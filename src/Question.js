@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import { TextField, TextareaAutosize, Button } from '@material-ui/core';
+import { TextField, TextareaAutosize, Button, Container } from '@material-ui/core';
+
 
 class Question extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Question extends React.Component {
 
   render () {
     return (
-      <body className="App-header">
+      <Container>
         <p>
           {this.props.question}
         </p>
@@ -42,7 +43,7 @@ class Question extends React.Component {
             onChange={this.handleChange}/>
         </form>
         <Button onClick={this.onClick}>Next</Button>
-      </body>
+      </Container>
     )
   }
 }
