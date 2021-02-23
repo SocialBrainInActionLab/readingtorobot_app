@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Container, MobileStepper, Button, Box, Grid } from '@material-ui/core';
+import { AppBar, Box, Button, MobileStepper,} from '@material-ui/core';
 import {Question} from './Question.js'
 import {Page} from './pages/page.js'
 
@@ -45,15 +45,12 @@ class Navigator extends React.Component {
 
   render () {
     return (
-      <Box heigh="100%" width="100%">
-        <Grid
-          container
-          direction="column"
-          align="stretch"
-          justify="space-around">
-
+      <Box height="85%" display="flex" flexDirection="column">
+        <Box flex={1} overflow="auto">
           {this.layout[this.state.current].dom}
-
+          <Box height="10vh"></Box>
+        </Box>
+        <AppBar style={{top: 'auto', bottom: 0}}>
           <MobileStepper
             variant="progress"
             steps={this.layout_length}
@@ -72,8 +69,7 @@ class Navigator extends React.Component {
                 Back
               </Button>
             }/>
-
-        </Grid>
+          </AppBar>
       </Box>
     )
   }

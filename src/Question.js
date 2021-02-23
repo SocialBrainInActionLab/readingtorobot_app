@@ -42,7 +42,6 @@ class Question extends React.Component {
             value={this.state.value}
             onChange={this.handleChange}/>
         </form>
-        <Button onClick={this.onClick}>Next</Button>
       </Container>
     )
   }
