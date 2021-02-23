@@ -1,14 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './App.css';
-import { TextField, TextareaAutosize, Button, Container } from '@material-ui/core';
-
+import { TextField, TextareaAutosize, Container } from '@material-ui/core';
 
 class Question extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ""
-    }
+      value: '',
+    };
     this.handleChange = this.handleChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onSubmit = props.onSubmitResponse;
@@ -19,19 +19,21 @@ class Question extends React.Component {
     // give react a function to set the state asynchronously.
     // here it's using the "name" value set on the TextField
     // to set state.person.[firstname|lastname].
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
   }
 
   onClick() {
-    var res = this.state.value;
+    const { value: res } = this.state;
     this.onSubmit(res);
   }
 
-  render () {
+  render() {
+    const { question } = this.props;
+    const { value } = this.state;
     return (
       <Container>
         <p>
-          {this.props.question}
+          {question}
         </p>
         <form className="this" noValidate autoComplete="off">
           <TextField
@@ -39,12 +41,18 @@ class Question extends React.Component {
             id="outlined-basic"
             variant="outlined"
             multiline={TextareaAutosize}
-            value={this.state.value}
-            onChange={this.handleChange}/>
+            value={value}
+            onChange={this.handleChange}
+          />
         </form>
       </Container>
-    )
+    );
   }
 }
 
-export {Question}
+Question.propTypes = {
+  onSubmitResponse: PropTypes.func.isRequired,
+  question: PropTypes.string.isRequired,
+};
+
+export default Question;
