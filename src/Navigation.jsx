@@ -6,41 +6,37 @@ import {
   Box,
   Button,
   MobileStepper,
+  Typography,
 } from '@material-ui/core';
-// import {Page} from './pages/page.js'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import Question from './Question';
 
 class Navigator extends React.Component {
   constructor(props) {
     super(props);
+    this.setData = this.setData.bind(this);
+    this.getData = this.getData.bind(this);
+    this.handleNext = this.handleNext.bind(this);
+    this.handleBack = this.handleBack.bind(this);
+
+    this.state = {
+      current: 0,
+      data: [],
+    };
+
     if (!props.layout) {
       this.layout = [
-        {
-          dom: <Question question="Did you like the robot?" onSubmitResponse={this.handleResponse} />,
-          data: {},
-        },
-        {
-          dom: <Question question="Why not?" onSubmitResponse={this.handleResponse} />,
-          data: {},
-        },
+        <Typography variant="h6">No layout provided, please specify questionaire layout in index.js</Typography>,
       ];
     } else {
       this.layout = props.layout;
+      let i;
+      for (i = 0; i < this.layout.length; i += 1) {
+        const { data } = this.state;
+        data.push('');
+      }
     }
     this.layout_length = this.layout.length;
-    this.state = {
-      current: 0,
-    };
-
-    this.handleNext = this.handleNext.bind(this);
-    this.handleBack = this.handleBack.bind(this);
-  }
-
-  handleResponse(value) {
-    const { current: c } = this.state;
-    this.layout[c].data = value;
   }
 
   handleNext() {
@@ -53,12 +49,29 @@ class Navigator extends React.Component {
     this.setState({ current: c - 1 });
   }
 
-  render() {
+  setData(value) {
+    const { current: c, data } = this.state;
+    const NewData = data;
+    NewData[c] = value;
+    this.setState({ data: NewData });
+  }
+
+  getData() {
     const { current: c } = this.state;
+    return this.data[c];
+  }
+
+  render() {
+    const { current: c, data } = this.state;
     return (
       <Box height="85%" display="flex" flexDirection="column">
         <Box flex={1} overflow="auto">
-          {this.layout[c].dom}
+          {
+            React.cloneElement(this.layout[c], {
+              data: data[c],
+              setData: this.setData,
+            })
+          }
           <Box height="10vh" />
         </Box>
         <AppBar style={{ top: 'auto', bottom: 0 }}>
@@ -88,12 +101,7 @@ class Navigator extends React.Component {
 }
 
 Navigator.propTypes = {
-  layout: PropTypes.arrayOf(
-    PropTypes.shape({
-      dom: PropTypes.element,
-      data: PropTypes.objectOf(PropTypes.any),
-    }),
-  ).isRequired,
+  layout: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 export default Navigator;

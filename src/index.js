@@ -1,13 +1,19 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Question from './Question';
+
+const layout = [
+  <Question question="Did you like the robot?" />,
+  <Question question="Why not?" />,
+];
 
 ReactDOM.render(
-  // eslint-disable-next-line react/jsx-filename-extension
   <React.StrictMode>
-    <App />
+    <App layout={layout} />
   </React.StrictMode>,
   document.getElementById('root'),
 );

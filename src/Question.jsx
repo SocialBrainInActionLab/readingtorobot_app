@@ -6,12 +6,7 @@ import { TextField, TextareaAutosize, Container } from '@material-ui/core';
 class Question extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: '',
-    };
     this.handleChange = this.handleChange.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.onSubmit = props.onSubmitResponse;
   }
 
   handleChange(event) {
@@ -19,17 +14,14 @@ class Question extends React.Component {
     // give react a function to set the state asynchronously.
     // here it's using the "name" value set on the TextField
     // to set state.person.[firstname|lastname].
-    this.setState({ value: event.target.value });
-  }
-
-  onClick() {
-    const { value: res } = this.state;
-    this.onSubmit(res);
+    const { setData } = this.props;
+    setData(event.target.value);
   }
 
   render() {
     const { question } = this.props;
-    const { value } = this.state;
+    const { data: value } = this.props;
+
     return (
       <Container>
         <p>
@@ -51,8 +43,13 @@ class Question extends React.Component {
 }
 
 Question.propTypes = {
-  onSubmitResponse: PropTypes.func.isRequired,
+  setData: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
+  data: PropTypes.string,
+};
+
+Question.defaultProps = {
+  data: '',
 };
 
 export default Question;

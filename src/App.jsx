@@ -18,10 +18,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import React from 'react';
+import PropTypes from 'prop-types';
 import './App.css';
 import Navigator from './Navigation';
 
-class Base extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     // TODO: Populate results from formularies
@@ -42,6 +43,7 @@ class Base extends React.Component {
 
   render() {
     const { drawer } = this.state;
+    const { layout } = this.props;
     const TDON = this.toogleDrawer(true);
     const TDOFF = this.toogleDrawer(false);
     const list = (
@@ -90,8 +92,9 @@ class Base extends React.Component {
               </Grid>
             </Toolbar>
           </AppBar>
-          <Navigator />
+          <Navigator layout={layout} />
         </Box>
+
         <SwipeableDrawer
           anchor="left"
           open={drawer}
@@ -105,10 +108,8 @@ class Base extends React.Component {
   }
 }
 
-function App() {
-  return (
-    <Base />
-  );
-}
+App.propTypes = {
+  layout: PropTypes.arrayOf(PropTypes.element).isRequired,
+};
 
 export default App;
