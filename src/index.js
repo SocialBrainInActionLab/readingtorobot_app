@@ -5,8 +5,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Question from './Question';
+import RobotSelectionPage from './pages/select_robot';
 
 const layout = [
+  <RobotSelectionPage />,
   <Question question="Did you like the robot?" />,
   <Question question="Why not?" />,
 ];
