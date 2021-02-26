@@ -6,8 +6,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Question from './Question';
 import RobotSelectionPage from './pages/select_robot';
+import { ParticipantInfoPage } from './pages/participant_info';
 
 const layout = [
+  <ParticipantInfoPage />,
   <RobotSelectionPage />,
   <Question question="Did you like the robot?" />,
   <Question question="Why not?" />,
