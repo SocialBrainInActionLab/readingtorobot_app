@@ -31,15 +31,18 @@ class RobotSelectionPage extends React.Component {
   constructor(props) {
     super(props);
     this.data = [];
+    this.state = {
+      robot: '',
+    };
     this.robots = shuffle(['Cozmo', 'MiRo', 'NAO']);
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
-    this.claimRef = React.createRef();
   }
 
   handleStart(bot) {
     return () => {
-      // const data = this.claimRef.current.value;
+      const { isLoading } = this.props;
+      isLoading(true);
       fetch('/startRobot', {
         method: 'POST',
         body: JSON.stringify(bot),
@@ -50,6 +53,38 @@ class RobotSelectionPage extends React.Component {
         .then((res) => {
           if (res.status !== 200) {
             console.log(`Looks like there was a problem. Status code: ${res.status}`);
+            isLoading(false);
+            return;
+          }
+          res.json().then((data) => {
+            console.log(data);
+          });
+        })
+        .catch((error) => {
+          console.log(`Fetch error: ${error}`);
+        });
+      const { setData } = this.props;
+      this.setState({ robot: bot });
+      setData(true);
+      isLoading(false);
+    };
+  }
+
+  handleStop(bot) {
+    return () => {
+      const { isLoading } = this.props;
+      isLoading(true);
+      fetch('/stopRobot', {
+        method: 'POST',
+        body: JSON.stringify(bot),
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      })
+        .then((res) => {
+          if (res.status !== 200) {
+            console.log(`Looks like there was a problem. Status code: ${res.status}`);
+            isLoading(false);
             return;
           }
           res.json().then((data) => {
@@ -61,17 +96,14 @@ class RobotSelectionPage extends React.Component {
         });
       const { setData } = this.props;
       setData(true);
+      isLoading(false);
     };
   }
 
-  handleStop() {
-    const { setData } = this.props;
-    setData(false);
-  }
-
   getRunning() {
+    const { robot } = this.state;
     this.data.push();
-    return <Grid element><Button onClick={this.handleStop}>Stop</Button></Grid>;
+    return <Grid element><Button onClick={this.handleStop(robot)}>Stop</Button></Grid>;
   }
 
   getIdle() {
@@ -110,6 +142,7 @@ class RobotSelectionPage extends React.Component {
 RobotSelectionPage.propTypes = {
   data: PropTypes.bool,
   setData: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
 };
 
 RobotSelectionPage.defaultProps = {

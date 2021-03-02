@@ -51,9 +51,11 @@ class Navigator extends React.Component {
 
   setData(value) {
     const { current: c, data } = this.state;
+    const { onResultChange } = this.props;
     const NewData = data;
     NewData[c] = value;
     this.setState({ data: NewData });
+    onResultChange(data);
   }
 
   getData() {
@@ -63,6 +65,7 @@ class Navigator extends React.Component {
 
   render() {
     const { current: c, data } = this.state;
+    const { isLoading: loading } = this.props;
     return (
       <Box height="85%" display="flex" flexDirection="column">
         <Box flex={1} overflow="auto">
@@ -70,6 +73,7 @@ class Navigator extends React.Component {
             React.cloneElement(this.layout[c], {
               data: data[c],
               setData: this.setData,
+              isLoading: loading,
             })
           }
           <Box height="10vh" />
@@ -102,6 +106,8 @@ class Navigator extends React.Component {
 
 Navigator.propTypes = {
   layout: PropTypes.arrayOf(PropTypes.element).isRequired,
+  onResultChange: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
 };
 
 export default Navigator;

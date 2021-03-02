@@ -1,7 +1,9 @@
 import {
   AppBar,
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Divider,
   Grid,
   IconButton,
@@ -29,7 +31,43 @@ class App extends React.Component {
     this.results = {};
     this.state = {
       drawer: false,
+      loading: false,
     };
+    this.handleResultChange = this.handleResultChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.isLoading = this.isLoading.bind(this);
+  }
+
+  handleResultChange(result) {
+    this.results = result;
+  }
+
+  handleSave() {
+    this.setState({ loading: true });
+    fetch('/saveData', {
+      method: 'POST',
+      body: JSON.stringify(this.results),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${res.status}`);
+          return;
+        }
+        res.json().then((data) => {
+          console.log(data);
+        });
+      })
+      .catch((error) => {
+        console.log(`Fetch error: ${error}`);
+      });
+    this.setState({ loading: false });
+  }
+
+  isLoading(value) {
+    this.setState({ loading: value });
   }
 
   toogleDrawer(open) {
@@ -42,7 +80,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { drawer } = this.state;
+    const { drawer, loading } = this.state;
     const { layout } = this.props;
     const TDON = this.toogleDrawer(true);
     const TDOFF = this.toogleDrawer(false);
@@ -88,11 +126,11 @@ class App extends React.Component {
                 <Typography variant="h6">
                   Reading With Robots
                 </Typography>
-                <Button color="inherit">Save</Button>
+                <Button color="inherit" onClick={this.handleSave}>Save</Button>
               </Grid>
             </Toolbar>
           </AppBar>
-          <Navigator layout={layout} />
+          <Navigator layout={layout} onResultChange={this.handleResultChange} isLoading={this.isLoading} />
         </Box>
 
         <SwipeableDrawer
@@ -103,6 +141,9 @@ class App extends React.Component {
         >
           {list}
         </SwipeableDrawer>
+        <Backdrop open={loading}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </div>
     );
   }

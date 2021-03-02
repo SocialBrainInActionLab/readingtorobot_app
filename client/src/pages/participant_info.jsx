@@ -3,7 +3,11 @@ import React from 'react';
 import {
   Box,
   Divider,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
 } from '@material-ui/core';
 import {
@@ -18,11 +22,11 @@ export class ParticipantInfoPage extends Page {
   static initialValues() {
     return {
       id: '',
-      date: '',
+      date: new Date(),
       name: '',
       phone: '',
       email: '',
-      birthdate: '',
+      birthdate: new Date(Date.now() - 86400000),
       age: '',
       gender: '',
       ethnicity: '',
@@ -32,10 +36,15 @@ export class ParticipantInfoPage extends Page {
 
   handleChange(id) {
     return (event) => {
-      event.persist();
       const { setData } = this.props;
       const d = this.getState();
-      d[id] = event.target.value;
+
+      if (event instanceof Date) {
+        d[id] = event;
+      } else {
+        event.persist();
+        d[id] = event.target.value;
+      }
       setData(d);
     };
   }
@@ -81,7 +90,7 @@ export class ParticipantInfoPage extends Page {
                 margin="normal"
                 id="date-picker-dialog"
                 label="Date"
-                format="MM/dd/yyyy"
+                format="dd/MM/yyyy"
                 value={d.date}
                 onChange={updateDate}
                 KeyboardButtonProps={{
@@ -116,6 +125,7 @@ export class ParticipantInfoPage extends Page {
             <TextField
               label="email"
               variant="outlined"
+              type="email"
               value={d.email}
               onChange={updateEmail}
             />
@@ -124,12 +134,21 @@ export class ParticipantInfoPage extends Page {
           <Grid item><Divider /></Grid>
 
           <Grid item>
-            <TextField
-              label="birthdate"
-              variant="outlined"
-              value={d.birthdate}
-              onChange={updateBirth}
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Birthdate"
+                format="dd/MM/yyyy"
+                value={d.birthdate}
+                disableFuture
+                onChange={updateBirth}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
+
           </Grid>
 
           <Grid item>
@@ -145,12 +164,18 @@ export class ParticipantInfoPage extends Page {
           <Grid item><Divider /></Grid>
 
           <Grid item>
-            <TextField
-              label="gender"
-              variant="outlined"
-              value={d.gender}
-              onChange={updateGender}
-            />
+            <FormControl variant="outlined" style={{ minWidth: 120 }}>
+              <InputLabel id="gender" style={{ backgroundColor: '#FFFF' }}> Gender </InputLabel>
+              <Select
+                labelId="gender"
+                id="gender"
+                value={d.gender}
+                onChange={updateGender}
+              >
+                <MenuItem value="M">Male</MenuItem>
+                <MenuItem value="F">Female</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
 
           <Grid item>
