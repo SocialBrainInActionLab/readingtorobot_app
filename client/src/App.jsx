@@ -4,25 +4,19 @@ import {
   Box,
   Button,
   CircularProgress,
-  Divider,
   Grid,
   IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   SwipeableDrawer,
   Toolbar,
   Typography,
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import Navigator from './Navigation';
+import Drawer from './Drawer';
 
 class App extends React.Component {
   constructor(props) {
@@ -32,10 +26,16 @@ class App extends React.Component {
     this.state = {
       drawer: false,
       loading: false,
+      robots: {
+        miro: '0.0.0.0',
+        nao: '0.0.0.0',
+      },
     };
     this.handleResultChange = this.handleResultChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.isLoading = this.isLoading.bind(this);
+    this.setRobotIPs = this.setRobotIPs.bind(this);
+    this.sendRobotIPs = this.sendRobotIPs.bind(this);
   }
 
   handleResultChange(result) {
@@ -66,6 +66,29 @@ class App extends React.Component {
     this.setState({ loading: false });
   }
 
+  setRobotIPs(value) {
+    this.setState({ robots: value });
+  }
+
+  sendRobotIPs() {
+    const { robots } = this.state;
+    fetch('/setRobotIP', {
+      method: 'POST',
+      body: JSON.stringify(robots),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${res.status}`);
+        }
+      })
+      .catch((error) => {
+        console.log(`Fetch error: ${error}`);
+      });
+  }
+
   isLoading(value) {
     this.setState({ loading: value });
   }
@@ -76,39 +99,18 @@ class App extends React.Component {
         return;
       }
       this.setState({ drawer: open });
+      if (!open) {
+        this.sendRobotIPs();
+      }
     };
   }
 
   render() {
-    const { drawer, loading } = this.state;
+    const { drawer, loading, robots } = this.state;
     const { layout } = this.props;
     const TDON = this.toogleDrawer(true);
     const TDOFF = this.toogleDrawer(false);
-    const list = (
-      <div
-        role="presentation"
-        onClick={TDOFF}
-        onKeyDown={TDOFF}
-      >
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </div>
-    );
+
     return (
       <div className="App">
         <Box height="100vh" width="100hh">
@@ -139,7 +141,7 @@ class App extends React.Component {
           onClose={TDOFF}
           onOpen={TDON}
         >
-          {list}
+          <Drawer setIPs={this.setRobotIPs} robots={robots} />
         </SwipeableDrawer>
         <Backdrop open={loading}>
           <CircularProgress color="inherit" />

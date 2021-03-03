@@ -18,6 +18,7 @@ CORS(app)
 
 robotProcesses = []
 running_robot = '_'
+robot_ips = {}
 
 
 def stop_robot(name: str, timeout: Optional[int] = 15) -> bool:
@@ -26,7 +27,7 @@ def stop_robot(name: str, timeout: Optional[int] = 15) -> bool:
     stop_robot.robot_closed = True
     stop_robot.speech_closed = True
     for p in robotProcesses:
-        if name in p.args and p.poll() is None:
+        if name in p.args[0] and p.poll() is None:
             stop_robot.robot_closed = False
         if 'speech' in p.args and p.poll() is None:
             stop_robot.speech_closed = False
@@ -76,6 +77,15 @@ def home():
     return app.send_static_file('index.html')
 
 
+@app.route('/setRobotIP', methods=['POST'])
+def setRobotIP():
+    ip_list = request.get_json()
+    global robot_ips
+    for robot in ip_list:
+        robot_ips[robot] = ip_list[robot]
+    return make_response(jsonify({"message": "OK"}), 200)
+
+
 @app.route('/startRobot', methods=['POST'])
 def startRobot():
     robot_name = request.get_json()
@@ -87,9 +97,10 @@ def startRobot():
 
     robotProcesses.append(subprocess.Popen('speech_service.py'))
     if running_robot == 'cozmo':
-        robotProcesses.append(subprocess.Popen('read_to_cozmo'))
+        robotProcesses.append(subprocess.Popen(['read_to_cozmo']))
     else:
-        robotProcesses.append(subprocess.Popen('launch_{}.sh'.format(running_robot)))
+        robotProcesses.append(subprocess.Popen(['launch_{}.sh'.format(running_robot),
+                                                robot_ips.get(running_robot, '')]))
 
     res = make_response(jsonify({"message": "OK"}), 200)
     return res
