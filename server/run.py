@@ -21,7 +21,7 @@ running_robot = '_'
 robot_ips = {}
 
 
-def stop_robot(name: str, timeout: Optional[int] = 15) -> bool:
+def stop_robot(name: str, timeout: Optional[int] = 20) -> bool:
     # First attemp to stop the robot cleanly.
 
     stop_robot.robot_closed = True
@@ -95,10 +95,10 @@ def startRobot():
 
     running_robot = robot_name.lower()
 
-    robotProcesses.append(subprocess.Popen('speech_service.py'))
     if running_robot == 'cozmo':
         robotProcesses.append(subprocess.Popen(['read_to_cozmo']))
     else:
+        robotProcesses.append(subprocess.Popen('speech_service.py'))
         robotProcesses.append(subprocess.Popen(['launch_{}.sh'.format(running_robot),
                                                 robot_ips.get(running_robot, '')]))
 
