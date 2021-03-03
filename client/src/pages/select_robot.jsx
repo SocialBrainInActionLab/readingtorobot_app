@@ -33,10 +33,24 @@ class RobotSelectionPage extends React.Component {
     this.data = [];
     this.state = {
       robot: '',
+      running: false,
     };
     this.robots = shuffle(['Cozmo', 'MiRo', 'NAO']);
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
+    this.getRobotState = this.getRobotState.bind(this);
+  }
+
+  componentDidMount() {
+    this.getRobotState();
+    this.intervalId = setInterval(this.getRobotState, 1000);
+  }
+
+  componentWillUnmount() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
   }
 
   handleStart(bot) {
@@ -56,17 +70,13 @@ class RobotSelectionPage extends React.Component {
             isLoading(false);
             return;
           }
-          res.json().then((data) => {
-            console.log(data);
-          });
+          this.setState({ robot: bot });
+          isLoading(false);
         })
         .catch((error) => {
           console.log(`Fetch error: ${error}`);
+          isLoading(false);
         });
-      const { setData } = this.props;
-      this.setState({ robot: bot });
-      setData(true);
-      isLoading(false);
     };
   }
 
@@ -90,23 +100,43 @@ class RobotSelectionPage extends React.Component {
           res.json().then((data) => {
             console.log(data);
           });
+          this.setState({ robot: '' });
+          isLoading(false);
         })
         .catch((error) => {
           console.log(`Fetch error: ${error}`);
+          isLoading(false);
         });
-      const { setData } = this.props;
-      setData(true);
-      isLoading(false);
     };
   }
 
-  getRunning() {
-    const { robot } = this.state;
-    this.data.push();
-    return <Grid element><Button onClick={this.handleStop(robot)}>Stop</Button></Grid>;
+  getRobotState() {
+    fetch('/getRobotState', {
+      method: 'GET',
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+      mode: 'cors',
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${res.status}`);
+          return;
+        }
+        res.json().then((data) => {
+          if (data.running > 0) {
+            this.setState({ running: true });
+          } else {
+            this.setState({ running: false });
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(`Fetch error: ${error}`);
+      });
   }
 
-  getIdle() {
+  paintIdle() {
     this.data.push();
     const buttons = [];
 
@@ -118,12 +148,14 @@ class RobotSelectionPage extends React.Component {
     return buttons;
   }
 
-  getButtons(running) {
-    return running ? this.getRunning() : this.getIdle();
+  paintRunning() {
+    const { robot } = this.state;
+    this.data.push();
+    return <Grid element><Button onClick={this.handleStop(robot)}>Stop</Button></Grid>;
   }
 
   render() {
-    const { data: running } = this.props;
+    const { running } = this.state;
 
     return (
       <Grid
@@ -133,20 +165,14 @@ class RobotSelectionPage extends React.Component {
         style={{ height: '70vh' }}
       >
         <Typography variant="h6">Under construction</Typography>
-        {this.getButtons(running)}
+        {running ? this.paintRunning() : this.paintIdle()}
       </Grid>
     );
   }
 }
 
 RobotSelectionPage.propTypes = {
-  data: PropTypes.bool,
-  setData: PropTypes.func.isRequired,
   isLoading: PropTypes.func.isRequired,
-};
-
-RobotSelectionPage.defaultProps = {
-  data: false,
 };
 
 export default RobotSelectionPage;
