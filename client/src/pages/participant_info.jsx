@@ -116,6 +116,7 @@ export class ParticipantInfoPage extends Page {
               label="Phone number"
               variant="outlined"
               type="number"
+              inputProps={{ inputMode: 'tel' }}
               value={d.number}
               onChange={updatePhone}
             />
@@ -126,6 +127,7 @@ export class ParticipantInfoPage extends Page {
               label="email"
               variant="outlined"
               type="email"
+              inputProps={{ inputMode: 'email' }}
               value={d.email}
               onChange={updateEmail}
             />
@@ -156,6 +158,7 @@ export class ParticipantInfoPage extends Page {
               label="age"
               variant="outlined"
               type="number"
+              inputProps={{ inputMode: 'decimal' }}
               value={d.age}
               onChange={updateAge}
             />
