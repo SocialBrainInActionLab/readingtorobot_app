@@ -31,13 +31,23 @@ class Navigator extends React.Component {
       ];
     } else {
       this.layout = props.layout;
-      let i;
-      for (i = 0; i < this.layout.length; i += 1) {
-        const { data } = this.state;
-        data.push('');
-      }
     }
     this.layout_length = this.layout.length;
+  }
+
+  componentDidMount() {
+    const ls = JSON.parse(localStorage.getItem('data'));
+    const { data } = this.state;
+
+    if (!ls || (ls.length !== this.layout.length)) {
+      let i;
+
+      for (i = 0; i < this.layout.length; i += 1) {
+        data.push('');
+      }
+    } else {
+      this.setState({ data: ls });
+    }
   }
 
   handleNext() {
@@ -57,6 +67,7 @@ class Navigator extends React.Component {
     NewData[c] = value;
     this.setState({ data: NewData });
     onResultChange(data);
+    localStorage.setItem('data', JSON.stringify(data));
   }
 
   getData() {

@@ -19,6 +19,11 @@ import Navigator from './Navigation';
 import Drawer from './Drawer';
 
 class App extends React.Component {
+  static clearForm() {
+    localStorage.clear();
+    window.location.reload();
+  }
+
   constructor(props) {
     super(props);
     // TODO: Populate results from formularies
@@ -141,7 +146,7 @@ class App extends React.Component {
           onClose={TDOFF}
           onOpen={TDON}
         >
-          <Drawer setIPs={this.setRobotIPs} robots={robots} />
+          <Drawer setIPs={this.setRobotIPs} robots={robots} clearForm={App.clearForm} />
         </SwipeableDrawer>
         <Backdrop open={loading}>
           <CircularProgress color="inherit" />

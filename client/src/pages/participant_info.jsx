@@ -117,7 +117,7 @@ export class ParticipantInfoPage extends Page {
               variant="outlined"
               type="number"
               inputProps={{ inputMode: 'tel' }}
-              value={d.number}
+              value={d.phone}
               onChange={updatePhone}
             />
           </Grid>
