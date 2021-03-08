@@ -1,0 +1,9 @@
+export { AfterRobotVideo } from './after_robot_video';
+export { DemoPage1 } from './demo_1';
+export { DemoPage2 } from './demo_2';
+export { DemoPage3 } from './demo_3';
+export { DemoPage4 } from './demo_4';
+export { MeetRobotsInactivePage } from './meet_robots_inactive';
+export { ParticipantInfoPage } from './participant_info';
+export { RobotVideoPage } from './robot_video';
+export { RobotSelectionPage } from './select_robot';

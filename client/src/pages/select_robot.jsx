@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@material-ui/core';
 
-class RobotSelectionPage extends React.Component {
+export class RobotSelectionPage extends React.Component {
   constructor(props) {
     super(props);
     this.data = [];
@@ -34,7 +34,7 @@ class RobotSelectionPage extends React.Component {
 
   handleStart(bot) {
     return () => {
-      const { isLoading } = this.props;
+      const { isLoading, chooseRobot } = this.props;
       isLoading(true);
       fetch('/startRobot', {
         method: 'POST',
@@ -51,11 +51,13 @@ class RobotSelectionPage extends React.Component {
           }
           this.setState({ robot: bot });
           isLoading(false);
+          chooseRobot(bot);
         })
         .catch((error) => {
           console.log(`Fetch error: ${error}`);
           isLoading(false);
         });
+      chooseRobot(bot);
     };
   }
 
@@ -152,6 +154,7 @@ class RobotSelectionPage extends React.Component {
 
 RobotSelectionPage.propTypes = {
   isLoading: PropTypes.func.isRequired,
+  chooseRobot: PropTypes.func.isRequired,
 };
 
 export default RobotSelectionPage;

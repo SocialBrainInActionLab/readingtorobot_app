@@ -102,6 +102,9 @@ def startRobot():
         robotProcesses.append(subprocess.Popen(['launch_{}.sh'.format(running_robot),
                                                 robot_ips.get(running_robot, '')]))
 
+    # We should wait a bit to ensure all mqtt clients are connected before allowing to send the stop message.
+    time.sleep(1)
+
     res = make_response(jsonify({"message": "OK"}), 200)
     return res
 

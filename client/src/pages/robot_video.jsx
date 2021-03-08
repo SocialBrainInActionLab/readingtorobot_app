@@ -11,9 +11,25 @@ import Page from './page';
 import Question from '../Question';
 
 export class RobotVideoPage extends Page {
+  static initialValues() {
+    return {
+      questions: '',
+    };
+  }
+
   handleChange(event) {
     const { setData } = this.props;
-    setData(event);
+    const d = this.getState();
+    d.questions = event;
+    setData(d);
+  }
+
+  getState() {
+    let { data: d } = this.props;
+    if (!d) {
+      d = this.constructor.initialValues();
+    }
+    return d;
   }
 
   render() {

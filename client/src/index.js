@@ -4,11 +4,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Question from './Question';
-import RobotSelectionPage from './pages/select_robot';
-import { ParticipantInfoPage } from './pages/participant_info';
-import { MeetRobotsInactivePage } from './pages/meet_robots_inactive';
-import { RobotVideoPage } from './pages/robot_video';
+import {
+  ParticipantInfoPage,
+  MeetRobotsInactivePage,
+  RobotSelectionPage,
+  RobotVideoPage,
+  DemoPage1,
+  DemoPage2,
+  DemoPage3,
+  DemoPage4,
+} from './pages';
+import IntensityButtons from './IntensityButtons';
 
 function shuffle(array) {
   const res = array;
@@ -44,8 +50,12 @@ layout = layout.concat(shuffle([
 
 layout = layout.concat([
   <RobotSelectionPage />,
-  <Question question="Did you like the robot?" />,
-  <Question question="Why not?" />,
+  <DemoPage1 />,
+  <IntensityButtons question="How helpful was this robot?" />,
+  <DemoPage2 />,
+  <DemoPage3 />,
+  <IntensityButtons question="How much did you enjoy reading with the robot?" />,
+  <DemoPage4 />,
 ]);
 
 ReactDOM.render(

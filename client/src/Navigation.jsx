@@ -18,10 +18,11 @@ class Navigator extends React.Component {
     this.getData = this.getData.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
-
+    this.chooseRobot = this.chooseRobot.bind(this);
     this.state = {
       current: 0,
       data: [],
+      chosenRobot: null,
     };
 
     if (!props.layout) {
@@ -63,8 +64,12 @@ class Navigator extends React.Component {
     return this.data[c];
   }
 
+  chooseRobot(bot) {
+    this.setState({ chosenRobot: bot });
+  }
+
   render() {
-    const { current: c, data } = this.state;
+    const { current: c, data, chosenRobot } = this.state;
     const { isLoading: loading } = this.props;
     return (
       <Box height="85%" display="flex" flexDirection="column">
@@ -74,6 +79,8 @@ class Navigator extends React.Component {
               data: data[c],
               setData: this.setData,
               isLoading: loading,
+              robot: chosenRobot,
+              chooseRobot: this.chooseRobot,
             })
           }
           <Box height="10vh" />
