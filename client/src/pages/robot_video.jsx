@@ -18,22 +18,24 @@ export class RobotVideoPage extends Page {
   }
 
   handleChange(event) {
-    const { setData } = this.props;
+    const { setData, robotName } = this.props;
     const d = this.getState();
-    d.questions = event;
+    d[`${robotName}Questions`] = event;
     setData(d);
   }
 
   getState() {
     let { data: d } = this.props;
+    const { robotName } = this.props;
     if (!d) {
-      d = this.constructor.initialValues();
+      d = {};
+      d[`${robotName}Questions`] = '';
     }
     return d;
   }
 
   render() {
-    const { url } = this.props;
+    const { url, robotName } = this.props;
     const d = this.getState();
 
     return (
@@ -47,7 +49,7 @@ export class RobotVideoPage extends Page {
           <Grid item>
             <Question
               question="Do you have any questions about this robot?"
-              data={d.questions}
+              data={d[`${robotName}Questions`]}
               setData={this.handleChange}
             />
           </Grid>

@@ -16,10 +16,10 @@ import Question from '../Question';
 export class MeetRobotsInactivePage extends Page {
   static initialValues() {
     return {
-      mostLiked: '',
-      why: '',
-      secondMostLiked: '',
-      questions: '',
+      q1: '',
+      q2: '',
+      q3: '',
+      q4: '',
     };
   }
 
@@ -48,10 +48,10 @@ export class MeetRobotsInactivePage extends Page {
 
   render() {
     const d = this.getState();
-    const updateMostLiked = this.handleChange('mostLiked');
-    const updateSecondMostLiked = this.handleChange('secondMostLiked');
-    const updateWhy = this.handleChange('why');
-    const updateQuestions = this.handleChange('questions');
+    const updateMostLiked = this.handleChange('q1');
+    const updateSecondMostLiked = this.handleChange('q3');
+    const updateWhy = this.handleChange('q2');
+    const updateQuestions = this.handleChange('q4');
 
     return (
       <Box m={5}>
@@ -62,11 +62,11 @@ export class MeetRobotsInactivePage extends Page {
               Which robot do you like the best?
             </p>
             <FormControl variant="outlined" style={{ minWidth: 120 }}>
-              <InputLabel id="mostLiked" style={{ backgroundColor: '#FFFF' }}> Robot </InputLabel>
+              <InputLabel id="q1" style={{ backgroundColor: '#FFFF' }}> Robot </InputLabel>
               <Select
-                labelId="mostLiked"
-                id="mostLiked"
-                value={d.mostLiked}
+                labelId="q1"
+                id="q1"
+                value={d.q1}
                 defaultValue=""
                 onChange={updateMostLiked}
               >
@@ -78,7 +78,7 @@ export class MeetRobotsInactivePage extends Page {
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
-            <Question question="Why?" data={d.why} setData={updateWhy} />
+            <Question question="Why?" data={d.q2} setData={updateWhy} />
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
@@ -86,11 +86,11 @@ export class MeetRobotsInactivePage extends Page {
               Out of the remaining two: Which robot do you like best?
             </p>
             <FormControl variant="outlined" style={{ minWidth: 120 }}>
-              <InputLabel id="secondMostLiked" style={{ backgroundColor: '#FFFF' }}> Robot </InputLabel>
+              <InputLabel id="q3" style={{ backgroundColor: '#FFFF' }}> Robot </InputLabel>
               <Select
-                labelId="secondMostLiked"
-                id="secondMostLiked"
-                value={d.secondMostLiked}
+                labelId="q3"
+                id="q3"
+                value={d.q3}
                 defaultValue=""
                 onChange={updateSecondMostLiked}
               >
@@ -104,9 +104,9 @@ export class MeetRobotsInactivePage extends Page {
             <Question
               question={
                     `You will get to see the robots in action later but first I’ll show you a video of each robot.
-                    Do you have any questions?`
+                    Do you have any q4?`
                   }
-              data={d.questions}
+              data={d.q4}
               setData={updateQuestions}
             />
           </Grid>

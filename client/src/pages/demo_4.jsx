@@ -12,11 +12,11 @@ import Question from '../Question';
 export class DemoPage4 extends Page {
   static initialValues() {
     return {
-      good_reading_buddy: null,
-      improvements: null,
-      activities: null,
-      not_tos: null,
-      questions: null,
+      q15: null,
+      q16: null,
+      q17: null,
+      q18: null,
+      q1: null,
     };
   }
 
@@ -45,11 +45,11 @@ export class DemoPage4 extends Page {
   render() {
     const { robot } = this.props;
     const d = this.getState();
-    const update1 = this.handleChange('good_reading_buddy');
-    const update2 = this.handleChange('improvements');
-    const update3 = this.handleChange('activities');
-    const update4 = this.handleChange('not_tos');
-    const update5 = this.handleChange('questions');
+    const update1 = this.handleChange('q15');
+    const update2 = this.handleChange('q16');
+    const update3 = this.handleChange('q17');
+    const update4 = this.handleChange('q18');
+    const update5 = this.handleChange('q1');
 
     return (
       <Box m={5}>
@@ -58,7 +58,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question={`What makes ${robot} a good reading buddy?`}
-              data={d.good_reading_buddy}
+              data={d.q15}
               setData={update1}
             />
             <Divider />
@@ -67,7 +67,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question={`How could ${robot} be a better reading buddy?`}
-              data={d.improvements}
+              data={d.q16}
               setData={update2}
             />
             <Divider />
@@ -76,7 +76,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question={`What types of activities could you do with ${robot}? [Prompt for explanation].`}
-              data={d.activities}
+              data={d.q17}
               setData={update3}
             />
             <Divider />
@@ -86,7 +86,7 @@ export class DemoPage4 extends Page {
             <Question
               question={`Can you think of something you probably shouldn’t do with the ${robot}?
                          [Prompt for explanation].`}
-              data={d.not_tos}
+              data={d.q18}
               setData={update4}
             />
             <Divider />
@@ -95,7 +95,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question="Do you have any questions or is there anything else you’d like to say?"
-              data={d.questions}
+              data={d.q1}
               setData={update5}
             />
             <Divider />

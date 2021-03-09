@@ -13,8 +13,8 @@ import QuestionSelect from '../Question_select';
 export class DemoPage1 extends Page {
   static initialValues() {
     return {
-      thoughts_about_robot: '',
-      was_robot_helpful: '',
+      q5: '',
+      q6: '',
     };
   }
 
@@ -42,8 +42,8 @@ export class DemoPage1 extends Page {
 
   render() {
     const d = this.getState();
-    const updateHowWasIt = this.handleChange('thoughts_about_robot');
-    const updateHelpful = this.handleChange('was_robot_helpful');
+    const updateHowWasIt = this.handleChange('q5');
+    const updateHelpful = this.handleChange('q6');
 
     return (
       <Box m={5}>
@@ -52,7 +52,7 @@ export class DemoPage1 extends Page {
             <Box height="20px" />
             <Question
               question="How was that? What do you think about this robot?"
-              data={d.thoughts_about_robot}
+              data={d.q5}
               setData={updateHowWasIt}
             />
           </Grid>
@@ -61,7 +61,7 @@ export class DemoPage1 extends Page {
             <QuestionSelect
               question="Do you think this is a helpful robot? Why (if not) / HOW (if so)?"
               options={['Yes', 'No']}
-              data={d.was_robot_helpful}
+              data={d.q6}
               setData={updateHelpful}
             />
           </Grid>

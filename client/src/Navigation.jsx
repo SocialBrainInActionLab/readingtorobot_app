@@ -76,6 +76,7 @@ class Navigator extends React.Component {
   }
 
   chooseRobot(bot) {
+    this.setData({ chosen: bot });
     this.setState({ chosenRobot: bot });
   }
 

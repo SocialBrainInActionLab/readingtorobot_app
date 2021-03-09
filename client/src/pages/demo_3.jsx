@@ -12,9 +12,9 @@ import QuestionSelect from '../Question_select';
 export class DemoPage3 extends Page {
   static initialValues() {
     return {
-      dislikes: null,
-      robot_or_teacher: null,
-      like_robot: null,
+      q11: null,
+      q12: null,
+      q13: null,
     };
   }
 
@@ -43,9 +43,9 @@ export class DemoPage3 extends Page {
   render() {
     const { robot } = this.props;
     const d = this.getState();
-    const updateDislikes = this.handleChange('dislikes');
-    const updateRobotOrTeacher = this.handleChange('robot_or_teacher');
-    const updateLikes = this.handleChange('like_robot');
+    const updateDislikes = this.handleChange('q11');
+    const updateRobotOrTeacher = this.handleChange('q12');
+    const updateLikes = this.handleChange('q13');
 
     return (
       <Box m={5}>
@@ -55,7 +55,7 @@ export class DemoPage3 extends Page {
             <QuestionSelect
               question="Is there anything you didn’t like about the robot?"
               options={['Yes', 'No']}
-              data={d.dislikes}
+              data={d.q11}
               setData={updateDislikes}
             />
             <Divider />
@@ -65,7 +65,7 @@ export class DemoPage3 extends Page {
             <QuestionSelect
               question="Would you prefer to read with this robot or your teacher? Why?"
               options={['Prefer Robots', 'Prefer Adult']}
-              data={d.robot_or_teacher}
+              data={d.q12}
               setData={updateRobotOrTeacher}
             />
             <Divider />
@@ -75,7 +75,7 @@ export class DemoPage3 extends Page {
             <QuestionSelect
               question={`Did you like reading with ${robot}? Why?`}
               options={['Yes', 'No']}
-              data={d.like_robot}
+              data={d.q13}
               setData={updateLikes}
             />
             <Divider />

@@ -43,18 +43,18 @@ let layout = [
 ];
 
 layout = layout.concat(shuffle([
-  <RobotVideoPage url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
-  <RobotVideoPage url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
-  <RobotVideoPage url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
+  <RobotVideoPage robotName="miro" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
+  <RobotVideoPage robotName="cozmo" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
+  <RobotVideoPage robotName="nao" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
 ]));
 
 layout = layout.concat([
   <RobotSelectionPage />,
   <DemoPage1 />,
-  <IntensityButtons question="How helpful was this robot?" />,
+  <IntensityButtons qId="q7" question="How helpful was this robot?" />,
   <DemoPage2 />,
   <DemoPage3 />,
-  <IntensityButtons question="How much did you enjoy reading with the robot?" />,
+  <IntensityButtons qId="q14" question="How much did you enjoy reading with the robot?" />,
   <DemoPage4 />,
 ]);
 
