@@ -16,7 +16,7 @@ export class DemoPage4 extends Page {
       q16: null,
       q17: null,
       q18: null,
-      q1: null,
+      q19: null,
     };
   }
 
@@ -49,7 +49,7 @@ export class DemoPage4 extends Page {
     const update2 = this.handleChange('q16');
     const update3 = this.handleChange('q17');
     const update4 = this.handleChange('q18');
-    const update5 = this.handleChange('q1');
+    const update5 = this.handleChange('q19');
 
     return (
       <Box m={5}>
@@ -95,7 +95,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question="Do you have any questions or is there anything else you’d like to say?"
-              data={d.q1}
+              data={d.q19}
               setData={update5}
             />
             <Divider />

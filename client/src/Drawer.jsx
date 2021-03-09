@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
+  Divider,
   Grid,
   List,
   ListItem,
@@ -12,19 +13,27 @@ class Drawer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeIP = this.handleChangeIP.bind(this);
+    this.handleChangeFile = this.handleChangeFile.bind(this);
   }
 
-  handleChange(id) {
+  handleChangeIP(id) {
     return (event) => {
-      const { robots, setIPs } = this.props;
-      robots[id] = event.target.value;
-      setIPs(robots);
+      const { settings, setSettings } = this.props;
+      settings.robotIPs[id] = event.target.value;
+      setSettings(settings);
     };
   }
 
+  handleChangeFile(event) {
+    const { settings, setSettings } = this.props;
+    settings.filename = event.target.value;
+    setSettings(settings);
+  }
+
   render() {
-    const { robots, clearForm } = this.props;
+    const { settings, clearForm } = this.props;
+
     return (
       <Grid
         container
@@ -36,19 +45,33 @@ class Drawer extends React.Component {
         <Grid item>
           <List>
             <ListItem>Robot Ips</ListItem>
-            {Object.keys(robots).map((robot) => {
-              const change = this.handleChange(robot);
+            {Object.keys(settings.robotIPs).map((robot) => {
+              const change = this.handleChangeIP(robot);
               return (
                 <ListItem>
                   <TextField
                     label={robot}
                     variant="outlined"
-                    value={robots[robot]}
+                    value={settings.robotIPs[robot]}
                     onChange={change}
                   />
                 </ListItem>
               );
             })}
+          </List>
+        </Grid>
+        <Grid item><Divider /></Grid>
+        <Grid item>
+          <List>
+            <ListItem>Data Storage</ListItem>
+            <ListItem>
+              <TextField
+                label="Filename"
+                variant="outlined"
+                value={settings.filename}
+                onChange={this.handleChangeFile}
+              />
+            </ListItem>
           </List>
         </Grid>
         <Grid item>
@@ -60,8 +83,8 @@ class Drawer extends React.Component {
 }
 
 Drawer.propTypes = {
-  setIPs: PropTypes.func.isRequired,
-  robots: PropTypes.objectOf(PropTypes.string).isRequired,
+  setSettings: PropTypes.func.isRequired,
+  settings: PropTypes.objectOf(PropTypes.string).isRequired,
   clearForm: PropTypes.func.isRequired,
 };
 

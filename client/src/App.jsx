@@ -20,38 +20,73 @@ import Drawer from './Drawer';
 
 class App extends React.Component {
   static clearForm() {
-    localStorage.clear();
+    localStorage.removeItem('data');
     window.location.reload();
+  }
+
+  static sendSettings(msg) {
+    fetch('/setSettings', {
+      method: 'POST',
+      body: JSON.stringify(msg),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          console.log(`Looks like there was a problem. Status code: ${res.status}`);
+        }
+      })
+      .catch((error) => {
+        console.log(`Fetch error: ${error}`);
+      });
   }
 
   constructor(props) {
     super(props);
     // TODO: Populate results from formularies
-    this.results = {};
     this.state = {
       drawer: false,
       loading: false,
-      robots: {
-        miro: '0.0.0.0',
-        nao: '0.0.0.0',
-      },
+      settings: {},
+      results: localStorage.getItem('data'),
     };
     this.handleResultChange = this.handleResultChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.isLoading = this.isLoading.bind(this);
-    this.setRobotIPs = this.setRobotIPs.bind(this);
-    this.sendRobotIPs = this.sendRobotIPs.bind(this);
+    this.setSettings = this.setSettings.bind(this);
+    this.sendCurrentSettings = this.sendCurrentSettings.bind(this);
+  }
+
+  componentDidMount() {
+    const ls = JSON.parse(localStorage.getItem('settings'));
+    let { settings: s } = this.state;
+
+    if (!ls) {
+      s = {
+        robotIPs: {
+          miro: '0.0.0.0',
+          nao: '0.0.0.0',
+        },
+        filename: 'data.csv',
+      };
+    } else {
+      s = ls;
+    }
+    this.setState({ settings: s });
+    App.sendSettings(s);
   }
 
   handleResultChange(result) {
-    this.results = result;
+    this.setState({ results: result });
   }
 
   handleSave() {
+    const { results } = this.state;
     this.setState({ loading: true });
     fetch('/saveData', {
       method: 'POST',
-      body: JSON.stringify(this.results),
+      body: JSON.stringify(results),
       headers: new Headers({
         'content-type': 'application/json',
       }),
@@ -71,27 +106,14 @@ class App extends React.Component {
     this.setState({ loading: false });
   }
 
-  setRobotIPs(value) {
-    this.setState({ robots: value });
+  setSettings(value) {
+    localStorage.setItem('settings', JSON.stringify(value));
+    this.setState({ settings: value });
   }
 
-  sendRobotIPs() {
-    const { robots } = this.state;
-    fetch('/setRobotIP', {
-      method: 'POST',
-      body: JSON.stringify(robots),
-      headers: new Headers({
-        'content-type': 'application/json',
-      }),
-    })
-      .then((res) => {
-        if (res.status !== 200) {
-          console.log(`Looks like there was a problem. Status code: ${res.status}`);
-        }
-      })
-      .catch((error) => {
-        console.log(`Fetch error: ${error}`);
-      });
+  sendCurrentSettings() {
+    const { settings } = this.state;
+    App.sendSettings(settings);
   }
 
   isLoading(value) {
@@ -105,13 +127,13 @@ class App extends React.Component {
       }
       this.setState({ drawer: open });
       if (!open) {
-        this.sendRobotIPs();
+        this.sendCurrentSettings();
       }
     };
   }
 
   render() {
-    const { drawer, loading, robots } = this.state;
+    const { drawer, loading, settings } = this.state;
     const { layout } = this.props;
     const TDON = this.toogleDrawer(true);
     const TDOFF = this.toogleDrawer(false);
@@ -146,7 +168,7 @@ class App extends React.Component {
           onClose={TDOFF}
           onOpen={TDON}
         >
-          <Drawer setIPs={this.setRobotIPs} robots={robots} clearForm={App.clearForm} />
+          <Drawer setSettings={this.setSettings} settings={settings} clearForm={App.clearForm} />
         </SwipeableDrawer>
         <Backdrop open={loading}>
           <CircularProgress color="inherit" />

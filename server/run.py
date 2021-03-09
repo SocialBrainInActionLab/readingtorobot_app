@@ -1,5 +1,6 @@
 
 import csv
+import json
 import os
 import signal
 import subprocess
@@ -12,13 +13,13 @@ from flask_cors import CORS
 
 import paho.mqtt.client as mqtt
 
-DEFAULT_DATA_FILE = './data.csv'
 app = Flask(__name__, static_url_path='')
 CORS(app)
 
 robotProcesses = []
 running_robot = '_'
 robot_ips = {}
+data_file = '/data/data.csv'
 
 
 def stop_robot(name: str, timeout: Optional[int] = 20) -> bool:
@@ -77,12 +78,15 @@ def home():
     return app.send_static_file('index.html')
 
 
-@app.route('/setRobotIP', methods=['POST'])
-def setRobotIP():
-    ip_list = request.get_json()
-    global robot_ips
-    for robot in ip_list:
-        robot_ips[robot] = ip_list[robot]
+@app.route('/setSettings', methods=['POST'])
+def setSettings():
+    settings = request.get_json()
+    global robot_ips, data_file
+
+    for robot in settings['robotIPs']:
+        robot_ips[robot] = settings['robotIPs'][robot]
+    data_file = os.path.join('/data', settings['filename'])
+
     return make_response(jsonify({"message": "OK"}), 200)
 
 
@@ -133,22 +137,28 @@ def stopRobot():
     return res
 
 
-@app.route('/storeData', methods=['POST'])
-def storeData():
-    p_data = request.get_json()
-    data_file = p_data.pop('dataFile', DEFAULT_DATA_FILE)
+@app.route('/saveData', methods=['POST'])
+def saveData():
+    p_data = json.loads(request.get_json())
+    onedict = {}
+    for p in p_data:
+        for key in p:
+            onedict[key] = p[key]
 
     if not os.path.isfile(data_file):
         # Create new file and add header.
         with open(data_file, 'w') as f:
             writer = csv.writer(f)
-            header = p_data.keys()
+            header = onedict.keys()
             writer.writerow(header)
-            writer.writerow(p_data.values())
+            writer.writerow(onedict.values())
     else:
         with open(data_file, 'a') as f:
             writer = csv.writer(f)
-            writer.writerow(p_data.values())
+            writer.writerow(onedict.values())
+
+    return make_response(jsonify({"message": "Saved."}), 200)
+
 
 
 @app.route('/getRobotState', methods=['GET'])
@@ -159,7 +169,6 @@ def getRobotState():
 @app.route('/getData', methods=['GET'])
 def getData():
     msg = request.get_json()
-    data_file = msg.get('dataFile', DEFAULT_DATA_FILE)
     if not os.path.isfile(data_file):
         return make_response(jsonify({"message": "No data file {} not found".format(data_file)}), 415)
     with open(data_file, 'r') as f:
