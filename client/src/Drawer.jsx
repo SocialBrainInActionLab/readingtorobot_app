@@ -75,7 +75,7 @@ class Drawer extends React.Component {
           </List>
         </Grid>
         <Grid item>
-          <Button onClick={clearForm}>Clear form</Button>
+          <Button variant="outlined" onClick={clearForm}>Clear form</Button>
         </Grid>
       </Grid>
     );

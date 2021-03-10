@@ -4,20 +4,48 @@ import {
   Button,
   Grid,
   Typography,
+  Switch,
 } from '@material-ui/core';
 
+function publishMQTT(topicName, message) {
+  fetch('/pubMQTT', {
+    method: 'POST',
+    body: JSON.stringify({ topic: topicName, msg: message }),
+    headers: new Headers({
+      'content-type': 'application/json',
+    }),
+  })
+    .then((res) => {
+      if (res.status !== 200) {
+        console.log(`Looks like there was a problem. Status code: ${res.status}`);
+      }
+    })
+    .catch((error) => {
+      console.log(`Fetch error: ${error}`);
+    });
+}
+
 export class RobotSelectionPage extends React.Component {
+  static sendEmotion(emotion) {
+    return () => {
+      publishMQTT('speech/cmd', emotion);
+    };
+  }
+
   constructor(props) {
     super(props);
     this.data = [];
     this.state = {
       robot: '',
       running: false,
+      speechOn: true,
     };
     this.robots = ['Cozmo', 'MiRo', 'NAO'];
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.getRobotState = this.getRobotState.bind(this);
+    this.handleSpeechChange = this.handleSpeechChange.bind(this);
+    this.sendEmotion = RobotSelectionPage.sendEmotion.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +119,52 @@ export class RobotSelectionPage extends React.Component {
     };
   }
 
+  handleSpeechChange(event) {
+    const { isLoading } = this.props;
+    if (event.target.checked) {
+      isLoading(true);
+      fetch('/startSpeech', {
+        method: 'GET',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+        mode: 'cors',
+      })
+        .then((res) => {
+          isLoading(false);
+          if (res.status !== 200) {
+            console.log(`Looks like there was a problem. Status code: ${res.status}`);
+            return;
+          }
+          this.setState({ speechOn: true });
+        })
+        .catch((error) => {
+          console.log(`Fetch error: ${error}`);
+          isLoading(false);
+        });
+    } else {
+      fetch('/stopSpeech', {
+        method: 'GET',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+        mode: 'cors',
+      })
+        .then((res) => {
+          isLoading(false);
+          if (res.status !== 200) {
+            console.log(`Looks like there was a problem. Status code: ${res.status}`);
+            return;
+          }
+          this.setState({ speechOn: false });
+        })
+        .catch((error) => {
+          console.log(`Fetch error: ${error}`);
+          isLoading(false);
+        });
+    }
+  }
+
   getRobotState() {
     fetch('/getRobotState', {
       method: 'GET',
@@ -124,15 +198,58 @@ export class RobotSelectionPage extends React.Component {
     for (let i = 0; i < this.robots.length; i += 1) {
       const bot = this.robots[i];
       const start = this.handleStart(bot);
-      buttons.push(<Grid element><Button onClick={start}>{bot}</Button></Grid>);
+      buttons.push(<Grid element><Button variant="outlined" onClick={start}>{bot}</Button></Grid>);
     }
     return buttons;
   }
 
   paintRunning() {
-    const { robot } = this.state;
+    const { robot, speechOn } = this.state;
     this.data.push();
-    return <Grid element><Button onClick={this.handleStop(robot)}>Stop</Button></Grid>;
+    return (
+      <Grid
+        container
+        direction="column"
+        justify="space-evenly"
+        style={{ height: '50vh' }}
+      >
+        <Grid element>
+          <Button variant="outlined" onClick={this.handleStop(robot)}>Stop</Button>
+        </Grid>
+        <Grid element>
+          <Grid
+            container
+            direction="column"
+            justify="space-evenly"
+            style={{ height: '40vh' }}
+          >
+            <Grid element>
+              <Switch
+                checked={speechOn}
+                onChange={this.handleSpeechChange}
+                name="checkedB"
+                color="primary"
+              />
+            </Grid>
+            <Grid element>
+              <Button variant="outlined" onClick={this.sendEmotion('happy')} disabled={speechOn}>Happy</Button>
+            </Grid>
+            <Grid element>
+              <Button variant="outlined" onClick={this.sendEmotion('sad')} disabled={speechOn}>Sad</Button>
+            </Grid>
+            <Grid element>
+              <Button variant="outlined" onClick={this.sendEmotion('excited')} disabled={speechOn}>Excited</Button>
+            </Grid>
+            <Grid element>
+              <Button variant="outlined" onClick={this.sendEmotion('groan')} disabled={speechOn}>Groan</Button>
+            </Grid>
+            <Grid element>
+              <Button variant="outlined" onClick={this.sendEmotion('scared')} disabled={speechOn}>Scared</Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
   }
 
   render() {

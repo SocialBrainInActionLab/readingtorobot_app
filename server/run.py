@@ -22,7 +22,7 @@ robot_ips = {}
 data_file = '/data/data.csv'
 
 
-def stop_robot(name: str, timeout: Optional[int] = 20) -> bool:
+def stop_robot(name: str, timeout: Optional[int] = 30) -> bool:
     # First attemp to stop the robot cleanly.
 
     stop_robot.robot_closed = True
@@ -39,7 +39,7 @@ def stop_robot(name: str, timeout: Optional[int] = 20) -> bool:
     def speech_callback(cli, obj, msg):
         stop_robot.speech_closed = True
 
-    mqttc = mqtt.Client()
+    mqttc = mqtt.Client('stop')
     mqttc.message_callback_add("{}/stopped_clean".format(name), robot_callback)
     mqttc.message_callback_add("speech/stopped_clean", speech_callback)
     mqttc.connect(socket.gethostbyname(socket.gethostname()))
@@ -56,8 +56,33 @@ def stop_robot(name: str, timeout: Optional[int] = 20) -> bool:
     return False
 
 
+def stop_speech(timeout: Optional[int] = 20) -> bool:
+    stop_speech.speech_closed = True
+    for p in robotProcesses:
+        if 'speech' in p.args and p.poll() is None:
+            stop_robot.speech_closed = False
+
+    def speech_callback(cli, obj, msg):
+        stop_robot.speech_closed = True
+
+    mqttc = mqtt.Client('stop')
+    mqttc.message_callback_add("speech/stopped_clean", speech_callback)
+    mqttc.connect(socket.gethostbyname(socket.gethostname()))
+    mqttc.subscribe("speech/stopped_clean", 0)
+    mqttc.loop_start()
+    mqttc.publish("speech/stop", "stop")
+
+    for _ in range(timeout):
+        if stop_robot.speech_closed:
+            return True
+        time.sleep(1)
+    return False
+
+    mqttc.loop_stop()
+
+
 def stop_robot_process(p: subprocess.Popen) -> Response:
-    print(p)
+    print(p.args)
     p.terminate()
     # Make sure that the process is terminated. If time runs out, send sigkill and send back an error code.
     print('waiting')
@@ -99,10 +124,10 @@ def startRobot():
 
     running_robot = robot_name.lower()
 
+    robotProcesses.append(subprocess.Popen('speech_service.py'))
     if running_robot == 'cozmo':
         robotProcesses.append(subprocess.Popen(['read_to_cozmo']))
     else:
-        robotProcesses.append(subprocess.Popen('speech_service.py'))
         robotProcesses.append(subprocess.Popen(['launch_{}.sh'.format(running_robot),
                                                 robot_ips.get(running_robot, '')]))
 
@@ -137,6 +162,63 @@ def stopRobot():
     return res
 
 
+@app.route('/startSpeech', methods=['GET'])
+def startSpeech():
+    global robotProcesses
+
+    robotProcesses.append(subprocess.Popen('speech_service.py'))
+
+    # We should wait a bit to ensure all mqtt clients are connected before allowing to send the stop message.
+    time.sleep(1)
+
+    res = make_response(jsonify({"message": "OK"}), 200)
+    return res
+
+
+@app.route('/stopSpeech', methods=['GET'])
+def stopSpeech():
+    global robotProcesses
+    global running_robot
+
+    # First, try to stop the robot with mqtt command.
+    if running_robot is not None and stop_speech():
+        todel = []
+        for i, p in enumerate(robotProcesses):
+            if 'speech' in p.args and p.poll() is None:
+                todel.insert(0, i)
+        for i in todel:
+            del robotProcesses[i]
+        return make_response(jsonify({"message": "Speech stopped."}), 200)
+
+    # If the robot does not stop, close processes individually
+    todel = []
+    if robotProcesses:
+        for i, p in enumerate(robotProcesses):
+            if 'speech' in p.args and p.poll() is None:
+                res = stop_robot_process(p)
+                todel.insert(0, i)
+    else:
+        res = make_response(jsonify({"message": "No robot processes are running"}), 500)
+
+    for i in todel:
+        del robotProcesses[i]
+
+    return res
+
+
+@app.route('/pubMQTT', methods=['POST'])
+def pubMQTT():
+    req = request.get_json()
+    mqttc = mqtt.Client('publisher')
+
+    mqttc.connect(socket.gethostbyname(socket.gethostname()))
+    mqttc.loop_start()
+    mqttc.publish(req['topic'], req['msg'])
+    mqttc.loop_stop()
+
+    return make_response(jsonify({"message": "Message sent."}), 200)
+
+
 @app.route('/saveData', methods=['POST'])
 def saveData():
     p_data = json.loads(request.get_json())
@@ -158,7 +240,6 @@ def saveData():
             writer.writerow(onedict.values())
 
     return make_response(jsonify({"message": "Saved."}), 200)
-
 
 
 @app.route('/getRobotState', methods=['GET'])

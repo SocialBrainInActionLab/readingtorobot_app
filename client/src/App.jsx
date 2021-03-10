@@ -155,7 +155,7 @@ class App extends React.Component {
                 <Typography variant="h6">
                   Reading With Robots
                 </Typography>
-                <Button color="inherit" onClick={this.handleSave}>Save</Button>
+                <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
               </Grid>
             </Toolbar>
           </AppBar>
