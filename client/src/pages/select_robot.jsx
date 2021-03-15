@@ -77,7 +77,7 @@ export class RobotSelectionPage extends React.Component {
             isLoading(false);
             return;
           }
-          this.setState({ robot: bot });
+          this.setState({ robot: bot, speechOn: true });
           isLoading(false);
           chooseRobot(bot);
         })

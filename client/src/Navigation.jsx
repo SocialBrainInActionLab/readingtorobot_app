@@ -43,7 +43,7 @@ class Navigator extends React.Component {
       let i;
 
       for (i = 0; i < this.layout.length; i += 1) {
-        data.push('');
+        data.push({});
       }
     } else {
       this.setState({ data: ls });

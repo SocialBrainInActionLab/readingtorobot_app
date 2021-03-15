@@ -17,6 +17,9 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 robotProcesses = []
+csv_fieldnames = ['id', 'date', 'name', 'phone', 'email', 'birthdate', 'age', 'gender', 'ethnicity', 'language',
+                  'miroQuestions', 'naoQuestions', 'cozmoQuestions', 'chosen', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7',
+                  'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', ]
 running_robot = '_'
 robot_ips = {}
 data_file = '/data/data.csv'
@@ -60,10 +63,10 @@ def stop_speech(timeout: Optional[int] = 20) -> bool:
     stop_speech.speech_closed = True
     for p in robotProcesses:
         if 'speech' in p.args and p.poll() is None:
-            stop_robot.speech_closed = False
+            stop_speech.speech_closed = False
 
     def speech_callback(cli, obj, msg):
-        stop_robot.speech_closed = True
+        stop_speech.speech_closed = True
 
     mqttc = mqtt.Client('stop')
     mqttc.message_callback_add("speech/stopped_clean", speech_callback)
@@ -73,7 +76,7 @@ def stop_speech(timeout: Optional[int] = 20) -> bool:
     mqttc.publish("speech/stop", "stop")
 
     for _ in range(timeout):
-        if stop_robot.speech_closed:
+        if stop_speech.speech_closed:
             return True
         time.sleep(1)
     return False
@@ -192,13 +195,13 @@ def stopSpeech():
 
     # If the robot does not stop, close processes individually
     todel = []
-    if robotProcesses:
-        for i, p in enumerate(robotProcesses):
-            if 'speech' in p.args and p.poll() is None:
-                res = stop_robot_process(p)
-                todel.insert(0, i)
+    for i, p in enumerate(robotProcesses):
+        if 'speech' in p.args and p.poll() is None:
+            res = stop_robot_process(p)
+            todel.insert(0, i)
+            break
     else:
-        res = make_response(jsonify({"message": "No robot processes are running"}), 500)
+        res = make_response(jsonify({"message": "Speech is not running."}), 200)
 
     for i in todel:
         del robotProcesses[i]
@@ -221,23 +224,24 @@ def pubMQTT():
 
 @app.route('/saveData', methods=['POST'])
 def saveData():
-    p_data = json.loads(request.get_json())
+    d = request.get_json()
+    if isinstance(d, str):
+        d = json.loads(d)
     onedict = {}
-    for p in p_data:
+    for p in d:
         for key in p:
             onedict[key] = p[key]
 
     if not os.path.isfile(data_file):
         # Create new file and add header.
         with open(data_file, 'w') as f:
-            writer = csv.writer(f)
-            header = onedict.keys()
-            writer.writerow(header)
-            writer.writerow(onedict.values())
+            writer = csv.DictWriter(f, csv_fieldnames)
+            writer.writeheader()
+            writer.writerow(onedict)
     else:
         with open(data_file, 'a') as f:
-            writer = csv.writer(f)
-            writer.writerow(onedict.values())
+            writer = csv.DictWriter(f, csv_fieldnames)
+            writer.writerow(onedict)
 
     return make_response(jsonify({"message": "Saved."}), 200)
 
