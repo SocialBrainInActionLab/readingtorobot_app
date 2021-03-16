@@ -84,8 +84,8 @@ class Navigator extends React.Component {
     const { current: c, data, chosenRobot } = this.state;
     const { isLoading: loading } = this.props;
     return (
-      <Box height="85%" display="flex" flexDirection="column">
-        <Box flex={1} overflow="auto">
+      <Box position="sticky" height="85%" display="flex" flexDirection="column">
+        <Box>
           {
             React.cloneElement(this.layout[c], {
               data: data[c],
@@ -97,7 +97,7 @@ class Navigator extends React.Component {
           }
           <Box height="10vh" />
         </Box>
-        <AppBar style={{ top: 'auto', bottom: 0 }}>
+        <AppBar position="fixed" style={{ top: 'auto', bottom: 0 }}>
           <MobileStepper
             variant="progress"
             steps={this.layout_length}

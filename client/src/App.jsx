@@ -1,15 +1,14 @@
 import {
   AppBar,
-  Backdrop,
   Box,
   Button,
-  CircularProgress,
   Grid,
   IconButton,
   SwipeableDrawer,
   Toolbar,
   Typography,
 } from '@material-ui/core';
+import LoadingOverlay from 'react-loading-overlay';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
@@ -140,39 +139,38 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Box height="100vh" width="100hh">
-          <AppBar position="static">
-            <Toolbar>
-              <Grid
-                container
-                direction="row"
-                align="stretch"
-                justify="space-between"
-              >
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={TDON}>
-                  <MenuIcon />
-                </IconButton>
-                <Typography variant="h6">
-                  Reading With Robots
-                </Typography>
-                <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
-              </Grid>
-            </Toolbar>
-          </AppBar>
-          <Navigator layout={layout} onResultChange={this.handleResultChange} isLoading={this.isLoading} />
-        </Box>
+        <LoadingOverlay active={loading} spinner>
+          <Box height="100vh" width="100hh" position="sticky">
+            <AppBar position="sticky">
+              <Toolbar>
+                <Grid
+                  container
+                  direction="row"
+                  align="stretch"
+                  justify="space-between"
+                >
+                  <IconButton edge="start" color="inherit" aria-label="menu" onClick={TDON}>
+                    <MenuIcon />
+                  </IconButton>
+                  <Typography variant="h6">
+                    Reading With Robots
+                  </Typography>
+                  <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
+                </Grid>
+              </Toolbar>
+            </AppBar>
+            <Navigator layout={layout} onResultChange={this.handleResultChange} isLoading={this.isLoading} />
+          </Box>
 
-        <SwipeableDrawer
-          anchor="left"
-          open={drawer}
-          onClose={TDOFF}
-          onOpen={TDON}
-        >
-          <Drawer setSettings={this.setSettings} settings={settings} clearForm={App.clearForm} />
-        </SwipeableDrawer>
-        <Backdrop open={loading}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
+          <SwipeableDrawer
+            anchor="left"
+            open={drawer}
+            onClose={TDOFF}
+            onOpen={TDON}
+          >
+            <Drawer setSettings={this.setSettings} settings={settings} clearForm={App.clearForm} />
+          </SwipeableDrawer>
+        </LoadingOverlay>
       </div>
     );
   }
