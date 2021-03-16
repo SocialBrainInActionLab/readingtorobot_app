@@ -1,3 +1,6 @@
+"""
+    Web server for the Reading To Robots App.
+"""
 
 import csv
 import json
@@ -12,6 +15,9 @@ from flask import Flask, request, Response, make_response, jsonify
 from flask_cors import CORS
 
 import paho.mqtt.client as mqtt
+
+from server.slack_bot import publish_hostname
+
 
 app = Flask(__name__, static_url_path='')
 CORS(app)
@@ -265,4 +271,5 @@ def getData():
 
 
 if __name__ == '__main__':
+    publish_hostname()
     app.run(host='0.0.0.0')
