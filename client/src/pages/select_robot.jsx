@@ -121,8 +121,8 @@ export class RobotSelectionPage extends React.Component {
 
   handleSpeechChange(event) {
     const { isLoading } = this.props;
+    isLoading(true);
     if (event.target.checked) {
-      isLoading(true);
       fetch('/startSpeech', {
         method: 'GET',
         headers: new Headers({
