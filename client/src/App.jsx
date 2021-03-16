@@ -9,6 +9,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import LoadingOverlay from 'react-loading-overlay';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
@@ -92,15 +94,18 @@ class App extends React.Component {
     })
       .then((res) => {
         if (res.status !== 200) {
-          console.log(`Looks like there was a problem. Status code: ${res.status}`);
+          res.text().then((data) => {
+            NotificationManager.error(`Looks like there was a problem saving the data.
+                                      Status code: ${res.status}
+                                      Error: ${data}`, 'ERROR');
+          });
+
           return;
         }
-        res.json().then((data) => {
-          console.log(data);
-        });
+        NotificationManager.success('Data saved successfully!', 'Saved');
       })
       .catch((error) => {
-        console.log(`Fetch error: ${error}`);
+        NotificationManager.error(`Fetch error: ${error}`, 'ERROR');
       });
     this.setState({ loading: false });
   }
@@ -170,6 +175,7 @@ class App extends React.Component {
           >
             <Drawer setSettings={this.setSettings} settings={settings} clearForm={App.clearForm} />
           </SwipeableDrawer>
+          <NotificationContainer />
         </LoadingOverlay>
       </div>
     );
