@@ -22,7 +22,7 @@ export class ParticipantInfoPage extends Page {
   static initialValues() {
     return {
       id: '',
-      date: new Date(),
+      date: new Date(Date.now()),
       name: '',
       phone: '',
       email: '',
@@ -32,6 +32,11 @@ export class ParticipantInfoPage extends Page {
       ethnicity: '',
       language: '',
     };
+  }
+
+  constructor(props) {
+    super(props);
+    this.handleBirthdateChange = this.handleBirthdateChange.bind(this);
   }
 
   handleChange(id) {
@@ -49,10 +54,21 @@ export class ParticipantInfoPage extends Page {
     };
   }
 
+  handleBirthdateChange(event) {
+    if (event != null) {
+      const { setData } = this.props;
+      const d = this.getState();
+      d.birthdate = event;
+      d.age = Math.abs((new Date(Date.now() - event.getTime())).getUTCFullYear() - 1970);
+      setData(d);
+    }
+  }
+
   getState() {
     let { data: d } = this.props;
     if (!d) {
       d = this.constructor.initialValues();
+      this.props.setData(d);
     }
     return d;
   }
@@ -64,7 +80,6 @@ export class ParticipantInfoPage extends Page {
     const updateName = this.handleChange('name');
     const updatePhone = this.handleChange('phone');
     const updateEmail = this.handleChange('email');
-    const updateBirth = this.handleChange('birthdate');
     const updateAge = this.handleChange('age');
     const updateGender = this.handleChange('gender');
     const updateEthnicity = this.handleChange('ethnicity');
@@ -144,7 +159,7 @@ export class ParticipantInfoPage extends Page {
                 format="dd/MM/yyyy"
                 value={d.birthdate}
                 disableFuture
-                onChange={updateBirth}
+                onChange={this.handleBirthdateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
                 }}
