@@ -9,8 +9,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import LoadingOverlay from 'react-loading-overlay';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
@@ -95,17 +95,75 @@ class App extends React.Component {
       .then((res) => {
         if (res.status !== 200) {
           res.text().then((data) => {
-            NotificationManager.error(`Looks like there was a problem saving the data.
-                                      Status code: ${res.status}
-                                      Error: ${data}`, 'ERROR');
+            toast.error(
+              `Looks like there was a problem saving the data.
+              Status code: ${res.status}
+              Error: ${data}`,
+              {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              },
+            );
           });
-
           return;
         }
-        NotificationManager.success('Data saved successfully!', 'Saved');
+        // NotificationManager.success('Data saved successfully!\n(click to clear form)', 'Saved', 6000, App.clearForm);
+        toast(
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            justify="space-between"
+          >
+            <Grid item>
+              <Box width="200px">
+                Data saved successfully!
+              </Box>
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={App.clearForm}
+                variant="contained"
+                style={{
+                  backgroundColor: '#a7daa9',
+                  fontSize: '12px',
+                  padding: '1px 10px',
+
+                }}
+              >
+                Clear form
+              </Button>
+            </Grid>
+          </Grid>,
+          {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          },
+        );
       })
       .catch((error) => {
-        NotificationManager.error(`Fetch error: ${error}`, 'ERROR');
+        toast.error(
+          `Fetch error: ${error}`,
+          {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          },
+        );
       });
     this.setState({ loading: false });
   }
@@ -175,7 +233,18 @@ class App extends React.Component {
           >
             <Drawer setSettings={this.setSettings} settings={settings} clearForm={App.clearForm} />
           </SwipeableDrawer>
-          <NotificationContainer />
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            style={{ width: '400px' }}
+          />
         </LoadingOverlay>
       </div>
     );
