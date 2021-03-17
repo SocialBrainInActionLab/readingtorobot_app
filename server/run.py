@@ -58,11 +58,17 @@ def stop_robot(name: str, timeout: Optional[int] = 30) -> bool:
     mqttc.publish("{}/stop".format(name), "stop")
     mqttc.publish("speech/stop", "stop")
 
+    res = False
     for _ in range(timeout):
         if stop_robot.robot_closed and stop_robot.speech_closed:
-            return True
+            res = True
+            break
         time.sleep(1)
-    return False
+
+    mqttc.loop_stop()
+    mqttc.disconnect()
+
+    return res
 
 
 def stop_speech(timeout: Optional[int] = 20) -> bool:
@@ -74,7 +80,7 @@ def stop_speech(timeout: Optional[int] = 20) -> bool:
     def speech_callback(cli, obj, msg):
         stop_speech.speech_closed = True
 
-    mqttc = mqtt.Client('stop')
+    mqttc = mqtt.Client('stopSpeech')
     mqttc.message_callback_add("speech/stopped_clean", speech_callback)
     mqttc.connect(socket.gethostbyname(socket.gethostname()))
     mqttc.subscribe("speech/stopped_clean", 0)
@@ -88,6 +94,7 @@ def stop_speech(timeout: Optional[int] = 20) -> bool:
     return False
 
     mqttc.loop_stop()
+    mqttc.disconnect()
 
 
 def stop_robot_process(p: subprocess.Popen) -> Response:
@@ -140,10 +147,35 @@ def startRobot():
         robotProcesses.append(subprocess.Popen(['launch_{}.sh'.format(running_robot),
                                                 robot_ips.get(running_robot, '')]))
 
-    # We should wait a bit to ensure all mqtt clients are connected before allowing to send the stop message.
-    time.sleep(1)
+    startRobot.started_result = None
+    res = None
 
-    res = make_response(jsonify({"message": "OK"}), 200)
+    def start_callback(cli, obj, msg):
+        startRobot.started_result = int(msg.payload.decode('ascii'))
+
+    mqttc = mqtt.Client('start')
+    mqttc.message_callback_add("{}/started".format(running_robot), start_callback)
+    mqttc.connect(socket.gethostbyname(socket.gethostname()))
+    mqttc.subscribe("{}/started".format(running_robot), 0)
+    mqttc.loop_start()
+
+    for _ in range(15):
+        time.sleep(1)
+        if startRobot.started_result is not None:
+            if startRobot.started_result:
+                res = make_response(jsonify({"message": "OK"}), 200)
+            else:
+                res = make_response(jsonify({"message": "Failed to start!"}), 500)
+            break
+        if len([None for p in robotProcesses if p.poll() is None]) < 2:
+            res = make_response(jsonify({"message": "Failed to start robot!"}), 501)
+            break
+    else:
+        res = make_response(jsonify({"message": "Failed to start robot, timeout!"}), 502)
+
+    mqttc.loop_stop()
+    mqttc.disconnect()
+
     return res
 
 
@@ -224,7 +256,7 @@ def pubMQTT():
     mqttc.loop_start()
     mqttc.publish(req['topic'], req['msg'])
     mqttc.loop_stop()
-
+    mqttc.disconnect()
     return make_response(jsonify({"message": "Message sent."}), 200)
 
 
@@ -254,7 +286,10 @@ def saveData():
 
 @app.route('/getRobotState', methods=['GET'])
 def getRobotState():
-    return make_response(jsonify({'running': len(robotProcesses)}), 200)
+    return make_response(jsonify({
+            'running': any([True for p in robotProcesses if p.poll() is None]),
+            'speech': any([True for p in robotProcesses if 'speech' in p.args and p.poll() is None])
+        }), 200)
 
 
 @app.route('/getData', methods=['GET'])

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
+  Divider,
   Grid,
   Typography,
   Switch,
@@ -179,11 +180,7 @@ export class RobotSelectionPage extends React.Component {
           return;
         }
         res.json().then((data) => {
-          if (data.running > 0) {
-            this.setState({ running: true });
-          } else {
-            this.setState({ running: false });
-          }
+          this.setState({ running: data.running, speechOn: data.speech });
         });
       })
       .catch((error) => {
@@ -210,12 +207,24 @@ export class RobotSelectionPage extends React.Component {
       <Grid
         container
         direction="column"
-        justify="space-evenly"
-        style={{ height: '50vh' }}
+        justify="space-around"
+        style={{ height: '60vh' }}
       >
         <Grid element>
           <Button variant="outlined" onClick={this.handleStop(robot)}>Stop</Button>
         </Grid>
+        <Grid element>
+          <Divider />
+        </Grid>
+
+        <Grid element>
+          {`Speech Recognition: ${speechOn ? 'ON' : 'OFF'}`}
+        </Grid>
+
+        <Grid element>
+          <Divider />
+        </Grid>
+
         <Grid element>
           <Grid
             container
