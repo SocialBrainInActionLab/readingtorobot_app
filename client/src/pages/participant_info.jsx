@@ -37,6 +37,8 @@ export class ParticipantInfoPage extends Page {
   constructor(props) {
     super(props);
     this.handleBirthdateChange = this.handleBirthdateChange.bind(this);
+    this.handleEthnicityChoice = this.handleEthnicityChoice.bind(this);
+    this.state = { ethOther: false };
   }
 
   handleChange(id) {
@@ -52,6 +54,17 @@ export class ParticipantInfoPage extends Page {
       }
       setData(d);
     };
+  }
+
+  handleEthnicityChoice(event) {
+    event.persist();
+    const updateEthnicity = this.handleChange('ethnicity');
+    updateEthnicity(event);
+    if (event.target.value.toUpperCase() === 'OTHER') {
+      this.setState({ ethOther: true });
+    } else {
+      this.setState({ ethOther: false });
+    }
   }
 
   handleBirthdateChange(event) {
@@ -75,6 +88,7 @@ export class ParticipantInfoPage extends Page {
 
   render() {
     const d = this.getState();
+    const { ethOther } = this.state;
     const updateId = this.handleChange('id');
     const updateDate = this.handleChange('date');
     const updateName = this.handleChange('name');
@@ -197,14 +211,40 @@ export class ParticipantInfoPage extends Page {
           </Grid>
 
           <Grid item>
-            <TextField
-              label="ethnicity"
-              variant="outlined"
-              value={d.ethnicity}
-              onChange={updateEthnicity}
-            />
+            <Grid container direction="row" justify="center" spacing={2}>
+              <Grid item>
+                <FormControl variant="outlined" style={{ minWidth: 120 }}>
+                  <InputLabel id="ethnicity" style={{ backgroundColor: '#FFFF' }}> Ethnicity </InputLabel>
+                  <Select
+                    labelId="ethnicity"
+                    id="ethnicity"
+                    value={ethOther ? 'Other' : d.ethnicity}
+                    onChange={this.handleEthnicityChoice}
+                  >
+                    <MenuItem value="Aboriginal">Aboriginal</MenuItem>
+                    <MenuItem value="Torres Strait Islander">Torres Strait Islander</MenuItem>
+                    <MenuItem value="Caucasian">Caucasian</MenuItem>
+                    <MenuItem value="South Asian">South Asian</MenuItem>
+                    <MenuItem value="South East Asian">South East Asian</MenuItem>
+                    <MenuItem value="Middle Eastern">Middle Eastern</MenuItem>
+                    <MenuItem value="African">African</MenuItem>
+                    <MenuItem value="Hispanic">Hispanic</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item>
+                {ethOther ? (
+                  <TextField
+                    label="Please specify"
+                    variant="outlined"
+                    value={d.ethnicity.toUpperCase() === 'OTHER' ? '' : d.ethnicity}
+                    onChange={updateEthnicity}
+                  />
+                ) : <div />}
+              </Grid>
+            </Grid>
           </Grid>
-
           <Divider />
 
           <Grid item>
