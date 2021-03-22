@@ -8,6 +8,8 @@ import {
   Switch,
 } from '@material-ui/core';
 
+import { toast } from 'react-toastify';
+
 function publishMQTT(topicName, message) {
   fetch('/pubMQTT', {
     method: 'POST',
@@ -18,11 +20,39 @@ function publishMQTT(topicName, message) {
   })
     .then((res) => {
       if (res.status !== 200) {
-        console.log(`Looks like there was a problem. Status code: ${res.status}`);
+        res.text().then((data) => {
+          toast.error(
+            `Looks like there was a problem when publishing a MQTT message.
+            Status code: ${res.status}
+            Error: ${data}`,
+            {
+              toastId: 'mqttRequestError',
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            },
+          );
+        });
       }
     })
     .catch((error) => {
-      console.log(`Fetch error: ${error}`);
+      toast.error(
+        `Fetch error: ${error}`,
+        {
+          toastId: 'mqttExceptionError',
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
     });
 }
 
@@ -74,7 +104,23 @@ export class RobotSelectionPage extends React.Component {
       })
         .then((res) => {
           if (res.status !== 200) {
-            console.log(`Looks like there was a problem. Status code: ${res.status}`);
+            res.text().then((data) => {
+              toast.error(
+                `Looks like there was a problem starting the robot.
+                Status code: ${res.status}
+                Error: ${data}`,
+                {
+                  toastId: 'robotStartRequestError',
+                  position: 'top-center',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                },
+              );
+            });
             isLoading(false);
             return;
           }
@@ -83,7 +129,19 @@ export class RobotSelectionPage extends React.Component {
           chooseRobot(bot);
         })
         .catch((error) => {
-          console.log(`Fetch error: ${error}`);
+          toast.error(
+            `Fetch error: ${error}`,
+            {
+              toastId: 'robotStartExceptionError',
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            },
+          );
           isLoading(false);
         });
       chooseRobot(bot);
@@ -103,7 +161,23 @@ export class RobotSelectionPage extends React.Component {
       })
         .then((res) => {
           if (res.status !== 200) {
-            console.log(`Looks like there was a problem. Status code: ${res.status}`);
+            res.text().then((data) => {
+              toast.error(
+                `Looks like there was a problem stopping the robot.
+                Status code: ${res.status}
+                Error: ${data}`,
+                {
+                  toastId: 'robotStopRequestError',
+                  position: 'top-center',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                },
+              );
+            });
             isLoading(false);
             return;
           }
@@ -114,7 +188,19 @@ export class RobotSelectionPage extends React.Component {
           isLoading(false);
         })
         .catch((error) => {
-          console.log(`Fetch error: ${error}`);
+          toast.error(
+            `Fetch error: ${error}`,
+            {
+              toastId: 'robotStopExceptionError',
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            },
+          );
           isLoading(false);
         });
     };
@@ -134,13 +220,41 @@ export class RobotSelectionPage extends React.Component {
         .then((res) => {
           isLoading(false);
           if (res.status !== 200) {
-            console.log(`Looks like there was a problem. Status code: ${res.status}`);
+            res.text().then((data) => {
+              toast.error(
+                `Looks like there was a problem starting the speech recognition module.
+                Status code: ${res.status}
+                Error: ${data}`,
+                {
+                  toastId: 'speechStartRequestError',
+                  position: 'top-center',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                },
+              );
+            });
             return;
           }
           this.setState({ speechOn: true });
         })
         .catch((error) => {
-          console.log(`Fetch error: ${error}`);
+          toast.error(
+            `Fetch error: ${error}`,
+            {
+              toastId: 'speechStartExceptionError',
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            },
+          );
           isLoading(false);
         });
     } else {
@@ -154,13 +268,41 @@ export class RobotSelectionPage extends React.Component {
         .then((res) => {
           isLoading(false);
           if (res.status !== 200) {
-            console.log(`Looks like there was a problem. Status code: ${res.status}`);
+            res.text().then((data) => {
+              toast.error(
+                `Looks like there was a problem stopping the speech recognition module.
+                Status code: ${res.status}
+                Error: ${data}`,
+                {
+                  toastId: 'speechStopRequestError',
+                  position: 'top-center',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                },
+              );
+            });
             return;
           }
           this.setState({ speechOn: false });
         })
         .catch((error) => {
-          console.log(`Fetch error: ${error}`);
+          toast.error(
+            `Fetch error: ${error}`,
+            {
+              toastId: 'speechStopExceptionError',
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            },
+          );
           isLoading(false);
         });
     }
@@ -176,7 +318,23 @@ export class RobotSelectionPage extends React.Component {
     })
       .then((res) => {
         if (res.status !== 200) {
-          console.log(`Looks like there was a problem. Status code: ${res.status}`);
+          res.text().then((data) => {
+            toast.error(
+              `Looks like there was a problem fetching the robot state.
+              Status code: ${res.status}
+              Error: ${data}`,
+              {
+                toastId: 'robotStateRequestError',
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              },
+            );
+          });
           return;
         }
         res.json().then((data) => {
@@ -184,7 +342,19 @@ export class RobotSelectionPage extends React.Component {
         });
       })
       .catch((error) => {
-        console.log(`Fetch error: ${error}`);
+        toast.error(
+          `Fetch error: ${error}`,
+          {
+            toastId: 'robotStateExceptionError',
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          },
+        );
       });
   }
 

@@ -36,11 +36,39 @@ class App extends React.Component {
     })
       .then((res) => {
         if (res.status !== 200) {
-          console.log(`Looks like there was a problem. Status code: ${res.status}`);
+          res.text().then((data) => {
+            toast.error(
+              `Looks like there was a problem storing your settings.
+              Status code: ${res.status}
+              Error: ${data}`,
+              {
+                toastId: 'settingsRequestError',
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              },
+            );
+          });
         }
       })
       .catch((error) => {
-        console.log(`Fetch error: ${error}`);
+        toast.error(
+          `Fetch error: ${error}`,
+          {
+            toastId: 'settingsExceptionError',
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          },
+        );
       });
   }
 
@@ -103,6 +131,7 @@ class App extends React.Component {
               Status code: ${res.status}
               Error: ${data}`,
               {
+                toastId: 'saveRequestError',
                 position: 'top-center',
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -158,6 +187,7 @@ class App extends React.Component {
         toast.error(
           `Fetch error: ${error}`,
           {
+            toastId: 'saveRequestError',
             position: 'top-center',
             autoClose: 5000,
             hideProgressBar: false,
