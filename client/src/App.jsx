@@ -22,6 +22,7 @@ import Drawer from './Drawer';
 class App extends React.Component {
   static clearForm() {
     localStorage.removeItem('data');
+    localStorage.removeItem('videos');
     window.location.reload();
   }
 
@@ -50,7 +51,7 @@ class App extends React.Component {
       drawer: false,
       loading: false,
       settings: {},
-      results: localStorage.getItem('data'),
+      results: JSON.parse(localStorage.getItem('data')),
     };
     this.handleResultChange = this.handleResultChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -83,8 +84,10 @@ class App extends React.Component {
   }
 
   handleSave() {
-    const { results } = this.state;
+    const { results: [...results] } = this.state;
     this.setState({ loading: true });
+    const videoOrder = JSON.parse(localStorage.getItem('videos'));
+    results.push(videoOrder);
     fetch('/saveData', {
       method: 'POST',
       body: JSON.stringify(results),

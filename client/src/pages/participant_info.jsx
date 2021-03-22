@@ -79,7 +79,7 @@ export class ParticipantInfoPage extends Page {
 
   getState() {
     let { data: d } = this.props;
-    if (!d) {
+    if (d && Object.keys(d).length === 0) {
       d = this.constructor.initialValues();
       this.props.setData(d);
     }

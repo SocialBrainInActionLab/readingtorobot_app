@@ -19,11 +19,6 @@ class Navigator extends React.Component {
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.chooseRobot = this.chooseRobot.bind(this);
-    this.state = {
-      current: 0,
-      data: [],
-      chosenRobot: null,
-    };
 
     if (!props.layout) {
       this.layout = [
@@ -32,22 +27,22 @@ class Navigator extends React.Component {
     } else {
       this.layout = props.layout;
     }
-    this.layout_length = this.layout.length;
-  }
 
-  componentDidMount() {
-    const ls = JSON.parse(localStorage.getItem('data'));
-    const { data } = this.state;
+    this.layout_length = this.layout.length;
+    let ls = JSON.parse(localStorage.getItem('data'));
 
     if (!ls || (ls.length !== this.layout.length)) {
-      let i;
-
-      for (i = 0; i < this.layout.length; i += 1) {
-        data.push({});
+      ls = [];
+      for (let i = 0; i < this.layout.length; i += 1) {
+        ls.push({});
       }
-    } else {
-      this.setState({ data: ls });
     }
+
+    this.state = {
+      current: 0,
+      data: ls,
+      chosenRobot: null,
+    };
   }
 
   handleNext() {

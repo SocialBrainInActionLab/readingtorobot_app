@@ -34,7 +34,7 @@ export class DemoPage3 extends Page {
 
   getState() {
     let { data: d } = this.props;
-    if (!d) {
+    if (d && Object.keys(d).length === 0) {
       d = this.constructor.initialValues();
     }
     return d;

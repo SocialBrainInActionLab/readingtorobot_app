@@ -16,6 +16,12 @@ import {
 } from './pages';
 import IntensityButtons from './IntensityButtons';
 
+const robotVideos = {
+  miro: <RobotVideoPage robotName="miro" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
+  cozmo: <RobotVideoPage robotName="cozmo" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
+  nao: <RobotVideoPage robotName="nao" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
+};
+
 function shuffle(array) {
   const res = array;
   let currentIndex = array.length;
@@ -37,16 +43,23 @@ function shuffle(array) {
   return array;
 }
 
+function getVideos() {
+  let videos = JSON.parse(localStorage.getItem('videos'));
+  const res = [];
+  if (videos == null) {
+    videos = shuffle(['miro', 'cozmo', 'nao']);
+    localStorage.setItem('videos', JSON.stringify(videos));
+  }
+  videos.forEach((vid) => { res.push(robotVideos[vid]); });
+  return res;
+}
+
 let layout = [
   <ParticipantInfoPage />,
   <MeetRobotsInactivePage />,
 ];
 
-layout = layout.concat(shuffle([
-  <RobotVideoPage robotName="miro" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
-  <RobotVideoPage robotName="cozmo" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
-  <RobotVideoPage robotName="nao" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
-]));
+layout = layout.concat(getVideos());
 
 layout = layout.concat([
   <RobotSelectionPage />,

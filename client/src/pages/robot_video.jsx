@@ -27,7 +27,7 @@ export class RobotVideoPage extends Page {
   getState() {
     let { data: d } = this.props;
     const { robotName } = this.props;
-    if (!d) {
+    if (d && Object.keys(d).length === 0) {
       d = {};
       d[`${robotName}Questions`] = '';
     }
