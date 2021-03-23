@@ -6,10 +6,10 @@ import csv
 import json
 import os
 import signal
+import socket
 import subprocess
 import time
 from typing import Optional
-import socket
 
 from flask import Flask, request, Response, make_response, jsonify
 from flask_cors import CORS
@@ -25,7 +25,7 @@ CORS(app)
 robotProcesses = []
 csv_fieldnames = ['id', 'date', 'name', 'phone', 'email', 'birthdate', 'age', 'gender', 'ethnicity', 'language',
                   'miroQuestions', 'naoQuestions', 'cozmoQuestions', 'chosen', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7',
-                  'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', ]
+                  'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'videos']
 running_robot = '_'
 robot_ips = {}
 data_file = '/data/data.csv'
