@@ -56,6 +56,28 @@ function publishMQTT(topicName, message) {
     });
 }
 
+function actionAvailable(robot, action) {
+  switch (robot.toLowerCase()) {
+    case 'cozmo':
+      if (action === 'scared') {
+        return true;
+      }
+      break;
+    case 'miro':
+      if (action === 'scared') {
+        return true;
+      }
+      break;
+    case 'nao':
+      if (action === 'happy') {
+        return true;
+      }
+      break;
+    default:
+  }
+  return false;
+}
+
 export class RobotSelectionPage extends React.Component {
   static sendEmotion(emotion) {
     return () => {
@@ -388,7 +410,24 @@ export class RobotSelectionPage extends React.Component {
         </Grid>
 
         <Grid element>
-          {`Speech Recognition: ${speechOn ? 'ON' : 'OFF'}`}
+          <Grid
+            container
+            direction="column"
+            justify="space-between"
+          >
+            <Grid element>
+              {`Speech Recognition: ${speechOn ? 'ON' : 'OFF'}`}
+            </Grid>
+
+            <Grid element>
+              <Switch
+                checked={speechOn}
+                onChange={this.handleSpeechChange}
+                name="checkedB"
+                color="primary"
+              />
+            </Grid>
+          </Grid>
         </Grid>
 
         <Grid element>
@@ -398,32 +437,54 @@ export class RobotSelectionPage extends React.Component {
         <Grid element>
           <Grid
             container
-            direction="column"
-            justify="space-evenly"
-            style={{ height: '40vh' }}
+            direction="row"
+            justify="space-around"
+            // style={{ height: '40vh' }}
           >
             <Grid element>
-              <Switch
-                checked={speechOn}
-                onChange={this.handleSpeechChange}
-                name="checkedB"
-                color="primary"
-              />
+              <Button
+                variant="outlined"
+                onClick={this.sendEmotion('happy')}
+                disabled={speechOn && actionAvailable(robot, 'happy')}
+              >
+                Happy
+              </Button>
             </Grid>
             <Grid element>
-              <Button variant="outlined" onClick={this.sendEmotion('happy')} disabled={speechOn}>Happy</Button>
+              <Button
+                variant="outlined"
+                onClick={this.sendEmotion('sad')}
+                disabled={speechOn && actionAvailable(robot, 'sad')}
+              >
+                Sad
+              </Button>
             </Grid>
             <Grid element>
-              <Button variant="outlined" onClick={this.sendEmotion('sad')} disabled={speechOn}>Sad</Button>
+              <Button
+                variant="outlined"
+                onClick={this.sendEmotion('excited')}
+                disabled={speechOn && actionAvailable(robot, 'excited')}
+              >
+                Excited
+              </Button>
             </Grid>
             <Grid element>
-              <Button variant="outlined" onClick={this.sendEmotion('excited')} disabled={speechOn}>Excited</Button>
+              <Button
+                variant="outlined"
+                onClick={this.sendEmotion('annoyed')}
+                disabled={speechOn && actionAvailable(robot, 'annoyed')}
+              >
+                Groan
+              </Button>
             </Grid>
             <Grid element>
-              <Button variant="outlined" onClick={this.sendEmotion('groan')} disabled={speechOn}>Groan</Button>
-            </Grid>
-            <Grid element>
-              <Button variant="outlined" onClick={this.sendEmotion('scared')} disabled={speechOn}>Scared</Button>
+              <Button
+                variant="outlined"
+                onClick={this.sendEmotion('scared')}
+                disabled={speechOn && actionAvailable(robot, 'scared')}
+              >
+                Scared
+              </Button>
             </Grid>
           </Grid>
         </Grid>
@@ -442,7 +503,7 @@ export class RobotSelectionPage extends React.Component {
         style={{ height: '70vh' }}
       >
         <Typography variant="h6">Under construction</Typography>
-        {running ? this.paintRunning() : this.paintIdle()}
+        {!running ? this.paintRunning() : this.paintIdle()}
       </Grid>
     );
   }

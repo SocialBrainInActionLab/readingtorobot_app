@@ -60,7 +60,7 @@ export class ParticipantInfoPage extends Page {
     event.persist();
     const updateEthnicity = this.handleChange('ethnicity');
     updateEthnicity(event);
-    if (event.target.value.toUpperCase() === 'OTHER') {
+    if (event.target.value.toLowerCase() === 'other') {
       this.setState({ ethOther: true });
     } else {
       this.setState({ ethOther: false });
@@ -238,7 +238,7 @@ export class ParticipantInfoPage extends Page {
                   <TextField
                     label="Please specify"
                     variant="outlined"
-                    value={d.ethnicity.toUpperCase() === 'OTHER' ? '' : d.ethnicity}
+                    value={d.ethnicity.toLowerCase() === 'other' ? '' : d.ethnicity}
                     onChange={updateEthnicity}
                   />
                 ) : <div />}
