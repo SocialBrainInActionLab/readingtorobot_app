@@ -503,7 +503,7 @@ export class RobotSelectionPage extends React.Component {
         style={{ height: '70vh' }}
       >
         <Typography variant="h6">Under construction</Typography>
-        {!running ? this.paintRunning() : this.paintIdle()}
+        {running ? this.paintRunning() : this.paintIdle()}
       </Grid>
     );
   }
