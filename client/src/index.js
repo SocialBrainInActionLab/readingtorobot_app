@@ -17,9 +17,9 @@ import {
 import IntensityButtons from './IntensityButtons';
 
 const robotVideos = {
-  miro: <RobotVideoPage robotName="miro" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
-  cozmo: <RobotVideoPage robotName="cozmo" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
-  nao: <RobotVideoPage robotName="nao" url="https://www.youtube.com/watch?v=7zDzibR9mzw" />,
+  miro: <RobotVideoPage robotName="miro" url="https://www.youtube.com/watch?v=rQ2v0kX7bww" />,
+  cozmo: <RobotVideoPage robotName="cozmo" url="https://www.youtube.com/watch?v=DHY5kpGTsDE" />,
+  nao: <RobotVideoPage robotName="nao" url="https://www.youtube.com/watch?v=2STTNYNF4lk" />,
 };
 
 function shuffle(array) {
