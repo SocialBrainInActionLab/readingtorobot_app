@@ -236,7 +236,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <LoadingOverlay active={loading} spinner>
-          <Box height="100vh" width="100hh" position="sticky">
+          <Box height="100vh" width="100hh">
             <AppBar position="sticky">
               <Toolbar>
                 <Grid

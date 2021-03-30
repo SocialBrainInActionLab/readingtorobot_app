@@ -5,6 +5,7 @@ import {
   Container,
   IconButton,
   Grid,
+  Box,
 } from '@material-ui/core';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
 
@@ -46,6 +47,7 @@ class IntensityButtons extends React.Component {
 
     return (
       <Container>
+        <Box height="5vh" />
         <p>
           {question}
         </p>

@@ -2,7 +2,6 @@
 import React from 'react';
 import {
   Box,
-  Divider,
   Grid,
 } from '@material-ui/core';
 
@@ -61,7 +60,6 @@ export class DemoPage4 extends Page {
               data={d.q15}
               setData={update1}
             />
-            <Divider />
           </Grid>
           <Grid item>
             <Box height="20px" />
@@ -70,7 +68,6 @@ export class DemoPage4 extends Page {
               data={d.q16}
               setData={update2}
             />
-            <Divider />
           </Grid>
           <Grid item>
             <Box height="20px" />
@@ -79,7 +76,6 @@ export class DemoPage4 extends Page {
               data={d.q17}
               setData={update3}
             />
-            <Divider />
           </Grid>
           <Grid item>
             <Box height="20px" />
@@ -89,7 +85,6 @@ export class DemoPage4 extends Page {
               data={d.q18}
               setData={update4}
             />
-            <Divider />
           </Grid>
           <Grid item>
             <Box height="20px" />
@@ -98,7 +93,6 @@ export class DemoPage4 extends Page {
               data={d.q19}
               setData={update5}
             />
-            <Divider />
           </Grid>
         </Grid>
       </Box>

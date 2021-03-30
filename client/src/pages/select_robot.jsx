@@ -445,7 +445,7 @@ export class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion('happy')}
-                disabled={speechOn && actionAvailable(robot, 'happy')}
+                disabled={speechOn || actionAvailable(robot, 'happy')}
               >
                 Happy
               </Button>
@@ -454,7 +454,7 @@ export class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion('sad')}
-                disabled={speechOn && actionAvailable(robot, 'sad')}
+                disabled={speechOn || actionAvailable(robot, 'sad')}
               >
                 Sad
               </Button>
@@ -463,7 +463,7 @@ export class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion('excited')}
-                disabled={speechOn && actionAvailable(robot, 'excited')}
+                disabled={speechOn || actionAvailable(robot, 'excited')}
               >
                 Excited
               </Button>
@@ -471,17 +471,17 @@ export class RobotSelectionPage extends React.Component {
             <Grid element>
               <Button
                 variant="outlined"
-                onClick={this.sendEmotion('annoyed')}
-                disabled={speechOn && actionAvailable(robot, 'annoyed')}
+                onClick={this.sendEmotion('groan')}
+                disabled={speechOn || actionAvailable(robot, 'groan')}
               >
-                Groan
+                Annoyed
               </Button>
             </Grid>
             <Grid element>
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion('scared')}
-                disabled={speechOn && actionAvailable(robot, 'scared')}
+                disabled={speechOn || actionAvailable(robot, 'scared')}
               >
                 Scared
               </Button>
