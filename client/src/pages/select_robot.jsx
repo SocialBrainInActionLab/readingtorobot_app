@@ -502,7 +502,7 @@ export class RobotSelectionPage extends React.Component {
         justify="space-evenly"
         style={{ height: '70vh' }}
       >
-        <Typography variant="h6">Under construction</Typography>
+        <Typography variant="h6">Robot Control</Typography>
         {running ? this.paintRunning() : this.paintIdle()}
       </Grid>
     );
