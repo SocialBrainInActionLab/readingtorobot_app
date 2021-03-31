@@ -483,7 +483,7 @@ export class RobotSelectionPage extends React.Component {
                 onClick={this.sendEmotion('scared')}
                 disabled={speechOn || actionAvailable(robot, 'scared')}
               >
-                Scared
+                {robot.toLowerCase() === 'nao' ? 'Surprised' : 'Scared'}
               </Button>
             </Grid>
           </Grid>
