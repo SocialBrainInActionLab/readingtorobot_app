@@ -91,7 +91,7 @@ export class RobotSelectionPage extends React.Component {
     this.state = {
       robot: '',
       running: false,
-      speechOn: true,
+      speechOn: false,
     };
     this.robots = ['Cozmo', 'MiRo', 'NAO'];
     this.handleStart = this.handleStart.bind(this);

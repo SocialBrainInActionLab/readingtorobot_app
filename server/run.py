@@ -140,7 +140,6 @@ def startRobot():
 
     running_robot = robot_name.lower()
 
-    robotProcesses.append(subprocess.Popen('speech_service.py'))
     if running_robot == 'cozmo':
         robotProcesses.append(subprocess.Popen(['read_to_cozmo']))
     else:
@@ -167,7 +166,7 @@ def startRobot():
             else:
                 res = make_response(jsonify({"message": "Failed to start!"}), 500)
             break
-        if len([None for p in robotProcesses if p.poll() is None]) < 2:
+        if not any([True for p in robotProcesses if p.poll() is None]):
             res = make_response(jsonify({"message": "Failed to start robot!"}), 501)
             break
     else:
