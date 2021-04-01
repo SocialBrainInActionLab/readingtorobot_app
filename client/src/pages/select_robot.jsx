@@ -6,6 +6,7 @@ import {
   Grid,
   Typography,
   Switch,
+  Box,
 } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
@@ -400,7 +401,7 @@ export class RobotSelectionPage extends React.Component {
         container
         direction="column"
         justify="space-around"
-        style={{ height: '60vh' }}
+        style={{ height: '65vh' }}
       >
         <Grid element>
           <Button variant="outlined" onClick={this.handleStop(robot)}>Stop</Button>
@@ -484,6 +485,41 @@ export class RobotSelectionPage extends React.Component {
                 disabled={speechOn || actionAvailable(robot, 'scared')}
               >
                 {robot.toLowerCase() === 'nao' ? 'Surprised' : 'Scared'}
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid element>
+          <Divider />
+        </Grid>
+
+        <Grid element>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            // style={{ height: '40vh' }}
+          >
+            <Grid element>
+              <Button
+                variant="outlined"
+                onClick={this.sendEmotion('start')}
+                disabled={actionAvailable(robot, 'start')}
+              >
+                Start
+              </Button>
+            </Grid>
+            <Grid element>
+              <Box width="15vw" />
+            </Grid>
+            <Grid element>
+              <Button
+                variant="outlined"
+                onClick={this.sendEmotion('end')}
+                disabled={actionAvailable(robot, 'end')}
+              >
+                End
               </Button>
             </Grid>
           </Grid>
