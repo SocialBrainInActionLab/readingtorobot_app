@@ -16,7 +16,7 @@ from flask_cors import CORS
 
 import paho.mqtt.client as mqtt
 
-from server.slack_bot import publish_hostname
+from server.slack_bot import publish_control_hostname
 
 
 app = Flask(__name__, static_url_path='')
@@ -305,5 +305,5 @@ def getData():
 
 
 if __name__ == '__main__':
-    publish_hostname()
+    publish_control_hostname()
     app.run(host='0.0.0.0', port='5001')
