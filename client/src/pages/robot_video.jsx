@@ -2,13 +2,11 @@
 import React from 'react';
 import {
   Box,
-  Divider,
   Grid,
 } from '@material-ui/core';
 import ReactPlayer from 'react-player';
 
 import Page from './page';
-import Question from '../Question';
 
 export class RobotVideoPage extends Page {
   static initialValues() {
@@ -35,8 +33,7 @@ export class RobotVideoPage extends Page {
   }
 
   render() {
-    const { url, robotName } = this.props;
-    const d = this.getState();
+    const { url } = this.props;
 
     return (
       <Box m={5}>
@@ -44,14 +41,6 @@ export class RobotVideoPage extends Page {
           <Grid item>
             <Box height="20px" />
             <ReactPlayer url={url} controls />
-          </Grid>
-          <Grid item><Divider /></Grid>
-          <Grid item>
-            <Question
-              question="Do you have any questions about this robot?"
-              data={d[`${robotName}Questions`]}
-              setData={this.handleChange}
-            />
           </Grid>
         </Grid>
       </Box>

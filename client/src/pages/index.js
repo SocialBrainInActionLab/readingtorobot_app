@@ -6,4 +6,5 @@ export { DemoPage4 } from './demo_4';
 export { MeetRobotsInactivePage } from './meet_robots_inactive';
 export { ParticipantInfoPage } from './participant_info';
 export { RobotVideoPage } from './robot_video';
+export { RobotVideoQuestionsPage } from './robot_video_questions';
 export { RobotSelectionPage } from './select_robot';

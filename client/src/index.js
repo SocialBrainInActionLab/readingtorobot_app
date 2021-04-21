@@ -9,6 +9,7 @@ import {
   MeetRobotsInactivePage,
   RobotSelectionPage,
   RobotVideoPage,
+  RobotVideoQuestionsPage,
   DemoPage1,
   DemoPage2,
   DemoPage3,
@@ -17,9 +18,18 @@ import {
 import IntensityButtons from './IntensityButtons';
 
 const robotVideos = {
-  miro: <RobotVideoPage robotName="miro" url="https://www.youtube.com/watch?v=rQ2v0kX7bww" />,
-  cozmo: <RobotVideoPage robotName="cozmo" url="https://www.youtube.com/watch?v=DHY5kpGTsDE" />,
-  nao: <RobotVideoPage robotName="nao" url="https://www.youtube.com/watch?v=2STTNYNF4lk" />,
+  miro: [
+    <RobotVideoPage url="https://www.youtube.com/watch?v=rQ2v0kX7bww" />,
+    <RobotVideoQuestionsPage robotName="miro" />,
+  ],
+  cozmo: [
+    <RobotVideoPage url="https://www.youtube.com/watch?v=DHY5kpGTsDE" />,
+    <RobotVideoQuestionsPage robotName="cozmo" />,
+  ],
+  nao: [
+    <RobotVideoPage url="https://www.youtube.com/watch?v=2STTNYNF4lk" />,
+    <RobotVideoQuestionsPage robotName="nao" />,
+  ],
 };
 
 function shuffle(array) {
@@ -45,12 +55,12 @@ function shuffle(array) {
 
 function getVideos() {
   let videos = JSON.parse(localStorage.getItem('videos'));
-  const res = [];
+  let res = [];
   if (videos == null) {
     videos = shuffle(['miro', 'cozmo', 'nao']);
     localStorage.setItem('videos', JSON.stringify(videos));
   }
-  videos.forEach((vid) => { res.push(robotVideos[vid]); });
+  videos.forEach((vid) => { res = [...res, ...robotVideos[vid]]; });
   return res;
 }
 
