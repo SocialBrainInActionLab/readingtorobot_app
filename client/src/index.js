@@ -67,7 +67,7 @@ layout = layout.concat([
   <IntensityButtons qId="q7" question="How helpful was this robot?" />,
   <DemoPage2 />,
   <DemoPage3 />,
-  <IntensityButtons qId="q14" question="How much did you enjoy reading with the robot?" />,
+  <IntensityButtons qId="q13" question="How much did you enjoy reading with the robot?" />,
   <DemoPage4 />,
 ]);
 

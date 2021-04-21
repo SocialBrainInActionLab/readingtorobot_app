@@ -14,7 +14,6 @@ export class DemoPage3 extends Page {
     return {
       q11: null,
       q12: null,
-      q13: null,
     };
   }
 
@@ -44,8 +43,7 @@ export class DemoPage3 extends Page {
     const { robot } = this.props;
     const d = this.getState();
     const updateDislikes = this.handleChange('q11');
-    const updateRobotOrTeacher = this.handleChange('q12');
-    const updateLikes = this.handleChange('q13');
+    const updateLikes = this.handleChange('q12');
 
     return (
       <Box m={5}>
@@ -63,19 +61,9 @@ export class DemoPage3 extends Page {
           <Grid item>
             <Box height="20px" />
             <QuestionSelect
-              question="Would you prefer to read with this robot or your teacher? Why?"
-              options={['Prefer Robots', 'Prefer Adult']}
-              data={d.q12}
-              setData={updateRobotOrTeacher}
-            />
-            <Divider />
-          </Grid>
-          <Grid item>
-            <Box height="20px" />
-            <QuestionSelect
               question={`Did you like reading with ${robot}? Why?`}
               options={['Yes', 'No']}
-              data={d.q13}
+              data={d.q12}
               setData={updateLikes}
             />
             <Divider />
