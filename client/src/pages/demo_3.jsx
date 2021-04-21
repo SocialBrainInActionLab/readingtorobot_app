@@ -14,6 +14,7 @@ export class DemoPage3 extends Page {
     return {
       q13: null,
       q14: null,
+      q15: null,
     };
   }
 
@@ -61,9 +62,20 @@ export class DemoPage3 extends Page {
           <Grid item>
             <Box height="20px" />
             <QuestionSelect
+              question={`If you had to read a really difficult book for the first time,
+                        would you be more comfortable reading with a teacher or this robot?`}
+              options={['Prefer Robots', 'Prefer Adult']}
+              data={d.q14}
+              setData={updateDislikes}
+            />
+            <Divider />
+          </Grid>
+          <Grid item>
+            <Box height="20px" />
+            <QuestionSelect
               question={`Did you like reading with ${robot}? Why?`}
               options={['Yes', 'No']}
-              data={d.q14}
+              data={d.q15}
               setData={updateLikes}
             />
             <Divider />

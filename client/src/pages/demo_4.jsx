@@ -11,11 +11,11 @@ import Question from '../Question';
 export class DemoPage4 extends Page {
   static initialValues() {
     return {
-      q16: null,
       q17: null,
       q18: null,
       q19: null,
       q20: null,
+      q21: null,
     };
   }
 
