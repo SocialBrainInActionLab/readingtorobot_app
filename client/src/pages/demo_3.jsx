@@ -12,8 +12,8 @@ import QuestionSelect from '../Question_select';
 export class DemoPage3 extends Page {
   static initialValues() {
     return {
-      q11: null,
-      q12: null,
+      q13: null,
+      q14: null,
     };
   }
 
@@ -42,8 +42,8 @@ export class DemoPage3 extends Page {
   render() {
     const { robot } = this.props;
     const d = this.getState();
-    const updateDislikes = this.handleChange('q11');
-    const updateLikes = this.handleChange('q12');
+    const updateDislikes = this.handleChange('q13');
+    const updateLikes = this.handleChange('q14');
 
     return (
       <Box m={5}>
@@ -53,7 +53,7 @@ export class DemoPage3 extends Page {
             <QuestionSelect
               question="Is there anything you didn’t like about the robot?"
               options={['Yes', 'No']}
-              data={d.q11}
+              data={d.q13}
               setData={updateDislikes}
             />
             <Divider />
@@ -63,7 +63,7 @@ export class DemoPage3 extends Page {
             <QuestionSelect
               question={`Did you like reading with ${robot}? Why?`}
               options={['Yes', 'No']}
-              data={d.q12}
+              data={d.q14}
               setData={updateLikes}
             />
             <Divider />

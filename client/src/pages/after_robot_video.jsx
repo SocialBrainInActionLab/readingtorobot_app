@@ -16,10 +16,8 @@ import Question from '../Question';
 export class AfterRobotVideo extends Page {
   static initialValues() {
     return {
-      mostLiked: '',
-      why: '',
-      secondMostLiked: '',
-      questions: '',
+      q5: '',
+      q6: '',
     };
   }
 
@@ -48,8 +46,8 @@ export class AfterRobotVideo extends Page {
 
   render() {
     const d = this.getState();
-    const updateMostLiked = this.handleChange('mostLiked');
-    const updateWhy = this.handleChange('why');
+    const updateMostLiked = this.handleChange('q5');
+    const updateWhy = this.handleChange('q6');
 
     return (
       <Box m={5}>
@@ -64,7 +62,7 @@ export class AfterRobotVideo extends Page {
               <Select
                 labelId="mostLiked"
                 id="mostLiked"
-                value={d.mostLiked}
+                value={d.q5}
                 defaultValue=""
                 onChange={updateMostLiked}
               >
@@ -76,7 +74,7 @@ export class AfterRobotVideo extends Page {
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
-            <Question question="Why?" data={d.why} setData={updateWhy} />
+            <Question question="Why?" data={d.q6} setData={updateWhy} />
           </Grid>
         </Grid>
       </Box>

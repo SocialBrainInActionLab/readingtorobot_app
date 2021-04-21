@@ -26,7 +26,7 @@ robotProcesses = []
 csv_fieldnames = ['id', 'date', 'name', 'phone', 'email', 'birthdate', 'age', 'gender', 'ethnicity', 'language',
                   'miro_q1', 'miro_q2', 'miro_q3', 'nao_q1', 'nao_q2', 'nao_q3', 'cozmo_q1', 'cozmo_q2', 'cozmo_q3',
                   'chosen', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14',
-                  'q15', 'q16', 'q17', 'q18', 'q19', 'videos']
+                  'q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'videos']
 running_robot = '_'
 robot_ips = {}
 data_file = '/data/data.csv'

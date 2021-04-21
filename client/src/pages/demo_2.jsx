@@ -12,9 +12,9 @@ import IntensityButtons from '../IntensityButtons';
 export class DemoPage2 extends Page {
   static initialValues() {
     return {
-      q8: null,
-      q9: null,
       q10: null,
+      q11: null,
+      q12: null,
     };
   }
 
@@ -38,9 +38,9 @@ export class DemoPage2 extends Page {
   render() {
     const { robot } = this.props;
     const d = this.getState();
-    const updateListener = this.handleChange('q8');
-    const updateTeacher = this.handleChange('q9');
-    const updateKind = this.handleChange('q10');
+    const updateListener = this.handleChange('q10');
+    const updateTeacher = this.handleChange('q11');
+    const updateKind = this.handleChange('q12');
 
     return (
       <Box m={5}>
@@ -52,7 +52,7 @@ export class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is a good listener.`}
-              data={d.q8}
+              data={d.q10}
               setData={updateListener}
             />
           </Grid>
@@ -61,7 +61,7 @@ export class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is a good teacher.`}
-              data={d.q9}
+              data={d.q11}
               setData={updateTeacher}
             />
           </Grid>
@@ -70,7 +70,7 @@ export class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is kind.`}
-              data={d.q10}
+              data={d.q12}
               setData={updateKind}
             />
           </Grid>

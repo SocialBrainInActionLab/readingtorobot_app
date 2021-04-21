@@ -14,6 +14,7 @@ import {
   DemoPage2,
   DemoPage3,
   DemoPage4,
+  AfterRobotVideo,
 } from './pages';
 import IntensityButtons from './IntensityButtons';
 
@@ -72,12 +73,13 @@ let layout = [
 layout = layout.concat(getVideos());
 
 layout = layout.concat([
+  <AfterRobotVideo />,
   <RobotSelectionPage />,
   <DemoPage1 />,
-  <IntensityButtons qId="q7" question="How helpful was this robot?" />,
+  <IntensityButtons qId="q9" question="How helpful was this robot?" />,
   <DemoPage2 />,
   <DemoPage3 />,
-  <IntensityButtons qId="q13" question="How much did you enjoy reading with the robot?" />,
+  <IntensityButtons qId="q15" question="How much did you enjoy reading with the robot?" />,
   <DemoPage4 />,
 ]);
 

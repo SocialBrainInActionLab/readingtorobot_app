@@ -11,11 +11,11 @@ import Question from '../Question';
 export class DemoPage4 extends Page {
   static initialValues() {
     return {
-      q14: null,
-      q15: null,
       q16: null,
       q17: null,
       q18: null,
+      q19: null,
+      q20: null,
     };
   }
 
@@ -44,11 +44,11 @@ export class DemoPage4 extends Page {
   render() {
     const { robot } = this.props;
     const d = this.getState();
-    const update1 = this.handleChange('q14');
-    const update2 = this.handleChange('q15');
-    const update3 = this.handleChange('q16');
-    const update4 = this.handleChange('q17');
-    const update5 = this.handleChange('q18');
+    const update1 = this.handleChange('q16');
+    const update2 = this.handleChange('q17');
+    const update3 = this.handleChange('q18');
+    const update4 = this.handleChange('q19');
+    const update5 = this.handleChange('q20');
 
     return (
       <Box m={5}>
@@ -57,7 +57,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question={`What makes ${robot} a good reading buddy?`}
-              data={d.q14}
+              data={d.q16}
               setData={update1}
             />
           </Grid>
@@ -65,7 +65,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question={`How could ${robot} be a better reading buddy?`}
-              data={d.q15}
+              data={d.q17}
               setData={update2}
             />
           </Grid>
@@ -73,7 +73,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question={`What types of activities could you do with ${robot}? [Prompt for explanation].`}
-              data={d.q16}
+              data={d.q18}
               setData={update3}
             />
           </Grid>
@@ -82,7 +82,7 @@ export class DemoPage4 extends Page {
             <Question
               question={`Can you think of something you probably shouldn’t do with the ${robot}?
                          [Prompt for explanation].`}
-              data={d.q17}
+              data={d.q19}
               setData={update4}
             />
           </Grid>
@@ -90,7 +90,7 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question="Do you have any questions or is there anything else you’d like to say?"
-              data={d.q18}
+              data={d.q20}
               setData={update5}
             />
           </Grid>
