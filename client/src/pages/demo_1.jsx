@@ -59,7 +59,15 @@ export class DemoPage1 extends Page {
           <Grid item><Divider /></Grid>
           <Grid item>
             <QuestionSelect
-              question="Do you think this is a helpful robot? Why (if not) / HOW (if so)?"
+              question={(
+                <p>
+                  <p>Do you think this is a helpful robot? Why (if not) / HOW (if so)?</p>
+                  <p>
+                    Prompts: What other things do you think it might be helpful with?
+                    How helpful do you think this robot would be in helping kids learn to read?
+                  </p>
+                </p>
+              )}
               options={['Yes', 'No']}
               data={d.q8}
               setData={updateHelpful}
