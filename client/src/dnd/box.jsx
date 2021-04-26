@@ -7,9 +7,10 @@ import Card from './card';
 
 const Container = styled.div`
   margin: 8px;
-  width: 220px;
+  width: ${(props) => (props.width ? props.width : '100%')};
   border: 1px solid lightgrey;
   border-radius: 2px;
+  margin: auto;
 
   display: flex;
   flex-direction: column;
@@ -17,27 +18,35 @@ const Container = styled.div`
 const Title = styled.h3`
   padding: 8px;
 `;
-const cardList = styled.div`
+const CardList = styled.div`
   padding: 8px;
-  flex-grow: 1;
-  min-height: 100px;
+  transition: background-color 0.2s ease;
+  background-color: ${(props) => (props.isDraggingOver ? 'skyblue' : 'white')};
+  display: flex;
+  flex-direction: ${(props) => props.direction};
+  justify-content: center;
+  align-items: center;
 `;
 
 export default class Box extends React.Component {
   render() {
-    const { box, cards } = this.props;
+    const {
+      box, cards, width, direction,
+    } = this.props;
     return (
-      <Container>
+      <Container width={width}>
         <Title>{box.title}</Title>
-        <Droppable droppableId={box.id}>
-          {(provided) => (
-            <cardList
+        <Droppable droppableId={box.id} direction={direction}>
+          {(provided, snapshot) => (
+            <CardList
               ref={provided.innerRef}
               {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+              direction={direction === 'vertical' ? 'column' : 'row'}
             >
               {cards.map((card, index) => <Card key={card.id} card={card} index={index} />)}
               {provided.placeholder}
-            </cardList>
+            </CardList>
           )}
         </Droppable>
       </Container>
@@ -48,4 +57,11 @@ export default class Box extends React.Component {
 Box.propTypes = {
   box: PropTypes.objectOf(PropTypes.shape()).isRequired,
   cards: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  width: PropTypes.number,
+  direction: PropTypes.string,
+};
+
+Box.defaultProps = {
+  width: null,
+  direction: 'vertical',
 };

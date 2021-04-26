@@ -9,6 +9,10 @@ const Container = styled.div`
   padding: 8px;
   margin-bottom: 8px;
   background-color: white;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default class Card extends React.Component {

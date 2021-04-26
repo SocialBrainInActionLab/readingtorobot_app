@@ -34,11 +34,17 @@ const data = {
       cardIds: [],
     },
   },
-  fieldOrder: ['origin', 'col1', 'col2', 'col3'],
+  fieldOrder: ['col1', 'col2', 'col3'],
 };
 
 const Container = styled.div`
   display: flex;
+`;
+
+const Area = styled.div`
+  margin: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 export default class DragArea extends React.Component {
@@ -119,14 +125,23 @@ export default class DragArea extends React.Component {
     const { fieldOrder, fields, cards } = this.state;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Container>
-          {fieldOrder.map((fieldId) => {
-            const field = fields[fieldId];
-            const cardIds = field.cardIds.map((cardId) => cards[cardId]);
+        <Area>
+          <Container>
+            {fieldOrder.map((fieldId) => {
+              const field = fields[fieldId];
+              const cardIds = field.cardIds.map((cardId) => cards[cardId]);
 
-            return (<Box key={field.id} box={field} cards={cardIds} />);
-          })}
-        </Container>
+              return (<Box key={field.id} box={field} cards={cardIds} />);
+            })}
+          </Container>
+          <Box
+            width="80%"
+            direction="horizontal"
+            key={fields.origin.id}
+            box={fields.origin}
+            cards={fields.origin.cardIds.map((cardId) => cards[cardId])}
+          />
+        </Area>
       </DragDropContext>
     );
   }
