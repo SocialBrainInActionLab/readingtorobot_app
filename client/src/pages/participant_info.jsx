@@ -18,7 +18,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import Page from './page';
 
-export class ParticipantInfoPage extends Page {
+export default class ParticipantInfoPage extends Page {
   static initialValues() {
     return {
       id: '',
@@ -260,5 +260,3 @@ export class ParticipantInfoPage extends Page {
     );
   }
 }
-
-export default ParticipantInfoPage;

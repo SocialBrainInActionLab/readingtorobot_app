@@ -13,7 +13,7 @@ import {
 import Page from './page';
 import Question from '../Question';
 
-export class AfterRobotVideo extends Page {
+export default class AfterRobotVideo extends Page {
   static initialValues() {
     return {
       q5: '',
@@ -81,5 +81,3 @@ export class AfterRobotVideo extends Page {
     );
   }
 }
-
-export default AfterRobotVideo;

@@ -9,7 +9,7 @@ import {
 import Page from './page';
 import QuestionSelect from '../Question_select';
 
-export class DemoPage3 extends Page {
+export default class DemoPage3 extends Page {
   static initialValues() {
     return {
       q13: null,
@@ -85,5 +85,3 @@ export class DemoPage3 extends Page {
     );
   }
 }
-
-export default DemoPage3;

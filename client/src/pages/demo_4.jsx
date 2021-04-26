@@ -8,7 +8,7 @@ import {
 import Page from './page';
 import Question from '../Question';
 
-export class DemoPage4 extends Page {
+export default class DemoPage4 extends Page {
   static initialValues() {
     return {
       q17: null,
@@ -99,5 +99,3 @@ export class DemoPage4 extends Page {
     );
   }
 }
-
-export default DemoPage4;

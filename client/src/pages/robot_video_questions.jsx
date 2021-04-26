@@ -10,7 +10,7 @@ import Page from './page';
 import Question from '../Question';
 import IntensityButtons from '../IntensityButtons';
 
-export class RobotVideoQuestionsPage extends Page {
+export default class RobotVideoQuestionsPage extends Page {
   static initialValues() {
     return {
       questions: '',
@@ -75,5 +75,3 @@ export class RobotVideoQuestionsPage extends Page {
     );
   }
 }
-
-export default RobotVideoQuestionsPage;

@@ -79,7 +79,7 @@ function actionAvailable(robot, action) {
   return false;
 }
 
-export class RobotSelectionPage extends React.Component {
+export default class RobotSelectionPage extends React.Component {
   static sendEmotion(emotion) {
     return () => {
       publishMQTT('speech/cmd', emotion);
@@ -549,5 +549,3 @@ RobotSelectionPage.propTypes = {
   isLoading: PropTypes.func.isRequired,
   chooseRobot: PropTypes.func.isRequired,
 };
-
-export default RobotSelectionPage;

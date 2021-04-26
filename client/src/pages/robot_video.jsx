@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 
 import Page from './page';
 
-export class RobotVideoPage extends Page {
+export default class RobotVideoPage extends Page {
   static initialValues() {
     return {
       questions: '',
@@ -47,5 +47,3 @@ export class RobotVideoPage extends Page {
     );
   }
 }
-
-export default RobotVideoPage;

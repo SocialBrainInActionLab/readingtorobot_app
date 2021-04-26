@@ -13,7 +13,7 @@ import {
 import Page from './page';
 import Question from '../Question';
 
-export class MeetRobotsInactivePage extends Page {
+export default class MeetRobotsInactivePage extends Page {
   static initialValues() {
     return {
       q1: '',
@@ -116,5 +116,3 @@ export class MeetRobotsInactivePage extends Page {
     );
   }
 }
-
-export default MeetRobotsInactivePage;

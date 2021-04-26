@@ -9,7 +9,7 @@ import {
 import Page from './page';
 import IntensityButtons from '../IntensityButtons';
 
-export class DemoPage2 extends Page {
+export default class DemoPage2 extends Page {
   static initialValues() {
     return {
       q10: null,
@@ -81,5 +81,3 @@ export class DemoPage2 extends Page {
     );
   }
 }
-
-export default DemoPage2;
