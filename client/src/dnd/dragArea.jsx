@@ -59,14 +59,14 @@ export default class DragArea extends React.Component {
     const { fields } = this.state;
 
     if (!destination) {
-      return;
+      return null;
     }
 
     if (
       destination.droppableId === source.droppableId
       && destination.index === source.index
     ) {
-      return;
+      return null;
     }
 
     const start = fields[source.droppableId];
@@ -91,7 +91,7 @@ export default class DragArea extends React.Component {
       };
 
       this.setState(newState);
-      return;
+      return newState;
     }
 
     const startCardIds = Array.from(start.cardIds);
@@ -118,6 +118,7 @@ export default class DragArea extends React.Component {
     };
 
     this.setState(newState);
+    return newState;
   }
 
   render() {

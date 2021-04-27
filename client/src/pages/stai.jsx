@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
 import { Grid } from '@material-ui/core';
@@ -21,34 +21,34 @@ const Image = styled.img`
 
 const data = {
   cards: {
-    'card-1': { id: 'card-1', content: <Image src={`${process.env.PUBLIC_URL}/calm_face.gif`} alt="calm" /> },
-    'card-2': { id: 'card-2', content: <Image src={`${process.env.PUBLIC_URL}/happy_face.gif`} alt="happy" /> },
-    'card-3': { id: 'card-3', content: <Image src={`${process.env.PUBLIC_URL}/sad_face.gif`} alt="sad" /> },
-    'card-4': { id: 'card-4', content: <Image src={`${process.env.PUBLIC_URL}/upset_face.gif`} alt="upset" /> },
+    calm: { id: 'calm', content: <Image src={`${process.env.PUBLIC_URL}/calm_face.gif`} alt="calm" /> },
+    happy: { id: 'happy', content: <Image src={`${process.env.PUBLIC_URL}/happy_face.gif`} alt="happy" /> },
+    sad: { id: 'sad', content: <Image src={`${process.env.PUBLIC_URL}/sad_face.gif`} alt="sad" /> },
+    upset: { id: 'upset', content: <Image src={`${process.env.PUBLIC_URL}/upset_face.gif`} alt="upset" /> },
   },
   fields: {
     origin: {
       id: 'origin',
       title: '',
-      cardIds: ['card-1', 'card-2', 'card-3', 'card-4'],
+      cardIds: ['calm', 'happy', 'sad', 'upset'],
     },
-    col1: {
-      id: 'col1',
+    low: {
+      id: 'low',
       title: '',
       cardIds: [],
     },
-    col2: {
-      id: 'col2',
+    mid: {
+      id: 'mid',
       title: '',
       cardIds: [],
     },
-    col3: {
-      id: 'col3',
+    high: {
+      id: 'high',
       title: '',
       cardIds: [],
     },
   },
-  fieldOrder: ['col1', 'col2', 'col3'],
+  fieldOrder: ['low', 'mid', 'high'],
 };
 
 export default class STAI extends DragArea {
@@ -57,8 +57,21 @@ export default class STAI extends DragArea {
     this.state = data;
   }
 
+  onDragEnd(result) {
+    const { setData } = this.props;
+    const res = super.onDragEnd(result);
+    if (res) {
+      setData(
+        Object.keys(res.fields).map((key) => {
+          const d = {};
+          d[key] = res.fields[key].cardIds;
+          return d;
+        }),
+      );
+    }
+  }
+
   render() {
-    // const { state } = this.props;
     const { fieldOrder, fields, cards } = this.state;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -111,5 +124,5 @@ export default class STAI extends DragArea {
 }
 
 STAI.propTypes = {
-  // state: PropTypes.objectOf(PropTypes.shape()).isRequired,
+  state: PropTypes.objectOf(PropTypes.shape()).isRequired,
 };
