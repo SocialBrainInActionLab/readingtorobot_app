@@ -9,6 +9,7 @@ import RobotVideoPage from './robot_video';
 import RobotVideoQuestionsPage from './robot_video_questions';
 import RobotSelectionPage from './select_robot';
 import STAI from './stai';
+import RobotRating from './robot_rating';
 
 export {
   AfterRobotVideo,
@@ -22,4 +23,5 @@ export {
   RobotVideoQuestionsPage,
   RobotSelectionPage,
   STAI,
+  RobotRating,
 };

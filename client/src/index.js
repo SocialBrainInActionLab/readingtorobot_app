@@ -16,6 +16,7 @@ import {
   DemoPage3,
   DemoPage4,
   AfterRobotVideo,
+  RobotRating,
 } from './pages';
 import IntensityButtons from './IntensityButtons';
 
@@ -69,12 +70,14 @@ function getVideos() {
 let layout = [
   <ParticipantInfoPage />,
   <MeetRobotsInactivePage />,
+  <RobotRating />,
 ];
 
 layout = layout.concat(getVideos());
 
 layout = layout.concat([
   <AfterRobotVideo />,
+  <RobotRating />,
   <STAI />,
   <RobotSelectionPage />,
   <STAI />,
