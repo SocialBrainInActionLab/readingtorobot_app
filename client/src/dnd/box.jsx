@@ -8,24 +8,31 @@ import Card from './card';
 const Container = styled.div`
   margin: 8px;
   width: ${(props) => (props.width ? props.width : '100%')};
-  border: 1px solid lightgrey;
   border-radius: 2px;
   margin: auto;
 
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 const Title = styled.h3`
   padding: 8px;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
 `;
 const CardList = styled.div`
   padding: 8px;
   transition: background-color 0.2s ease;
-  background-color: ${(props) => (props.isDraggingOver ? 'skyblue' : 'white')};
+  background-color: ${(props) => (props.isDraggingOver ? 'lightgrey' : 'white')};
   display: flex;
   flex-direction: ${(props) => props.direction};
   justify-content: center;
   align-items: center;
+  height: 100%;
+  min-height: ${(props) => (props.direction === 'column' ? '200px' : '100px')};
+  border-radius: 8px;
 `;
 
 export default class Box extends React.Component {

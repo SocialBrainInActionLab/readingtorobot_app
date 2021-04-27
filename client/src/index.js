@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
+  STAI,
   ParticipantInfoPage,
   MeetRobotsInactivePage,
   RobotSelectionPage,
@@ -74,7 +75,9 @@ layout = layout.concat(getVideos());
 
 layout = layout.concat([
   <AfterRobotVideo />,
+  <STAI />,
   <RobotSelectionPage />,
+  <STAI />,
   <DemoPage1 />,
   <IntensityButtons qId="q9" question="How helpful was this robot?" />,
   <DemoPage2 />,
