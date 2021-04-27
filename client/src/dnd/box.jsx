@@ -7,6 +7,7 @@ import Card from './card';
 
 const Container = styled.div`
   margin: 8px;
+  border: ${(props) => (props.bordered ? 1 : 0)}px solid lightgrey;
   width: ${(props) => (props.width ? props.width : '100%')};
   border-radius: 2px;
   margin: auto;
@@ -15,13 +16,7 @@ const Container = styled.div`
   flex-direction: column;
   height: 100%;
 `;
-const Title = styled.h3`
-  padding: 8px;
-  height: 100%;
 
-  justify-content: center;
-  align-items: center;
-`;
 const CardList = styled.div`
   padding: 8px;
   transition: background-color 0.2s ease;
@@ -38,11 +33,10 @@ const CardList = styled.div`
 export default class Box extends React.Component {
   render() {
     const {
-      box, cards, width, direction,
+      box, cards, width, direction, bordered,
     } = this.props;
     return (
-      <Container width={width}>
-        <Title>{box.title}</Title>
+      <Container width={width} bordered={bordered}>
         <Droppable droppableId={box.id} direction={direction}>
           {(provided, snapshot) => (
             <CardList
@@ -66,9 +60,11 @@ Box.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   width: PropTypes.number,
   direction: PropTypes.string,
+  bordered: PropTypes.bool,
 };
 
 Box.defaultProps = {
   width: null,
   direction: 'vertical',
+  bordered: false,
 };

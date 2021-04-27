@@ -8,12 +8,6 @@ import { Grid } from '@material-ui/core';
 import { DragDropContext } from 'react-beautiful-dnd';
 import DragArea, { Box } from '../dnd';
 
-const Container = styled.div`
-  display: flex;
-  height: 100%;
-  align-items: stretch;
-`;
-
 const Image = styled.img`
   height: 50%;
   width: 50%;
@@ -75,47 +69,59 @@ export default class STAI extends DragArea {
     const { fieldOrder, fields, cards } = this.state;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Grid
-          container
-          direction="column"
-          justify="space-between"
-          alignItems="stretch"
-        >
-          <Grid item>
-            <Grid
-              container
-              justify="space-around"
-              alignItems="center"
-            >
-              <Grid item xs={4}>
-                <Brightness1Icon style={{ fontSize: 30, color: 'red' }} />
-              </Grid>
-              <Grid item xs={4}>
-                <Brightness1Icon style={{ fontSize: 80, color: 'red' }} />
-              </Grid>
-              <Grid item xs={4}>
-                <Brightness1Icon style={{ fontSize: 150, color: 'red' }} />
+        <Grid container direction="column" alignItems="center">
+
+          <Grid
+            container
+            direction="column"
+            justify="space-between"
+            alignItems="stretch"
+            style={{ width: '80vw' }}
+          >
+            <Grid item>
+              <Grid
+                container
+                justify="space-around"
+                alignItems="center"
+              >
+                <Grid item xs={4}>
+                  <Brightness1Icon style={{ fontSize: 30, color: 'red' }} />
+                </Grid>
+                <Grid item xs={4}>
+                  <Brightness1Icon style={{ fontSize: 80, color: 'red' }} />
+                </Grid>
+                <Grid item xs={4}>
+                  <Brightness1Icon style={{ fontSize: 150, color: 'red' }} />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item>
-            <Container>
-              {fieldOrder.map((fieldId) => {
-                const field = fields[fieldId];
-                const cardIds = field.cardIds.map((cardId) => cards[cardId]);
+            <Grid item>
+              <Grid
+                container
+                justify="space-around"
+                alignItems="stretch"
+              >
+                {fieldOrder.map((fieldId) => {
+                  const field = fields[fieldId];
+                  const cardIds = field.cardIds.map((cardId) => cards[cardId]);
 
-                return (<Box key={field.id} box={field} cards={cardIds} />);
-              })}
-            </Container>
-          </Grid>
-          <Grid item>
-            <Box
-              width="100%"
-              direction="horizontal"
-              key={fields.origin.id}
-              box={fields.origin}
-              cards={fields.origin.cardIds.map((cardId) => cards[cardId])}
-            />
+                  return (
+                    <Grid item xs={4}>
+                      <Box key={field.id} box={field} cards={cardIds} bordered />
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Box
+                width="100%"
+                direction="horizontal"
+                key={fields.origin.id}
+                box={fields.origin}
+                cards={fields.origin.cardIds.map((cardId) => cards[cardId])}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </DragDropContext>
