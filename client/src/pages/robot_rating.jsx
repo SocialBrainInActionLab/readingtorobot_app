@@ -12,12 +12,12 @@ import DragArea, { Box } from '../dnd';
 
 const Container = styled.div`
   display: flex;
-  height: 100%;
+  max-height: 100%;
   align-items: stretch;
 `;
 
 const PodBox = styled.div`
-  height: 100%;
+  max-height: 100%;
   align-items: stretch;
   border-top: 4px solid brown;
   border-bottom: 4px solid brown;
@@ -27,8 +27,7 @@ const PodBox = styled.div`
 `;
 
 const Image = styled.img`
-  height: 50%;
-  width: 50%;
+  max-width: 70%;
 `;
 
 const data = {
@@ -111,24 +110,24 @@ export default class RobotRating extends DragArea {
               >
                 <Grid item xs={4}>
                   <PodBox left>
-                    <LooksTwoTwoToneIcon style={{ fontSize: 100, color: 'black' }} />
+                    <LooksTwoTwoToneIcon style={{ fontSize: 80, color: 'black' }} />
                   </PodBox>
                 </Grid>
                 <Grid item xs={4}>
                   <PodBox left right>
-                    <LooksOneTwoToneIcon style={{ fontSize: 150, color: 'black' }} />
+                    <LooksOneTwoToneIcon style={{ fontSize: 120, color: 'black' }} />
                   </PodBox>
                 </Grid>
                 <Grid item xs={4}>
                   <PodBox right>
-                    <Looks3TwoToneIcon style={{ fontSize: 70, color: 'black' }} />
+                    <Looks3TwoToneIcon style={{ fontSize: 60, color: 'black' }} />
                   </PodBox>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item>
               <Box
-                width="100%"
+                max-width="100%"
                 direction="horizontal"
                 key={fields.origin.id}
                 box={fields.origin}

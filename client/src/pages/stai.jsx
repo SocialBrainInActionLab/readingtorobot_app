@@ -9,8 +9,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import DragArea, { Box } from '../dnd';
 
 const Image = styled.img`
-  height: 50%;
-  width: 50%;
+  max-width: 60%;
 `;
 
 const data = {
@@ -88,10 +87,10 @@ export default class STAI extends DragArea {
                   <Brightness1Icon style={{ fontSize: 30, color: 'red' }} />
                 </Grid>
                 <Grid item xs={4}>
-                  <Brightness1Icon style={{ fontSize: 80, color: 'red' }} />
+                  <Brightness1Icon style={{ fontSize: 70, color: 'red' }} />
                 </Grid>
                 <Grid item xs={4}>
-                  <Brightness1Icon style={{ fontSize: 150, color: 'red' }} />
+                  <Brightness1Icon style={{ fontSize: 140, color: 'red' }} />
                 </Grid>
               </Grid>
             </Grid>

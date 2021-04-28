@@ -7,27 +7,35 @@ import Card from './card';
 
 const Container = styled.div`
   margin: 8px;
-  border: ${(props) => (props.bordered ? 1 : 0)}px solid lightgrey;
   width: ${(props) => (props.width ? props.width : '100%')};
   border-radius: 2px;
   margin: auto;
 
   display: flex;
   flex-direction: column;
-  height: 100%;
+  max-height: 100%;
 `;
 
 const CardList = styled.div`
   padding: 8px;
+  border: ${(props) => (props.bordered ? 1 : 0)}px solid lightgrey;
+  height: ${(props) => (props.bordered ? '220px' : '100%')};
   transition: background-color 0.2s ease;
   background-color: ${(props) => (props.isDraggingOver ? 'lightgrey' : 'white')};
   display: flex;
   flex-direction: ${(props) => props.direction};
   justify-content: center;
   align-items: center;
-  height: 100%;
   min-height: ${(props) => (props.direction === 'column' ? '200px' : '100px')};
   border-radius: 8px;
+`;
+
+const DynamicList = styled.section`
+  display: grid;
+  grid-template-rows: repeat(${(props) => (props.direction === 'vertical' ? 2 : 1)}, min-content);
+  grid-auto-flow: column;
+  text-align: center;
+  justify-content: center;
 `;
 
 export default class Box extends React.Component {
@@ -36,17 +44,20 @@ export default class Box extends React.Component {
       box, cards, width, direction, bordered,
     } = this.props;
     return (
-      <Container width={width} bordered={bordered}>
+      <Container width={width}>
         <Droppable droppableId={box.id} direction={direction}>
           {(provided, snapshot) => (
             <CardList
+              bordered={bordered}
               ref={provided.innerRef}
               {...provided.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}
               direction={direction === 'vertical' ? 'column' : 'row'}
             >
-              {cards.map((card, index) => <Card key={card.id} card={card} index={index} />)}
-              {provided.placeholder}
+              <DynamicList direction={direction}>
+                {cards.map((card, index) => <Card key={card.id} card={card} index={index} />)}
+                {provided.placeholder}
+              </DynamicList>
             </CardList>
           )}
         </Droppable>
