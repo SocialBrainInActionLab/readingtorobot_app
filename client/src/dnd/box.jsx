@@ -32,8 +32,8 @@ const CardList = styled.div`
 
 const DynamicList = styled.section`
   display: grid;
-  grid-template-rows: repeat(${(props) => (props.direction === 'vertical' ? 2 : 1)}, min-content);
-  grid-auto-flow: column;
+  grid-template-columns: repeat(2, auto);
+  grid-auto-flow: ${(props) => (props.direction)};
   text-align: center;
   justify-content: center;
 `;
@@ -54,7 +54,7 @@ export default class Box extends React.Component {
               isDraggingOver={snapshot.isDraggingOver}
               direction={direction === 'vertical' ? 'column' : 'row'}
             >
-              <DynamicList direction={direction}>
+              <DynamicList direction={direction === 'vertical' ? 'row' : 'column'}>
                 {cards.map((card, index) => <Card key={card.id} card={card} index={index} />)}
                 {provided.placeholder}
               </DynamicList>
