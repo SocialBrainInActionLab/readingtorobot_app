@@ -70,17 +70,17 @@ function getVideos() {
 let layout = [
   <ParticipantInfoPage />,
   <MeetRobotsInactivePage />,
-  <RobotRating />,
+  <RobotRating qId="rating1" />,
 ];
 
 layout = layout.concat(getVideos());
 
 layout = layout.concat([
   <AfterRobotVideo />,
-  <RobotRating />,
-  <STAI />,
+  <RobotRating qId="rating2" />,
+  <STAI qId="stai1" />,
   <RobotSelectionPage />,
-  <STAI />,
+  <STAI qId="stai2" />,
   <DemoPage1 />,
   <IntensityButtons qId="q9" question="How helpful was this robot?" />,
   <DemoPage2 />,

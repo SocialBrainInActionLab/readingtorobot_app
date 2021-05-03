@@ -12,7 +12,7 @@ const Image = styled.img`
   max-width: 60%;
 `;
 
-const data = {
+const initData = {
   cards: {
     calm: { id: 'calm', content: <Image src={`${process.env.PUBLIC_URL}/calm_face.gif`} alt="calm" /> },
     happy: { id: 'happy', content: <Image src={`${process.env.PUBLIC_URL}/happy_face.gif`} alt="happy" /> },
@@ -47,25 +47,41 @@ const data = {
 export default class STAI extends DragArea {
   constructor(props) {
     super(props);
-    this.state = data;
+    this.state = initData;
   }
 
   onDragEnd(result) {
-    const { setData } = this.props;
+    const { qId, setData } = this.props;
     const res = super.onDragEnd(result);
     if (res) {
-      setData(
-        Object.keys(res.fields).map((key) => {
+      const data = {};
+      data[qId] = Object
+        .keys(res.fields)
+        .map((key) => {
           const d = {};
           d[key] = res.fields[key].cardIds;
           return d;
-        }),
-      );
+        });
+      setData(data);
     }
   }
 
+  getFields() {
+    const { fields } = this.state;
+    const { qId, data } = this.props;
+    if (qId !== undefined && data[qId] !== undefined) {
+      data[qId].forEach((entry) => {
+        const key = Object.keys(entry)[0];
+        fields[key].cardIds = entry[key];
+      });
+    }
+    return fields;
+  }
+
   render() {
-    const { fieldOrder, fields, cards } = this.state;
+    const { fieldOrder, cards } = this.state;
+    const fields = this.getFields();
+
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Grid container direction="column" alignItems="center">
