@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
 import { TextField, TextareaAutosize, Container } from '@material-ui/core';
 
 class Question extends React.Component {

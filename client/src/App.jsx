@@ -16,8 +16,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
-import Navigator from './Navigation';
-import Drawer from './Drawer';
+import Navigator from './components/Navigation';
+import Drawer from './components/Drawer';
 
 class App extends React.Component {
   static clearForm() {

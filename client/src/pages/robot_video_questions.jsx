@@ -7,8 +7,8 @@ import {
 } from '@material-ui/core';
 
 import Page from './page';
-import Question from '../Question';
-import IntensityButtons from '../IntensityButtons';
+import Question from '../components/Question';
+import IntensityButtons from '../components/IntensityButtons';
 
 export default class RobotVideoQuestionsPage extends Page {
   static initialValues() {

@@ -7,8 +7,8 @@ import {
 } from '@material-ui/core';
 
 import Page from './page';
-import Question from '../Question';
-import QuestionSelect from '../Question_select';
+import Question from '../components/Question';
+import QuestionSelect from '../components/Question_select';
 
 export default class DemoPage1 extends Page {
   static initialValues() {

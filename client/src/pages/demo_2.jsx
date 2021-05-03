@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 
 import Page from './page';
-import IntensityButtons from '../IntensityButtons';
+import IntensityButtons from '../components/IntensityButtons';
 
 export default class DemoPage2 extends Page {
   static initialValues() {

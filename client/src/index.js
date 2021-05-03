@@ -18,7 +18,7 @@ import {
   AfterRobotVideo,
   RobotRating,
 } from './pages';
-import IntensityButtons from './IntensityButtons';
+import IntensityButtons from './components/IntensityButtons';
 
 const robotVideos = {
   miro: [

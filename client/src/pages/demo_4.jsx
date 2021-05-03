@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 
 import Page from './page';
-import Question from '../Question';
+import Question from '../components/Question';
 
 export default class DemoPage4 extends Page {
   static initialValues() {

@@ -6,7 +6,7 @@ import Brightness1Icon from '@material-ui/icons/Brightness1';
 import { Grid } from '@material-ui/core';
 
 import { DragDropContext } from 'react-beautiful-dnd';
-import DragArea, { Box } from '../dnd';
+import DragArea, { Box } from '../components/dnd';
 
 const Image = styled.img`
   max-width: 60%;

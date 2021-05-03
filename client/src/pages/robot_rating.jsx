@@ -8,7 +8,7 @@ import Looks3TwoToneIcon from '@material-ui/icons/Looks3TwoTone';
 import { Grid } from '@material-ui/core';
 
 import { DragDropContext } from 'react-beautiful-dnd';
-import DragArea, { Box } from '../dnd';
+import DragArea, { Box } from '../components/dnd';
 
 const Container = styled.div`
   display: flex;
