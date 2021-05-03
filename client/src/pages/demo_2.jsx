@@ -27,14 +27,6 @@ export default class DemoPage2 extends Page {
     };
   }
 
-  getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = this.constructor.initialValues();
-    }
-    return d;
-  }
-
   render() {
     const { robot } = this.props;
     const d = this.getState();

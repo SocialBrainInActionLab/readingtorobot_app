@@ -38,14 +38,6 @@ export default class MeetRobotsInactivePage extends Page {
     };
   }
 
-  getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = this.constructor.initialValues();
-    }
-    return d;
-  }
-
   render() {
     const d = this.getState();
     const updateMostLiked = this.handleChange('q1');

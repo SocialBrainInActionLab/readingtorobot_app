@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 
 import Page from './page';
-import QuestionSelect from '../components/Question_select';
+import { QuestionSelect } from '../components';
 
 export default class DemoPage3 extends Page {
   static initialValues() {
@@ -30,14 +30,6 @@ export default class DemoPage3 extends Page {
       }
       setData(d);
     };
-  }
-
-  getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = this.constructor.initialValues();
-    }
-    return d;
   }
 
   render() {

@@ -10,7 +10,7 @@ import {
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-class Navigator extends React.Component {
+export default class Navigator extends React.Component {
   constructor(props) {
     super(props);
     this.setData = this.setData.bind(this);
@@ -122,5 +122,3 @@ Navigator.propTypes = {
   onResultChange: PropTypes.func.isRequired,
   isLoading: PropTypes.func.isRequired,
 };
-
-export default Navigator;

@@ -9,10 +9,7 @@ class Question extends React.Component {
   }
 
   handleChange(event) {
-    event.persist(); // allow native event access (see: https://facebook.github.io/react/docs/events.html)
-    // give react a function to set the state asynchronously.
-    // here it's using the "name" value set on the TextField
-    // to set state.person.[firstname|lastname].
+    event.persist();
     const { setData } = this.props;
     setData(event.target.value);
   }

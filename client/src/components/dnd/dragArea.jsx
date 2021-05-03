@@ -1,7 +1,7 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
+
 import Box from './box';
 
 const data = {
@@ -42,9 +42,9 @@ const Container = styled.div`
 `;
 
 const Area = styled.div`
-  margin: auto;
   display: flex;
   flex-direction: column;
+  margin: auto;
 `;
 
 export default class DragArea extends React.Component {
@@ -122,7 +122,6 @@ export default class DragArea extends React.Component {
   }
 
   render() {
-    // const { state } = this.props;
     const { fieldOrder, fields, cards } = this.state;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -147,7 +146,3 @@ export default class DragArea extends React.Component {
     );
   }
 }
-
-DragArea.propTypes = {
-  // state: PropTypes.objectOf(PropTypes.shape()).isRequired,
-};

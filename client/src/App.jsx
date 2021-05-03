@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   AppBar,
   Box,
@@ -8,16 +10,15 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+
 import LoadingOverlay from 'react-loading-overlay';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import MenuIcon from '@material-ui/icons/Menu';
-import React from 'react';
 import PropTypes from 'prop-types';
+
 import './App.css';
-import Navigator from './components/Navigation';
-import Drawer from './components/Drawer';
+import { Navigator, Drawer } from './components';
 
 class App extends React.Component {
   static clearForm() {
@@ -74,12 +75,11 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    // TODO: Populate results from formularies
     this.state = {
       drawer: false,
       loading: false,
       settings: {},
-      results: JSON.parse(localStorage.getItem('data')),
+      results: {},
     };
     this.handleResultChange = this.handleResultChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -103,8 +103,13 @@ class App extends React.Component {
     } else {
       s = ls;
     }
-    this.setState({ settings: s });
+
     App.sendSettings(s);
+
+    this.setState({
+      settings: s,
+      results: JSON.parse(localStorage.getItem('data')),
+    });
   }
 
   handleResultChange(result) {
@@ -144,8 +149,7 @@ class App extends React.Component {
           });
           return;
         }
-        // NotificationManager.success('Data saved successfully!\n(click to clear form)', 'Saved', 6000, App.clearForm);
-        toast(
+        toast.success(
           <Grid
             container
             direction="row"
@@ -165,7 +169,6 @@ class App extends React.Component {
                   backgroundColor: '#a7daa9',
                   fontSize: '12px',
                   padding: '1px 10px',
-
                 }}
               >
                 Clear form

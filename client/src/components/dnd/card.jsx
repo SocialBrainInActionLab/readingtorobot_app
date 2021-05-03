@@ -1,17 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
-  border-radius: 4px;
-  padding: 8px;
-  margin-bottom: 8px;
+  align-items: center;
   background-color: white;
-  max-width: 150px;
+  border-radius: 4px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-bottom: 8px;
+  max-width: 150px;
+  padding: 8px;
 `;
 
 export default class Card extends React.Component {
