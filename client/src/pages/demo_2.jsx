@@ -6,15 +6,14 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import Page from './page';
-import IntensityButtons from '../IntensityButtons';
+import { IntensityButtons, Page } from '../components';
 
 export default class DemoPage2 extends Page {
   static initialValues() {
     return {
-      q10: null,
-      q11: null,
-      q12: null,
+      q10: '',
+      q11: '',
+      q12: '',
     };
   }
 
@@ -27,20 +26,12 @@ export default class DemoPage2 extends Page {
     };
   }
 
-  getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = this.constructor.initialValues();
-    }
-    return d;
-  }
-
   render() {
-    const { robot } = this.props;
     const d = this.getState();
-    const updateListener = this.handleChange('q10');
-    const updateTeacher = this.handleChange('q11');
-    const updateKind = this.handleChange('q12');
+
+    if (!d.chosen) {
+      d.chosen = 'The robot';
+    }
 
     return (
       <Box m={5}>
@@ -51,27 +42,27 @@ export default class DemoPage2 extends Page {
           <Grid item>
             <Box height="20px" />
             <IntensityButtons
-              question={`${robot} is a good listener.`}
+              question={`${d.chosen} is a good listener.`}
               data={d.q10}
-              setData={updateListener}
+              setData={this.handleChange('q10')}
             />
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
             <Box height="20px" />
             <IntensityButtons
-              question={`${robot} is a good teacher.`}
+              question={`${d.chosen} is a good teacher.`}
               data={d.q11}
-              setData={updateTeacher}
+              setData={this.handleChange('q11')}
             />
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
             <Box height="20px" />
             <IntensityButtons
-              question={`${robot} is kind.`}
+              question={`${d.chosen} is kind.`}
               data={d.q12}
-              setData={updateKind}
+              setData={this.handleChange('q12')}
             />
           </Grid>
           <Grid item><Divider /></Grid>

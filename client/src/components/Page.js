@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Page extends React.Component {
+export default class Page extends React.Component {
   static initialValues() {
     return '';
   }
@@ -22,10 +22,10 @@ class Page extends React.Component {
 
   getState() {
     let { data: d } = this.props;
-    if (!d) {
-      d = Page.initialValues();
+    if (d && Object.keys(d).length === 0) {
+      d = this.constructor.initialValues();
     }
-    return d;
+    return { ...d };
   }
 }
 
@@ -37,5 +37,3 @@ Page.propTypes = {
 Page.defaultProps = {
   data: '',
 };
-
-export default Page;

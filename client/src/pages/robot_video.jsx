@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import ReactPlayer from 'react-player';
 
-import Page from './page';
+import { Page } from '../components';
 
 export default class RobotVideoPage extends Page {
   static initialValues() {

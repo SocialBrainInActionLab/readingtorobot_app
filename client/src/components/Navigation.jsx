@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
 import {
   AppBar,
   Box,
@@ -11,11 +10,28 @@ import {
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-class Navigator extends React.Component {
+import Page from './Page';
+import ReusablePage from './ReusablePage';
+
+export default class Navigator extends React.Component {
+  static getDefaultResults(elements) {
+    let r = {};
+    elements.forEach((element) => {
+      if (element.type.prototype instanceof ReusablePage) {
+        const name = element.props.name || '';
+        r = { ...r, ...element.type.initialValues(name) };
+      } else if (element.type.prototype instanceof Page) {
+        r = { ...r, ...element.type.initialValues() };
+      } else if ('qId' in element.props) {
+        r[element.props.qId] = null;
+      }
+    });
+    return r;
+  }
+
   constructor(props) {
     super(props);
     this.setData = this.setData.bind(this);
-    this.getData = this.getData.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.chooseRobot = this.chooseRobot.bind(this);
@@ -29,19 +45,12 @@ class Navigator extends React.Component {
     }
 
     this.layout_length = this.layout.length;
-    let ls = JSON.parse(localStorage.getItem('data'));
 
-    if (!ls || (ls.length !== this.layout.length)) {
-      ls = [];
-      for (let i = 0; i < this.layout.length; i += 1) {
-        ls.push({});
-      }
-    }
+    const d = JSON.parse(localStorage.getItem('data')) || Navigator.getDefaultResults(props.layout);
 
     this.state = {
       current: 0,
-      data: ls,
-      chosenRobot: null,
+      data: { chosen: '', ...d },
     };
   }
 
@@ -56,37 +65,30 @@ class Navigator extends React.Component {
   }
 
   setData(value) {
-    const { current: c, data } = this.state;
-    const { onResultChange } = this.props;
-    const NewData = data;
-    NewData[c] = value;
-    this.setState({ data: NewData });
-    onResultChange(data);
-    localStorage.setItem('data', JSON.stringify(data));
-  }
+    const { data } = this.state;
+    const newData = { ...data, ...value };
+    this.setState({ data: newData });
 
-  getData() {
-    const { current: c } = this.state;
-    return this.data[c];
+    const { onResultChange } = this.props;
+    onResultChange(newData);
+    localStorage.setItem('data', JSON.stringify(newData));
   }
 
   chooseRobot(bot) {
     this.setData({ chosen: bot });
-    this.setState({ chosenRobot: bot });
   }
 
   render() {
-    const { current: c, data, chosenRobot } = this.state;
+    const { current: c, data } = this.state;
     const { isLoading: loading } = this.props;
     return (
       <Box position="sticky" height="85%" display="flex" flexDirection="column">
         <Box>
           {
             React.cloneElement(this.layout[c], {
-              data: data[c],
+              data,
               setData: this.setData,
               isLoading: loading,
-              robot: chosenRobot,
               chooseRobot: this.chooseRobot,
             })
           }
@@ -123,5 +125,3 @@ Navigator.propTypes = {
   onResultChange: PropTypes.func.isRequired,
   isLoading: PropTypes.func.isRequired,
 };
-
-export default Navigator;

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
 import {
   Container,
   IconButton,
@@ -41,9 +40,6 @@ class IntensityButtons extends React.Component {
       id = data[qId];
     }
     variants[id] = 'red';
-    const onClick0 = this.onButtonClick(0);
-    const onClick1 = this.onButtonClick(1);
-    const onClick2 = this.onButtonClick(2);
 
     return (
       <Container>
@@ -53,19 +49,19 @@ class IntensityButtons extends React.Component {
         </p>
         <Grid container alignItems="center" justify="space-evenly">
           <Grid item>
-            <IconButton onClick={onClick0}>
+            <IconButton onClick={this.onButtonClick(0)}>
               <Brightness1Icon style={{ fontSize: 30, color: variants[0] }} />
             </IconButton>
           </Grid>
 
           <Grid item>
-            <IconButton onClick={onClick1}>
+            <IconButton onClick={this.onButtonClick(1)}>
               <Brightness1Icon style={{ fontSize: 80, color: variants[1] }} />
             </IconButton>
           </Grid>
 
           <Grid item>
-            <IconButton onClick={onClick2}>
+            <IconButton onClick={this.onButtonClick(2)}>
               <Brightness1Icon style={{ fontSize: 150, color: variants[2] }} />
             </IconButton>
           </Grid>

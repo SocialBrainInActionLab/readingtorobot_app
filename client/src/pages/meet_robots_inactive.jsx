@@ -10,8 +10,7 @@ import {
   Select,
 } from '@material-ui/core';
 
-import Page from './page';
-import Question from '../Question';
+import { Page, Question } from '../components';
 
 export default class MeetRobotsInactivePage extends Page {
   static initialValues() {
@@ -38,20 +37,8 @@ export default class MeetRobotsInactivePage extends Page {
     };
   }
 
-  getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = this.constructor.initialValues();
-    }
-    return d;
-  }
-
   render() {
     const d = this.getState();
-    const updateMostLiked = this.handleChange('q1');
-    const updateSecondMostLiked = this.handleChange('q3');
-    const updateWhy = this.handleChange('q2');
-    const updateQuestions = this.handleChange('q4');
 
     return (
       <Box m={5}>
@@ -68,7 +55,7 @@ export default class MeetRobotsInactivePage extends Page {
                 id="q1"
                 value={d.q1}
                 defaultValue=""
-                onChange={updateMostLiked}
+                onChange={this.handleChange('q1')}
               >
                 <MenuItem value="miro">MiRo</MenuItem>
                 <MenuItem value="nao">NAO</MenuItem>
@@ -78,7 +65,7 @@ export default class MeetRobotsInactivePage extends Page {
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
-            <Question question="Why?" data={d.q2} setData={updateWhy} />
+            <Question question="Why?" data={d.q2} setData={this.handleChange('q2')} />
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
@@ -92,7 +79,7 @@ export default class MeetRobotsInactivePage extends Page {
                 id="q3"
                 value={d.q3}
                 defaultValue=""
-                onChange={updateSecondMostLiked}
+                onChange={this.handleChange('q3')}
               >
                 <MenuItem value="miro">MiRo</MenuItem>
                 <MenuItem value="nao">NAO</MenuItem>
@@ -107,7 +94,7 @@ export default class MeetRobotsInactivePage extends Page {
                     Do you have any q4?`
                   }
               data={d.q4}
-              setData={updateQuestions}
+              setData={this.handleChange('q4')}
             />
           </Grid>
 
