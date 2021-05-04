@@ -86,7 +86,7 @@ export default class RobotRating extends DragArea {
   getFields() {
     const { fields } = this.state;
     const { qId, data } = this.props;
-    if (qId !== undefined && data[qId] !== undefined) {
+    if (qId !== undefined && data[qId]) {
       data[qId].forEach((entry) => {
         const key = Object.keys(entry)[0];
         fields[key].cardIds = entry[key];

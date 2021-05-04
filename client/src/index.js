@@ -23,15 +23,15 @@ import { IntensityButtons } from './components';
 const robotVideos = {
   miro: [
     <RobotVideoPage url="https://www.youtube.com/watch?v=rQ2v0kX7bww" />,
-    <RobotVideoQuestionsPage robotName="miro" />,
+    <RobotVideoQuestionsPage name="miro" />,
   ],
   cozmo: [
     <RobotVideoPage url="https://www.youtube.com/watch?v=DHY5kpGTsDE" />,
-    <RobotVideoQuestionsPage robotName="cozmo" />,
+    <RobotVideoQuestionsPage name="cozmo" />,
   ],
   nao: [
     <RobotVideoPage url="https://www.youtube.com/watch?v=2STTNYNF4lk" />,
-    <RobotVideoQuestionsPage robotName="nao" />,
+    <RobotVideoQuestionsPage name="nao" />,
   ],
 };
 

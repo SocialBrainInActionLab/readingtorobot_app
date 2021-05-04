@@ -10,8 +10,7 @@ import {
   Select,
 } from '@material-ui/core';
 
-import Page from './page';
-import Question from '../components/Question';
+import { Page, Question } from '../components';
 
 export default class AfterRobotVideo extends Page {
   static initialValues() {
@@ -38,8 +37,6 @@ export default class AfterRobotVideo extends Page {
 
   render() {
     const d = this.getState();
-    const updateMostLiked = this.handleChange('q5');
-    const updateWhy = this.handleChange('q6');
 
     return (
       <Box m={5}>
@@ -56,7 +53,7 @@ export default class AfterRobotVideo extends Page {
                 id="mostLiked"
                 value={d.q5}
                 defaultValue=""
-                onChange={updateMostLiked}
+                onChange={this.handleChange('q5')}
               >
                 <MenuItem value="miro">MiRo</MenuItem>
                 <MenuItem value="nao">NAO</MenuItem>
@@ -66,7 +63,7 @@ export default class AfterRobotVideo extends Page {
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
-            <Question question="Why?" data={d.q6} setData={updateWhy} />
+            <Question question="Why?" data={d.q6} setData={this.handleChange('q6')} />
           </Grid>
         </Grid>
       </Box>

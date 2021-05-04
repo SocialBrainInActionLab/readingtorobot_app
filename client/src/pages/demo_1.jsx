@@ -6,9 +6,7 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import Page from './page';
-import Question from '../components/Question';
-import { QuestionSelect } from '../components';
+import { Page, Question, QuestionSelect } from '../components';
 
 export default class DemoPage1 extends Page {
   static initialValues() {
@@ -34,8 +32,6 @@ export default class DemoPage1 extends Page {
 
   render() {
     const d = this.getState();
-    const updateHowWasIt = this.handleChange('q7');
-    const updateHelpful = this.handleChange('q8');
 
     return (
       <Box m={5}>
@@ -45,7 +41,7 @@ export default class DemoPage1 extends Page {
             <Question
               question="How was that? What do you think about this robot?"
               data={d.q7}
-              setData={updateHowWasIt}
+              setData={this.handleChange('q7')}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -62,7 +58,7 @@ export default class DemoPage1 extends Page {
               )}
               options={['Yes', 'No']}
               data={d.q8}
-              setData={updateHelpful}
+              setData={this.handleChange('q8')}
             />
           </Grid>
         </Grid>

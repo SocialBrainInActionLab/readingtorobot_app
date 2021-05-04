@@ -6,15 +6,14 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import Page from './page';
-import { QuestionSelect } from '../components';
+import { Page, QuestionSelect } from '../components';
 
 export default class DemoPage3 extends Page {
   static initialValues() {
     return {
-      q13: null,
-      q14: null,
-      q15: null,
+      q13: '',
+      q14: '',
+      q15: '',
     };
   }
 
@@ -33,10 +32,11 @@ export default class DemoPage3 extends Page {
   }
 
   render() {
-    const { robot } = this.props;
     const d = this.getState();
-    const updateDislikes = this.handleChange('q13');
-    const updateLikes = this.handleChange('q14');
+
+    if (!d.chosen) {
+      d.chosen = 'the robot';
+    }
 
     return (
       <Box m={5}>
@@ -47,7 +47,7 @@ export default class DemoPage3 extends Page {
               question="Is there anything you didn’t like about the robot?"
               options={['Yes', 'No']}
               data={d.q13}
-              setData={updateDislikes}
+              setData={this.handleChange('q13')}
             />
             <Divider />
           </Grid>
@@ -58,17 +58,17 @@ export default class DemoPage3 extends Page {
                         would you be more comfortable reading with a teacher or this robot?`}
               options={['Prefer Robots', 'Prefer Adult']}
               data={d.q14}
-              setData={updateDislikes}
+              setData={this.handleChange('q14')}
             />
             <Divider />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <QuestionSelect
-              question={`Did you like reading with ${robot}? Why?`}
+              question={`Did you like reading with ${d.chosen}? Why?`}
               options={['Yes', 'No']}
               data={d.q15}
-              setData={updateLikes}
+              setData={this.handleChange('q15')}
             />
             <Divider />
           </Grid>

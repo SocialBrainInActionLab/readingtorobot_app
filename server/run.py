@@ -265,21 +265,17 @@ def saveData():
     d = request.get_json()
     if isinstance(d, str):
         d = json.loads(d)
-    onedict = {}
-    for p in d:
-        for key in p:
-            onedict[key] = p[key]
 
     if not os.path.isfile(data_file):
         # Create new file and add header.
         with open(data_file, 'w') as f:
             writer = csv.DictWriter(f, csv_fieldnames)
             writer.writeheader()
-            writer.writerow(onedict)
+            writer.writerow(d)
     else:
         with open(data_file, 'a') as f:
             writer = csv.DictWriter(f, csv_fieldnames)
-            writer.writerow(onedict)
+            writer.writerow(d)
 
     return make_response(jsonify({"message": "Saved."}), 200)
 

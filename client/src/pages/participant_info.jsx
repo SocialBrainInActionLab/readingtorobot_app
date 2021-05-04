@@ -16,7 +16,7 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
-import Page from './page';
+import { Page } from '../components';
 
 export default class ParticipantInfoPage extends Page {
   static initialValues() {
@@ -89,15 +89,6 @@ export default class ParticipantInfoPage extends Page {
   render() {
     const d = this.getState();
     const { ethOther } = this.state;
-    const updateId = this.handleChange('id');
-    const updateDate = this.handleChange('date');
-    const updateName = this.handleChange('name');
-    const updatePhone = this.handleChange('phone');
-    const updateEmail = this.handleChange('email');
-    const updateAge = this.handleChange('age');
-    const updateGender = this.handleChange('gender');
-    const updateEthnicity = this.handleChange('ethnicity');
-    const updateLanguage = this.handleChange('language');
 
     return (
       <Box m={5}>
@@ -108,7 +99,7 @@ export default class ParticipantInfoPage extends Page {
               label="Participant ID"
               variant="outlined"
               value={d.id}
-              onChange={updateId}
+              onChange={this.handleChange('id')}
             />
           </Grid>
 
@@ -121,7 +112,7 @@ export default class ParticipantInfoPage extends Page {
                 label="Date"
                 format="dd/MM/yyyy"
                 value={d.date}
-                onChange={updateDate}
+                onChange={this.handleChange('date')}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
                 }}
@@ -134,7 +125,7 @@ export default class ParticipantInfoPage extends Page {
               label="Name"
               variant="outlined"
               value={d.name}
-              onChange={updateName}
+              onChange={this.handleChange('name')}
             />
           </Grid>
 
@@ -147,7 +138,7 @@ export default class ParticipantInfoPage extends Page {
               type="number"
               inputProps={{ inputMode: 'tel' }}
               value={d.phone}
-              onChange={updatePhone}
+              onChange={this.handleChange('phone')}
             />
           </Grid>
 
@@ -158,7 +149,7 @@ export default class ParticipantInfoPage extends Page {
               type="email"
               inputProps={{ inputMode: 'email' }}
               value={d.email}
-              onChange={updateEmail}
+              onChange={this.handleChange('email')}
             />
           </Grid>
 
@@ -189,7 +180,7 @@ export default class ParticipantInfoPage extends Page {
               type="number"
               inputProps={{ inputMode: 'decimal' }}
               value={d.age}
-              onChange={updateAge}
+              onChange={this.handleChange('age')}
             />
           </Grid>
 
@@ -202,7 +193,7 @@ export default class ParticipantInfoPage extends Page {
                 labelId="gender"
                 id="gender"
                 value={d.gender}
-                onChange={updateGender}
+                onChange={this.handleChange('gender')}
               >
                 <MenuItem value="M">Male</MenuItem>
                 <MenuItem value="F">Female</MenuItem>
@@ -239,7 +230,7 @@ export default class ParticipantInfoPage extends Page {
                     label="Please specify"
                     variant="outlined"
                     value={d.ethnicity.toLowerCase() === 'other' ? '' : d.ethnicity}
-                    onChange={updateEthnicity}
+                    onChange={this.handleChange('ethnicity')}
                   />
                 ) : <div />}
               </Grid>
@@ -252,7 +243,7 @@ export default class ParticipantInfoPage extends Page {
               label="language"
               variant="outlined"
               value={d.language}
-              onChange={updateLanguage}
+              onChange={this.handleChange('language')}
             />
           </Grid>
         </Grid>

@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 
 import './App.css';
-import { Navigator, Drawer } from './components';
+import { Drawer, Navigator } from './components';
 
 class App extends React.Component {
   static clearForm() {
@@ -75,17 +75,19 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.handleResultChange = this.handleResultChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.isLoading = this.isLoading.bind(this);
+    this.setSettings = this.setSettings.bind(this);
+    this.sendCurrentSettings = this.sendCurrentSettings.bind(this);
+
     this.state = {
       drawer: false,
       loading: false,
       settings: {},
       results: {},
     };
-    this.handleResultChange = this.handleResultChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.isLoading = this.isLoading.bind(this);
-    this.setSettings = this.setSettings.bind(this);
-    this.sendCurrentSettings = this.sendCurrentSettings.bind(this);
   }
 
   componentDidMount() {
