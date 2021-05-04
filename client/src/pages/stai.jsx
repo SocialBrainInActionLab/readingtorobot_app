@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
 import { Grid } from '@material-ui/core';
@@ -48,34 +47,6 @@ export default class STAI extends DragArea {
   constructor(props) {
     super(props);
     this.state = initData;
-  }
-
-  onDragEnd(result) {
-    const { qId, setData } = this.props;
-    const res = super.onDragEnd(result);
-    if (res) {
-      const data = {};
-      data[qId] = Object
-        .keys(res.fields)
-        .map((key) => {
-          const d = {};
-          d[key] = res.fields[key].cardIds;
-          return d;
-        });
-      setData(data);
-    }
-  }
-
-  getFields() {
-    const { fields } = this.state;
-    const { qId, data } = this.props;
-    if (qId !== undefined && data[qId]) {
-      data[qId].forEach((entry) => {
-        const key = Object.keys(entry)[0];
-        fields[key].cardIds = entry[key];
-      });
-    }
-    return fields;
   }
 
   render() {
@@ -143,7 +114,3 @@ export default class STAI extends DragArea {
     );
   }
 }
-
-STAI.propTypes = {
-  state: PropTypes.objectOf(PropTypes.shape()).isRequired,
-};

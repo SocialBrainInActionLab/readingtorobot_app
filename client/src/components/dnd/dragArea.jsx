@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 import Box from './box';
 
-const data = {
+const initData = {
   cards: {
     'card-1': { id: 'card-1', content: 'card 1' },
     'card-2': { id: 'card-2', content: 'card 2' },
@@ -50,11 +51,39 @@ const Area = styled.div`
 export default class DragArea extends React.Component {
   constructor(props) {
     super(props);
-    this.state = data;
+    this.state = initData;
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   onDragEnd(result) {
+    const { qId, setData } = this.props;
+    const res = this.evaluateDragEnd(result);
+    if (res) {
+      const data = {};
+      data[qId] = Object
+        .keys(res.fields)
+        .map((key) => {
+          const d = {};
+          d[key] = res.fields[key].cardIds;
+          return d;
+        });
+      setData(data);
+    }
+  }
+
+  getFields() {
+    const { fields } = this.state;
+    const { qId, data } = this.props;
+    if (qId !== undefined && data[qId]) {
+      data[qId].forEach((entry) => {
+        const key = Object.keys(entry)[0];
+        fields[key].cardIds = entry[key];
+      });
+    }
+    return fields;
+  }
+
+  evaluateDragEnd(result) {
     const { destination, source, draggableId } = result;
     const { fields } = this.state;
 
@@ -146,3 +175,15 @@ export default class DragArea extends React.Component {
     );
   }
 }
+
+DragArea.propTypes = {
+  data: PropTypes.objectOf(PropTypes.shape()),
+  setData: PropTypes.func,
+  qId: PropTypes.string,
+};
+
+DragArea.defaultProps = {
+  data: {},
+  setData: () => {},
+  qId: '',
+};
