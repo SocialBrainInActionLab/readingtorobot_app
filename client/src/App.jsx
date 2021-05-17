@@ -119,10 +119,13 @@ class App extends React.Component {
   }
 
   handleSave() {
-    const { results: [...results] } = this.state;
+    const { results } = this.state;
+    if (!results) {
+      return;
+    }
     this.setState({ loading: true });
     const videoOrder = JSON.parse(localStorage.getItem('videos'));
-    results.push({ videos: videoOrder });
+    results.videos = videoOrder;
     fetch('/saveData', {
       method: 'POST',
       body: JSON.stringify(results),

@@ -9,12 +9,6 @@ import ReactPlayer from 'react-player';
 import { Page } from '../components';
 
 export default class RobotVideoPage extends Page {
-  static initialValues() {
-    return {
-      questions: '',
-    };
-  }
-
   handleChange(event) {
     const { setData, robotName } = this.props;
     const d = this.getState();
