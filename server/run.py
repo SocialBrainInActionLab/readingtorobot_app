@@ -142,7 +142,7 @@ def startRobot():
     running_robot = robot_name.lower()
 
     if running_robot == 'cozmo':
-        robotProcesses.append(subprocess.Popen(['read_to_cozmo']))
+        robotProcesses.append(subprocess.Popen(['read_to_robot', 'cozmo']))
     else:
         robotProcesses.append(subprocess.Popen(['launch_{}.sh'.format(running_robot),
                                                 robot_ips.get(running_robot, '')]))
