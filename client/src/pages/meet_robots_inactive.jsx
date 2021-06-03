@@ -91,7 +91,7 @@ export default class MeetRobotsInactivePage extends Page {
             <Question
               question={
                     `You will get to see the robots in action later but first I’ll show you a video of each robot.
-                    Do you have any q4?`
+                    Do you have any questions?`
                   }
               data={d.q4}
               setData={this.handleChange('q4')}
