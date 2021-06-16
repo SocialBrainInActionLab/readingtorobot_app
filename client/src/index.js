@@ -7,7 +7,6 @@ import reportWebVitals from './reportWebVitals';
 import {
   STAI,
   ParticipantInfoPage,
-  MeetRobotsInactivePage,
   RobotSelectionPage,
   RobotVideoPage,
   RobotVideoQuestionsPage,
@@ -15,7 +14,6 @@ import {
   DemoPage2,
   DemoPage3,
   DemoPage4,
-  AfterRobotVideo,
   RobotRating,
 } from './pages';
 import { IntensityButtons } from './components';
@@ -69,14 +67,12 @@ function getVideos() {
 
 let layout = [
   <ParticipantInfoPage />,
-  <MeetRobotsInactivePage />,
   <RobotRating qId="rating1" />,
 ];
 
 layout = layout.concat(getVideos());
 
 layout = layout.concat([
-  <AfterRobotVideo />,
   <RobotRating qId="rating2" />,
   <STAI qId="stai1" />,
   <RobotSelectionPage />,
