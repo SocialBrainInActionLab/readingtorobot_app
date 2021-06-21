@@ -22,10 +22,12 @@ export default class Page extends React.Component {
 
   getState() {
     let { data: d } = this.context;
-    if (d && Object.keys(d).length === 0) {
+    const { update } = this.context;
+    if (!d || Object.keys(d).length === 0) {
       d = this.constructor.initialValues();
+      update(d);
     }
-    return { ...d };
+    return d;
   }
 }
 

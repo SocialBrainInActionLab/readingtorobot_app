@@ -16,7 +16,7 @@ import {
   DemoPage4,
   RobotRating,
 } from './pages';
-import { IntensityButtons } from './components';
+import { IntensityButtons, QuestionaireProvider } from './components';
 
 const robotVideos = {
   miro: [
@@ -78,16 +78,18 @@ layout = layout.concat([
   <RobotSelectionPage />,
   <STAI qId="stai2" />,
   <DemoPage1 />,
-  <IntensityButtons qId="q9" question="How helpful was this robot?" />,
+  <IntensityButtons question="How helpful was this robot?" />,
   <DemoPage2 />,
   <DemoPage3 />,
-  <IntensityButtons qId="q16" question="How much did you enjoy reading with the robot?" />,
+  <IntensityButtons question="How much did you enjoy reading with the robot?" />,
   <DemoPage4 />,
 ]);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App layout={layout} />
+    <QuestionaireProvider>
+      <App layout={layout} />
+    </QuestionaireProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

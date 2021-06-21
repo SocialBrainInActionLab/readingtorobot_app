@@ -1,14 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Box,
   Divider,
   Grid,
 } from '@material-ui/core';
 
-import { IntensityButtons, Question, ReusablePage } from '../components';
+import { IntensityButtons, Question, Page } from '../components';
 
-export default class RobotVideoQuestionsPage extends ReusablePage {
+export default class RobotVideoQuestionsPage extends Page {
   render() {
     const { name } = this.props;
 
@@ -42,3 +43,8 @@ export default class RobotVideoQuestionsPage extends ReusablePage {
     );
   }
 }
+
+RobotVideoQuestionsPage.propTypes = {
+  name: PropTypes.string.isRequired,
+  ...Page.propTypes,
+};

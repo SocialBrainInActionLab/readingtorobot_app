@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 
 import './App.css';
-import { Drawer, Navigator, QuestionaireProvider } from './components';
+import { Drawer, Navigator, QuestionaireContext } from './components';
 
 class App extends React.Component {
   static clearForm() {
@@ -257,9 +257,7 @@ class App extends React.Component {
                 </Grid>
               </Toolbar>
             </AppBar>
-            <QuestionaireProvider>
-              <Navigator layout={layout} isLoading={this.isLoading} />
-            </QuestionaireProvider>
+            <Navigator layout={layout} isLoading={this.isLoading} />
           </Box>
 
           <SwipeableDrawer
@@ -287,6 +285,8 @@ class App extends React.Component {
     );
   }
 }
+
+App.contextType = QuestionaireContext;
 
 App.propTypes = {
   layout: PropTypes.arrayOf(PropTypes.element).isRequired,

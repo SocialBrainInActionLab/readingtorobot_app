@@ -10,29 +10,12 @@ import {
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import Page from './Page';
-import ReusablePage from './ReusablePage';
-
 export default class Navigator extends React.Component {
-  static getDefaultResults(elements) {
-    let r = {};
-    elements.forEach((element) => {
-      if (element.type.prototype instanceof ReusablePage) {
-        const name = element.props.name || '';
-        r = { ...r, ...element.type.initialValues(name) };
-      } else if (element.type.prototype instanceof Page) {
-        r = { ...r, ...element.type.initialValues() };
-      } else if ('qId' in element.props) {
-        r[element.props.qId] = '';
-      }
-    });
-    return r;
-  }
-
   constructor(props) {
     super(props);
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.initChildren = this.initChildren.bind(this);
 
     if (!props.layout) {
       this.layout = [
@@ -46,6 +29,7 @@ export default class Navigator extends React.Component {
 
     this.state = {
       current: 0,
+      initialized: false,
     };
   }
 
@@ -59,7 +43,19 @@ export default class Navigator extends React.Component {
     this.setState({ current: c - 1 });
   }
 
+  initChildren() {
+    // Need to do one round around all children pages to load the formulaire.
+    const { current, initialized } = this.state;
+    if (!initialized) {
+      if (current === (this.layout_length - 1)) {
+        this.setState({ initialized: true });
+      }
+      this.setState({ current: (current + 1) % (this.layout_length) });
+    }
+  }
+
   render() {
+    this.initChildren();
     const { current: c } = this.state;
     const { isLoading: loading } = this.props;
     return (
