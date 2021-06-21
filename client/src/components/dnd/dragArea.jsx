@@ -59,14 +59,7 @@ export default class DragArea extends React.Component {
     const { qId, setData } = this.props;
     const res = this.evaluateDragEnd(result);
     if (res) {
-      const data = {};
-      data[qId] = Object
-        .keys(res.fields)
-        .map((key) => {
-          const d = {};
-          d[key] = res.fields[key].cardIds;
-          return d;
-        });
+      const data = Object.fromEntries(Object.keys(res.fields).map((key) => [`${qId}_${key}`, res.fields[key].cardIds]));
       setData(data);
     }
   }
@@ -74,10 +67,9 @@ export default class DragArea extends React.Component {
   getFields() {
     const { fields } = this.state;
     const { qId, data } = this.props;
-    if (qId !== undefined && data[qId]) {
-      data[qId].forEach((entry) => {
-        const key = Object.keys(entry)[0];
-        fields[key].cardIds = entry[key];
+    if (qId !== undefined && Object.keys(fields).every((key) => data[`${qId}_${key}`])) {
+      Object.keys(fields).forEach((key) => {
+        fields[key].cardIds = data[`${qId}_${key}`];
       });
     }
     return fields;
