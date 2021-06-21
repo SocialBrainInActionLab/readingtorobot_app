@@ -10,7 +10,7 @@ import { Page, QuestionSelect } from '../components';
 
 export default class DemoPage3 extends Page {
   getState() {
-    const { data } = this.props;
+    const { data } = this.context;
     return data.chosen || 'the robot';
   }
 
@@ -26,7 +26,6 @@ export default class DemoPage3 extends Page {
               question="Is there anything you didn’t like about the robot?"
               options={['Yes', 'No']}
               qId="q13"
-              {...this.props}
             />
             <Divider />
           </Grid>
@@ -37,7 +36,6 @@ export default class DemoPage3 extends Page {
                         would you be more comfortable reading with a teacher or this robot?`}
               options={['Prefer Robots', 'Prefer Adult']}
               qId="q14"
-              {...this.props}
             />
             <Divider />
           </Grid>
@@ -47,7 +45,6 @@ export default class DemoPage3 extends Page {
               question={`Did you like reading with ${robot}? Why?`}
               options={['Yes', 'No']}
               qId="q15"
-              {...this.props}
             />
             <Divider />
           </Grid>

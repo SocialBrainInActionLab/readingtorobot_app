@@ -16,7 +16,7 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
-import { Page } from '../components';
+import { Page, QuestionaireContext } from '../components';
 
 export default class ParticipantInfoPage extends Page {
   static initialValues() {
@@ -43,7 +43,7 @@ export default class ParticipantInfoPage extends Page {
 
   handleChange(id) {
     return (event) => {
-      const { setData } = this.props;
+      const { update } = this.context;
       const d = this.getState();
 
       if (event instanceof Date) {
@@ -52,7 +52,7 @@ export default class ParticipantInfoPage extends Page {
         event.persist();
         d[id] = event.target.value;
       }
-      setData(d);
+      update(d);
     };
   }
 
@@ -78,10 +78,10 @@ export default class ParticipantInfoPage extends Page {
   }
 
   getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
+    let { data: d } = this.context;
+    if (!d || Object.keys(d).length === 0) {
       d = this.constructor.initialValues();
-      this.props.setData(d);
+      this.context.update(d);
     }
     return d;
   }
@@ -251,3 +251,5 @@ export default class ParticipantInfoPage extends Page {
     );
   }
 }
+
+ParticipantInfoPage.contextType = QuestionaireContext;

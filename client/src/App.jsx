@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 
 import './App.css';
-import { Drawer, Navigator } from './components';
+import { Drawer, Navigator, QuestionaireProvider } from './components';
 
 class App extends React.Component {
   static clearForm() {
@@ -76,7 +76,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleResultChange = this.handleResultChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.isLoading = this.isLoading.bind(this);
     this.setSettings = this.setSettings.bind(this);
@@ -86,7 +85,6 @@ class App extends React.Component {
       drawer: false,
       loading: false,
       settings: {},
-      results: {},
     };
   }
 
@@ -112,10 +110,6 @@ class App extends React.Component {
       settings: s,
       results: JSON.parse(localStorage.getItem('data')),
     });
-  }
-
-  handleResultChange(result) {
-    this.setState({ results: result });
   }
 
   handleSave() {
@@ -263,7 +257,9 @@ class App extends React.Component {
                 </Grid>
               </Toolbar>
             </AppBar>
-            <Navigator layout={layout} onResultChange={this.handleResultChange} isLoading={this.isLoading} />
+            <QuestionaireProvider>
+              <Navigator layout={layout} isLoading={this.isLoading} />
+            </QuestionaireProvider>
           </Box>
 
           <SwipeableDrawer

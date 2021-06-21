@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField, TextareaAutosize, Container } from '@material-ui/core';
+import QuestionaireContext from './QuestionaireContext';
 
 class Question extends React.Component {
   constructor(props) {
@@ -10,14 +11,16 @@ class Question extends React.Component {
 
   handleChange(event) {
     event.persist();
-    const { setData, qId } = this.props;
+    const { qId } = this.props;
+    const { update } = this.context;
     const res = {};
     res[qId] = event.target.value;
-    setData(res);
+    update(res);
   }
 
   getState() {
-    const { data, qId } = this.props;
+    const { qId } = this.props;
+    const { data } = this.context;
     data[qId] = data[qId] || '';
     return data[qId];
   }
@@ -44,10 +47,10 @@ class Question extends React.Component {
   }
 }
 
+Question.contextType = QuestionaireContext;
+
 Question.propTypes = {
-  setData: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
-  data: PropTypes.string.isRequired,
   qId: PropTypes.string.isRequired,
 };
 

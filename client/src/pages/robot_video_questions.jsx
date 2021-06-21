@@ -19,7 +19,6 @@ export default class RobotVideoQuestionsPage extends ReusablePage {
             <Question
               question="Do you have any questions about this robot?"
               qId={`${name}_q1`}
-              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -28,7 +27,6 @@ export default class RobotVideoQuestionsPage extends ReusablePage {
             <IntensityButtons
               question="How intelligent do you think this robot is?"
               qId={`${name}_q2`}
-              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -37,7 +35,6 @@ export default class RobotVideoQuestionsPage extends ReusablePage {
             <IntensityButtons
               question="How friendly do you think this robot is?"
               qId={`${name}_q3`}
-              {...this.props}
             />
           </Grid>
         </Grid>

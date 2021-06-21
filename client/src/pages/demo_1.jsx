@@ -18,7 +18,6 @@ export default class DemoPage1 extends Page {
             <Question
               question="How was that? What do you think about this robot?"
               qId="q7"
-              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -35,7 +34,6 @@ export default class DemoPage1 extends Page {
               )}
               options={['Yes', 'No']}
               qId="q8"
-              {...this.props}
             />
           </Grid>
         </Grid>

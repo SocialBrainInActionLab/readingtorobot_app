@@ -9,7 +9,7 @@ import { Page, Question } from '../components';
 
 export default class DemoPage4 extends Page {
   getState() {
-    const { data } = this.props;
+    const { data } = this.context;
     return data.chosen || 'the robot';
   }
 
@@ -24,7 +24,6 @@ export default class DemoPage4 extends Page {
             <Question
               question={`What makes ${d.chosen} a good reading buddy?`}
               qId="q17"
-              {...this.props}
             />
           </Grid>
           <Grid item>
@@ -32,7 +31,6 @@ export default class DemoPage4 extends Page {
             <Question
               question={`How could ${d.chosen} be a better reading buddy?`}
               qId="q18"
-              {...this.props}
             />
           </Grid>
           <Grid item>
@@ -40,7 +38,6 @@ export default class DemoPage4 extends Page {
             <Question
               question={`What types of activities could you do with ${d.chosen}? [Prompt for explanation].`}
               qId="q19"
-              {...this.props}
             />
           </Grid>
           <Grid item>
@@ -49,15 +46,13 @@ export default class DemoPage4 extends Page {
               question={`Can you think of something you probably shouldn’t do with the ${d.chosen}?
                          [Prompt for explanation].`}
               qId="q20"
-              {...this.props}
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
               question="Do you have any questions or is there anything else you’d like to say?"
-              qId="q20"
-              {...this.props}
+              qId="q21"
             />
           </Grid>
         </Grid>

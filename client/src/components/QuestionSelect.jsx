@@ -10,6 +10,7 @@ import {
   RadioGroup,
   FormControlLabel,
 } from '@material-ui/core';
+import QuestionaireContext from './QuestionaireContext';
 
 class QuestionSelect extends React.Component {
   constructor(props) {
@@ -19,21 +20,24 @@ class QuestionSelect extends React.Component {
   }
 
   handleTextChange(event) {
-    const { setData, qId } = this.props;
+    const { qId } = this.props;
+    const { update } = this.context;
     const data = this.getState();
     data[`${qId}_extended`] = event.target.value;
-    setData(data);
+    update(data);
   }
 
   handleRadioChange(event) {
-    const { setData, qId } = this.props;
+    const { qId } = this.props;
+    const { update } = this.context;
     const data = this.getState();
     data[`${qId}_option`] = event.target.value;
-    setData(data);
+    update(data);
   }
 
   getState() {
-    const { data, qId } = this.props;
+    const { qId } = this.props;
+    const { data } = this.context;
     const s = {};
     s[`${qId}_option`] = data[`${qId}_option`] || false;
     s[`${qId}_extended`] = data[`${qId}_extended`] || '';
@@ -87,11 +91,11 @@ class QuestionSelect extends React.Component {
   }
 }
 
+QuestionSelect.contextType = QuestionaireContext;
+
 QuestionSelect.propTypes = {
-  setData: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  data: PropTypes.string.isRequired,
   qId: PropTypes.string.isRequired,
 };
 

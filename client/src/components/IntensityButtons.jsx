@@ -7,6 +7,7 @@ import {
   Box,
 } from '@material-ui/core';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
+import QuestionaireContext from './QuestionaireContext';
 
 class IntensityButtons extends React.Component {
   constructor(props) {
@@ -16,15 +17,17 @@ class IntensityButtons extends React.Component {
 
   onButtonClick(buttonId) {
     return () => {
-      const { setData, qId } = this.props;
+      const { qId } = this.props;
+      const { update } = this.context;
       const res = {};
       res[qId] = buttonId;
-      setData(res);
+      update(res);
     };
   }
 
   getState() {
-    const { data, qId } = this.props;
+    const { qId } = this.props;
+    const { data } = this.context;
     const variants = ['pink', 'pink', 'pink'];
     if (data[qId] >= 0) {
       variants[data[qId]] = 'red';
@@ -68,10 +71,10 @@ class IntensityButtons extends React.Component {
   }
 }
 
+IntensityButtons.contextType = QuestionaireContext;
+
 IntensityButtons.propTypes = {
-  setData: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
-  data: PropTypes.string.isRequired,
   qId: PropTypes.string.isRequired,
 };
 

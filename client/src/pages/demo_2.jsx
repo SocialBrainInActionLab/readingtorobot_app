@@ -10,7 +10,7 @@ import { IntensityButtons, Page } from '../components';
 
 export default class DemoPage2 extends Page {
   getState() {
-    const { data } = this.props;
+    const { data } = this.context;
     return data.chosen || 'the robot';
   }
 
@@ -28,7 +28,6 @@ export default class DemoPage2 extends Page {
             <IntensityButtons
               question={`${robot} is a good listener.`}
               qId="q10"
-              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -37,7 +36,6 @@ export default class DemoPage2 extends Page {
             <IntensityButtons
               question={`${robot} is a good teacher.`}
               qId="q11"
-              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -46,7 +44,6 @@ export default class DemoPage2 extends Page {
             <IntensityButtons
               question={`${robot} is kind.`}
               qId="q12"
-              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>

@@ -5,6 +5,8 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 import Box from './box';
 
+import QuestionaireContext from '../QuestionaireContext';
+
 const initData = {
   cards: {
     'card-1': { id: 'card-1', content: 'card 1' },
@@ -56,17 +58,19 @@ export default class DragArea extends React.Component {
   }
 
   onDragEnd(result) {
-    const { qId, setData } = this.props;
     const res = this.evaluateDragEnd(result);
     if (res) {
+      const { qId } = this.props;
+      const { update } = this.context;
       const data = Object.fromEntries(Object.keys(res.fields).map((key) => [`${qId}_${key}`, res.fields[key].cardIds]));
-      setData(data);
+      update(data);
     }
   }
 
   getFields() {
     const { fields } = this.state;
-    const { qId, data } = this.props;
+    const { qId } = this.props;
+    const { data } = this.context;
     if (qId !== undefined && Object.keys(fields).every((key) => data[`${qId}_${key}`])) {
       Object.keys(fields).forEach((key) => {
         fields[key].cardIds = data[`${qId}_${key}`];
@@ -168,14 +172,12 @@ export default class DragArea extends React.Component {
   }
 }
 
+DragArea.contextType = QuestionaireContext;
+
 DragArea.propTypes = {
-  data: PropTypes.objectOf(PropTypes.shape()),
-  setData: PropTypes.func,
   qId: PropTypes.string,
 };
 
 DragArea.defaultProps = {
-  data: {},
-  setData: () => {},
   qId: '',
 };

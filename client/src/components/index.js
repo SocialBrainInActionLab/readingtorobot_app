@@ -6,6 +6,7 @@ import Page from './Page';
 import Question from './Question';
 import QuestionSelect from './QuestionSelect';
 import ReusablePage from './ReusablePage';
+import QuestionaireContext, { QuestionaireProvider } from './QuestionaireContext';
 
 export {
   DragArea,
@@ -15,6 +16,8 @@ export {
   Page,
   Question,
   QuestionSelect,
+  QuestionaireContext,
+  QuestionaireProvider,
 };
 
 export { ReusablePage };
