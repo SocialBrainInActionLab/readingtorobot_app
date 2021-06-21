@@ -19,30 +19,30 @@ class QuestionSelect extends React.Component {
   }
 
   handleTextChange(event) {
-    const { setData } = this.props;
+    const { setData, qId } = this.props;
     const data = this.getState();
-    data.answer = event.target.value;
+    data[`${qId}_extended`] = event.target.value;
     setData(data);
   }
 
   handleRadioChange(event) {
-    const { setData } = this.props;
+    const { setData, qId } = this.props;
     const data = this.getState();
-    data.option = event.target.value;
+    data[`${qId}_option`] = event.target.value;
     setData(data);
   }
 
   getState() {
-    let { data: d } = this.props;
-    if (!d) {
-      d = { option: false, answer: '' };
-    }
-    return d;
+    const { data, qId } = this.props;
+    const s = {};
+    s[`${qId}_option`] = data[`${qId}_option`] || false;
+    s[`${qId}_extended`] = data[`${qId}_extended`] || '';
+    return s;
   }
 
   render() {
-    const { question, options } = this.props;
-    const data = this.getState();
+    const { question, options, qId } = this.props;
+    const s = this.getState();
     return (
       <Container>
         <p>
@@ -55,7 +55,7 @@ class QuestionSelect extends React.Component {
               aria-label="option"
               name="option"
               defaultValue="top"
-              value={data.option}
+              value={s[`${qId}_option`]}
               onChange={this.handleRadioChange}
             >
               <FormControlLabel
@@ -78,7 +78,7 @@ class QuestionSelect extends React.Component {
             id="outlined-basic"
             variant="outlined"
             multiline={TextareaAutosize}
-            value={data.answer}
+            value={s[`${qId}_extended`]}
             onChange={this.handleTextChange}
           />
         </form>
@@ -91,11 +91,8 @@ QuestionSelect.propTypes = {
   setData: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  data: PropTypes.string,
-};
-
-QuestionSelect.defaultProps = {
-  data: '',
+  data: PropTypes.string.isRequired,
+  qId: PropTypes.string.isRequired,
 };
 
 export default QuestionSelect;

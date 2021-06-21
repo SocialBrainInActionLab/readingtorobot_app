@@ -9,38 +9,8 @@ import {
 import { IntensityButtons, Question, ReusablePage } from '../components';
 
 export default class RobotVideoQuestionsPage extends ReusablePage {
-  static initialValues(name) {
-    const d = {};
-    d[`${name}_q1`] = '';
-    d[`${name}_q2`] = '';
-    d[`${name}_q3`] = '';
-    return d;
-  }
-
-  handleChange(qId) {
-    return (event) => {
-      const { setData } = this.props;
-      const d = this.getState();
-      d[qId] = event;
-      setData(d);
-    };
-  }
-
-  getState() {
-    let { data: d } = this.props;
-    const { name } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = {};
-      d[`${name}_q1`] = '';
-      d[`${name}_q2`] = '';
-      d[`${name}_q3`] = '';
-    }
-    return d;
-  }
-
   render() {
     const { name } = this.props;
-    const d = this.getState();
 
     return (
       <Box m={5}>
@@ -48,8 +18,8 @@ export default class RobotVideoQuestionsPage extends ReusablePage {
           <Grid item>
             <Question
               question="Do you have any questions about this robot?"
-              data={d[`${name}_q1`]}
-              setData={this.handleChange(`${name}_q1`)}
+              qId={`${name}_q1`}
+              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -57,8 +27,8 @@ export default class RobotVideoQuestionsPage extends ReusablePage {
             <Box height="20px" />
             <IntensityButtons
               question="How intelligent do you think this robot is?"
-              data={d[`${name}_q2`]}
-              setData={this.handleChange(`${name}_q2`)}
+              qId={`${name}_q2`}
+              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -66,8 +36,8 @@ export default class RobotVideoQuestionsPage extends ReusablePage {
             <Box height="20px" />
             <IntensityButtons
               question="How friendly do you think this robot is?"
-              data={d[`${name}_q3`]}
-              setData={this.handleChange(`${name}_q3`)}
+              qId={`${name}_q3`}
+              {...this.props}
             />
           </Grid>
         </Grid>

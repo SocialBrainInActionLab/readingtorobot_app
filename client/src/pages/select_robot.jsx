@@ -205,6 +205,7 @@ export default class RobotSelectionPage extends React.Component {
             return;
           }
           res.json().then((data) => {
+            // eslint-disable-next-line
             console.log(data);
           });
           this.setState({ robot: '' });

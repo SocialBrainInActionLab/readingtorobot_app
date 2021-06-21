@@ -10,14 +10,20 @@ class Question extends React.Component {
 
   handleChange(event) {
     event.persist();
-    const { setData } = this.props;
-    setData(event.target.value);
+    const { setData, qId } = this.props;
+    const res = {};
+    res[qId] = event.target.value;
+    setData(res);
+  }
+
+  getState() {
+    const { data, qId } = this.props;
+    data[qId] = data[qId] || '';
+    return data[qId];
   }
 
   render() {
     const { question } = this.props;
-    const { data: value } = this.props;
-
     return (
       <Container>
         <p>
@@ -29,7 +35,7 @@ class Question extends React.Component {
             id="outlined-basic"
             variant="outlined"
             multiline={TextareaAutosize}
-            value={value}
+            value={this.getState()}
             onChange={this.handleChange}
           />
         </form>
@@ -41,11 +47,8 @@ class Question extends React.Component {
 Question.propTypes = {
   setData: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
-  data: PropTypes.string,
-};
-
-Question.defaultProps = {
-  data: '',
+  data: PropTypes.string.isRequired,
+  qId: PropTypes.string.isRequired,
 };
 
 export default Question;

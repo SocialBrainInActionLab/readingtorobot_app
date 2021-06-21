@@ -17,29 +17,26 @@ class IntensityButtons extends React.Component {
   onButtonClick(buttonId) {
     return () => {
       const { setData, qId } = this.props;
-      if (qId !== null) {
-        const res = {};
-        res[qId] = buttonId;
-        setData(res);
-      } else {
-        setData(buttonId);
-      }
+      const res = {};
+      res[qId] = buttonId;
+      setData(res);
     };
   }
 
-  render() {
-    const { question, qId } = this.props;
-    let { data } = this.props;
+  getState() {
+    const { data, qId } = this.props;
     const variants = ['pink', 'pink', 'pink'];
-    let id = data;
-    if (qId) {
-      if (data === null) {
-        data = {};
-        data[qId] = '';
-      }
-      id = data[qId];
+    if (data[qId] >= 0) {
+      variants[data[qId]] = 'red';
+    } else {
+      data[qId] = -1;
     }
-    variants[id] = 'red';
+    return variants;
+  }
+
+  render() {
+    const { question } = this.props;
+    const variants = this.getState();
 
     return (
       <Container>
@@ -74,13 +71,8 @@ class IntensityButtons extends React.Component {
 IntensityButtons.propTypes = {
   setData: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
-  data: PropTypes.string,
-  qId: PropTypes.string,
-};
-
-IntensityButtons.defaultProps = {
-  data: null,
-  qId: null,
+  data: PropTypes.string.isRequired,
+  qId: PropTypes.string.isRequired,
 };
 
 export default IntensityButtons;

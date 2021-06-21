@@ -9,30 +9,7 @@ import {
 import { Page, Question, QuestionSelect } from '../components';
 
 export default class DemoPage1 extends Page {
-  static initialValues() {
-    return {
-      q7: '',
-      q8: '',
-    };
-  }
-
-  handleChange(id) {
-    return (event) => {
-      const { setData } = this.props;
-      const d = this.getState();
-
-      if (typeof event === 'string' || event instanceof String || event instanceof Object) {
-        d[id] = event;
-      } else {
-        d[id] = event.target.value;
-      }
-      setData(d);
-    };
-  }
-
   render() {
-    const d = this.getState();
-
     return (
       <Box m={5}>
         <Grid container direction="column" spacing={2}>
@@ -40,8 +17,8 @@ export default class DemoPage1 extends Page {
             <Box height="20px" />
             <Question
               question="How was that? What do you think about this robot?"
-              data={d.q7}
-              setData={this.handleChange('q7')}
+              qId="q7"
+              {...this.props}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -57,8 +34,8 @@ export default class DemoPage1 extends Page {
                 </p>
               )}
               options={['Yes', 'No']}
-              data={d.q8}
-              setData={this.handleChange('q8')}
+              qId="q8"
+              {...this.props}
             />
           </Grid>
         </Grid>
