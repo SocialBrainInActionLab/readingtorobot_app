@@ -1,28 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import styled from 'styled-components';
-import LooksOneTwoToneIcon from '@material-ui/icons/LooksOneTwoTone';
-import LooksTwoTwoToneIcon from '@material-ui/icons/LooksTwoTwoTone';
-import Looks3TwoToneIcon from '@material-ui/icons/Looks3TwoTone';
 import { Grid } from '@material-ui/core';
 
 import { DragDropContext } from 'react-beautiful-dnd';
 import DragArea, { Box } from '../components/dnd';
+import { shuffle } from '../utils';
 
 const Container = styled.div`
   display: flex;
   max-height: 100%;
   align-items: stretch;
-`;
-
-const PodBox = styled.div`
-  max-height: 100%;
-  align-items: stretch;
-  border-top: 4px solid brown;
-  border-bottom: 4px solid brown;
-
-  border-left: ${(props) => (props.left ? 4 : 0)}px solid brown;
-  border-right: ${(props) => (props.right ? 4 : 0)}px solid brown;
 `;
 
 const Image = styled.img`
@@ -31,33 +19,33 @@ const Image = styled.img`
 
 const initData = {
   cards: {
-    Cozmo: { id: 'Cozmo', content: <Image src={`${process.env.PUBLIC_URL}/Cozmo.jpg`} alt="Cozmo" /> },
-    MiRo: { id: 'MiRo', content: <Image src={`${process.env.PUBLIC_URL}/MiRo.jpg`} alt="MiRo" /> },
-    NAO: { id: 'NAO', content: <Image src={`${process.env.PUBLIC_URL}/NAO.png`} alt="NAO" /> },
+    first: { id: 'first', content: <Image src={`${process.env.PUBLIC_URL}/rib1st.png`} alt="first" /> },
+    second: { id: 'second', content: <Image src={`${process.env.PUBLIC_URL}/rib2nd.png`} alt="second" /> },
+    third: { id: 'third', content: <Image src={`${process.env.PUBLIC_URL}/rib3rd.png`} alt="third" /> },
   },
   fields: {
     origin: {
       id: 'origin',
       title: '',
-      cardIds: ['Cozmo', 'NAO', 'MiRo'],
+      cardIds: ['first', 'second', 'third'],
     },
-    first: {
-      id: 'first',
+    cozmo: {
+      id: 'cozmo',
       title: '',
       cardIds: [],
     },
-    second: {
-      id: 'second',
+    miro: {
+      id: 'miro',
       title: '',
       cardIds: [],
     },
-    third: {
-      id: 'third',
+    nao: {
+      id: 'nao',
       title: '',
       cardIds: [],
     },
   },
-  fieldOrder: ['second', 'first', 'third'],
+  fieldOrder: shuffle(['cozmo', 'miro', 'nao']),
 };
 
 export default class RobotRating extends DragArea {
@@ -75,51 +63,42 @@ export default class RobotRating extends DragArea {
         <Grid container direction="column" alignItems="center">
           <Grid
             container
-            direction="column"
+            direction="row"
             justify="space-between"
             style={{ width: '60vw' }}
           >
+            <Grid item>
+              <Box
+                direction="vertical"
+                key={fields.origin.id}
+                box={fields.origin}
+                cards={fields.origin.cardIds.map((cardId) => cards[cardId])}
+              />
+            </Grid>
             <Grid item>
               <Container>
                 {fieldOrder.map((fieldId) => {
                   const field = fields[fieldId];
                   const cardIds = field.cardIds.map((cardId) => cards[cardId]);
 
-                  return (<Box key={field.id} box={field} cards={cardIds} />);
+                  return (
+                    <Box
+                      key={field.id}
+                      box={field}
+                      cards={cardIds}
+                      content={(
+                        <Image
+                          src={`${process.env.PUBLIC_URL}/${field.id}.png`}
+                          alt={field.id}
+                          style={{
+                            position: 'absolute', height: '30vh', zIndex: -1,
+                          }}
+                        />
+)}
+                    />
+                  );
                 })}
               </Container>
-            </Grid>
-            <Grid item>
-              <Grid
-                container
-                justify="space-around"
-                alignItems="flex-end"
-              >
-                <Grid item xs={4}>
-                  <PodBox left>
-                    <LooksTwoTwoToneIcon style={{ fontSize: 80, color: 'black' }} />
-                  </PodBox>
-                </Grid>
-                <Grid item xs={4}>
-                  <PodBox left right>
-                    <LooksOneTwoToneIcon style={{ fontSize: 120, color: 'black' }} />
-                  </PodBox>
-                </Grid>
-                <Grid item xs={4}>
-                  <PodBox right>
-                    <Looks3TwoToneIcon style={{ fontSize: 60, color: 'black' }} />
-                  </PodBox>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Box
-                max-width="100%"
-                direction="horizontal"
-                key={fields.origin.id}
-                box={fields.origin}
-                cards={fields.origin.cardIds.map((cardId) => cards[cardId])}
-              />
             </Grid>
           </Grid>
         </Grid>

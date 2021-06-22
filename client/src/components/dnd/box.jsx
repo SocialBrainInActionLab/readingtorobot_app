@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const CardList = styled.div`
   align-items: center;
-  background-color: ${(props) => (props.isDraggingOver ? 'lightgrey' : 'white')};
+  background-color: ${(props) => (props.isDraggingOver ? 'rgba(100, 100, 100, 0.3)' : 'transparent')};
   border: ${(props) => (props.bordered ? 1 : 0)}px solid lightgrey;
   border-radius: 8px;
   display: flex;
@@ -26,6 +26,7 @@ const CardList = styled.div`
   min-height: ${(props) => (props.direction === 'column' ? '200px' : '100px')};
   transition: background-color 0.2s ease;
   padding: 8px;
+  position: 'absolute'
 `;
 
 const DynamicList = styled.section`
@@ -39,24 +40,31 @@ const DynamicList = styled.section`
 export default class Box extends React.Component {
   render() {
     const {
-      box, cards, width, direction, bordered,
+      box, cards, width, direction, bordered, content,
     } = this.props;
     return (
       <Container width={width}>
         <Droppable droppableId={box.id} direction={direction}>
           {(provided, snapshot) => (
-            <CardList
-              bordered={bordered}
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              isDraggingOver={snapshot.isDraggingOver}
-              direction={direction === 'vertical' ? 'column' : 'row'}
+            <Container
+              style={{ display: 'flex' }}
+              justify-content="center"
+              align-items="center"
             >
-              <DynamicList direction={direction === 'vertical' ? 'row' : 'column'}>
-                {cards.map((card, index) => <Card key={card.id} card={card} index={index} />)}
-                {provided.placeholder}
-              </DynamicList>
-            </CardList>
+              <CardList
+                bordered={bordered}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                isDraggingOver={snapshot.isDraggingOver}
+                direction={direction === 'vertical' ? 'column' : 'row'}
+              >
+                <DynamicList direction={direction === 'vertical' ? 'row' : 'column'}>
+                  {cards.map((card, index) => <Card key={card.id} card={card} index={index} />)}
+                  {provided.placeholder}
+                </DynamicList>
+              </CardList>
+              {content}
+            </Container>
           )}
         </Droppable>
       </Container>
@@ -70,10 +78,12 @@ Box.propTypes = {
   width: PropTypes.number,
   direction: PropTypes.string,
   bordered: PropTypes.bool,
+  content: PropTypes.element,
 };
 
 Box.defaultProps = {
   width: null,
   direction: 'vertical',
   bordered: false,
+  content: null,
 };

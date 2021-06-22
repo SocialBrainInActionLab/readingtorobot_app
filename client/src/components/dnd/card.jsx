@@ -5,7 +5,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   align-items: center;
-  background-color: white;
+  background-color: transparent;
   border-radius: 4px;
   display: flex;
   justify-content: center;
