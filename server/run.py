@@ -25,8 +25,11 @@ CORS(app)
 robotProcesses = []
 csv_fieldnames = ['id', 'date', 'name', 'phone', 'email', 'birthdate', 'age', 'gender', 'ethnicity', 'language',
                   'miro_q1', 'miro_q2', 'miro_q3', 'nao_q1', 'nao_q2', 'nao_q3', 'cozmo_q1', 'cozmo_q2', 'cozmo_q3',
-                  'chosen', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14',
-                  'q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'q21', 'videos', 'rating1', 'rating2', 'stai1', 'stai2']
+                  'chosen', 'q0', 'q1_option', 'q1_extended', 'q2', 'q3', 'q4', 'q5', 'q6_extended', 'q6_option',
+                  'q7_extended', 'q7_option', 'q8_extended', 'q8_option' 'q9', 'q10', 'q11', 'q12', 'q13', 'q14',
+                  'rating1_first', 'rating1_origin', 'rating1_second', 'rating1_third', 'rating2_first',
+                  'rating2_origin', 'rating2_second', 'rating2_third', 'stai1_high', 'stai1_low', 'stai1_mid',
+                  'stai1_origin', 'stai2_high', 'stai2_low', 'stai2_mid', 'stai2_origin', 'videos']
 running_robot = '_'
 robot_ips = {}
 data_file = '/data/data.csv'
