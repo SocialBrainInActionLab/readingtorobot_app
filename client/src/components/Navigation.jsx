@@ -15,7 +15,6 @@ export default class Navigator extends React.Component {
     super(props);
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
-    this.initChildren = this.initChildren.bind(this);
 
     if (!props.layout) {
       this.layout = [
@@ -29,7 +28,6 @@ export default class Navigator extends React.Component {
 
     this.state = {
       current: 0,
-      initialized: false,
     };
   }
 
@@ -43,19 +41,7 @@ export default class Navigator extends React.Component {
     this.setState({ current: c - 1 });
   }
 
-  initChildren() {
-    // Need to do one round around all children pages to load the formulaire.
-    const { current, initialized } = this.state;
-    if (!initialized) {
-      if (current === (this.layout_length - 1)) {
-        this.setState({ initialized: true });
-      }
-      this.setState({ current: (current + 1) % (this.layout_length) });
-    }
-  }
-
   render() {
-    this.initChildren();
     const { current: c } = this.state;
     const { isLoading: loading } = this.props;
     return (

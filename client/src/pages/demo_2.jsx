@@ -27,7 +27,7 @@ export default class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is a good listener.`}
-              qId="q10"
+              qId="q3"
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -35,7 +35,7 @@ export default class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is a good teacher.`}
-              qId="q11"
+              qId="q4"
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -43,7 +43,7 @@ export default class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is kind.`}
-              qId="q12"
+              qId="q5"
             />
           </Grid>
           <Grid item><Divider /></Grid>

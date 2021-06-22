@@ -69,11 +69,11 @@ export default class ParticipantInfoPage extends Page {
 
   handleBirthdateChange(event) {
     if (event != null) {
-      const { setData } = this.props;
+      const { update } = this.context;
       const d = this.getState();
       d.birthdate = event;
       d.age = Math.abs((new Date(Date.now() - event.getTime())).getUTCFullYear() - 1970);
-      setData(d);
+      update(d);
     }
   }
 

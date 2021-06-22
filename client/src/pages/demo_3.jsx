@@ -25,7 +25,7 @@ export default class DemoPage3 extends Page {
             <QuestionSelect
               question="Is there anything you didn’t like about the robot?"
               options={['Yes', 'No']}
-              qId="q13"
+              qId="q6"
             />
             <Divider />
           </Grid>
@@ -35,7 +35,7 @@ export default class DemoPage3 extends Page {
               question={`If you had to read a really difficult book for the first time,
                         would you be more comfortable reading with a teacher or this robot?`}
               options={['Prefer Robots', 'Prefer Adult']}
-              qId="q14"
+              qId="q7"
             />
             <Divider />
           </Grid>
@@ -44,7 +44,7 @@ export default class DemoPage3 extends Page {
             <QuestionSelect
               question={`Did you like reading with ${robot}? Why?`}
               options={['Yes', 'No']}
-              qId="q15"
+              qId="q8"
             />
             <Divider />
           </Grid>

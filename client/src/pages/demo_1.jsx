@@ -17,7 +17,7 @@ export default class DemoPage1 extends Page {
             <Box height="20px" />
             <Question
               question="How was that? What do you think about this robot?"
-              qId="q7"
+              qId="q0"
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -33,7 +33,7 @@ export default class DemoPage1 extends Page {
                 </p>
               )}
               options={['Yes', 'No']}
-              qId="q8"
+              qId="q1"
             />
           </Grid>
         </Grid>

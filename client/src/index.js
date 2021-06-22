@@ -78,10 +78,10 @@ layout = layout.concat([
   <RobotSelectionPage />,
   <STAI qId="stai2" />,
   <DemoPage1 />,
-  <IntensityButtons question="How helpful was this robot?" />,
+  <IntensityButtons qId="q2" question="How helpful was this robot?" />,
   <DemoPage2 />,
   <DemoPage3 />,
-  <IntensityButtons question="How much did you enjoy reading with the robot?" />,
+  <IntensityButtons qId="q9" question="How much did you enjoy reading with the robot?" />,
   <DemoPage4 />,
 ]);
 
