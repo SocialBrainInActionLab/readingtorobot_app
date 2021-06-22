@@ -60,16 +60,23 @@ export default class RobotRating extends DragArea {
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Grid container direction="column" alignItems="center">
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ height: '70vh' }}
+        >
+
           <Grid
             container
             direction="row"
             justify="space-between"
-            style={{ width: '60vw' }}
+            alignItems="center"
+            style={{ width: '80vw' }}
           >
             <Grid item>
               <Box
-                direction="vertical"
                 key={fields.origin.id}
                 box={fields.origin}
                 cards={fields.origin.cardIds.map((cardId) => cards[cardId])}
@@ -80,21 +87,25 @@ export default class RobotRating extends DragArea {
                 {fieldOrder.map((fieldId) => {
                   const field = fields[fieldId];
                   const cardIds = field.cardIds.map((cardId) => cards[cardId]);
-
+                  const width = '15vw';
+                  const height = '20vh';
                   return (
                     <Box
+                      width={width}
+                      height={height}
                       key={field.id}
                       box={field}
                       cards={cardIds}
+                      position="absolute"
                       content={(
                         <Image
                           src={`${process.env.PUBLIC_URL}/${field.id}.png`}
                           alt={field.id}
                           style={{
-                            position: 'absolute', height: '30vh', zIndex: -1,
+                            zIndex: -1, width,
                           }}
                         />
-)}
+                      )}
                     />
                   );
                 })}
