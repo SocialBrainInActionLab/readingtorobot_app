@@ -34,7 +34,7 @@ export default class RobotVideoPage extends Page {
         <Grid container direction="column" spacing={2} align="center">
           <Grid item>
             <Box height="20px" />
-            <ReactPlayer url={url} controls />
+            <ReactPlayer url={url} controls width="90vw" height="70vh" />
           </Grid>
         </Grid>
       </Box>
