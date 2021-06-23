@@ -17,41 +17,43 @@ const Image = styled.img`
   max-width: 70%;
 `;
 
-const initData = {
-  cards: {
-    first: { id: 'first', content: <Image src={`${process.env.PUBLIC_URL}/rib1st.png`} alt="first" /> },
-    second: { id: 'second', content: <Image src={`${process.env.PUBLIC_URL}/rib2nd.png`} alt="second" /> },
-    third: { id: 'third', content: <Image src={`${process.env.PUBLIC_URL}/rib3rd.png`} alt="third" /> },
-  },
-  fields: {
-    origin: {
-      id: 'origin',
-      title: '',
-      cardIds: ['first', 'second', 'third'],
+function getInitData() {
+  return {
+    cards: {
+      first: { id: 'first', content: <Image src={`${process.env.PUBLIC_URL}/rib1st.png`} alt="first" /> },
+      second: { id: 'second', content: <Image src={`${process.env.PUBLIC_URL}/rib2nd.png`} alt="second" /> },
+      third: { id: 'third', content: <Image src={`${process.env.PUBLIC_URL}/rib3rd.png`} alt="third" /> },
     },
-    cozmo: {
-      id: 'cozmo',
-      title: '',
-      cardIds: [],
+    fields: {
+      origin: {
+        id: 'origin',
+        title: '',
+        cardIds: ['first', 'second', 'third'],
+      },
+      cozmo: {
+        id: 'cozmo',
+        title: '',
+        cardIds: [],
+      },
+      miro: {
+        id: 'miro',
+        title: '',
+        cardIds: [],
+      },
+      nao: {
+        id: 'nao',
+        title: '',
+        cardIds: [],
+      },
     },
-    miro: {
-      id: 'miro',
-      title: '',
-      cardIds: [],
-    },
-    nao: {
-      id: 'nao',
-      title: '',
-      cardIds: [],
-    },
-  },
-  fieldOrder: shuffle(['cozmo', 'miro', 'nao']),
-};
+    fieldOrder: shuffle(['cozmo', 'miro', 'nao']),
+  };
+}
 
 export default class RobotRating extends DragArea {
   constructor(props) {
     super(props);
-    this.state = initData;
+    this.state = getInitData();
   }
 
   render() {

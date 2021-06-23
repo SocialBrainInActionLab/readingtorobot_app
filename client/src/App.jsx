@@ -108,12 +108,11 @@ class App extends React.Component {
 
     this.setState({
       settings: s,
-      results: JSON.parse(localStorage.getItem('data')),
     });
   }
 
   handleSave() {
-    const { results } = this.state;
+    const { data: results } = this.context;
     if (!results) {
       return;
     }
