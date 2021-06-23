@@ -15,7 +15,7 @@ export default class RobotVideoQuestionsPage extends Page {
 
     return (
       <Box m={5}>
-        <Grid container direction="column" spacing={2} align="center">
+        <Grid container direction="column" spacing={2}>
           <Grid item>
             <Question
               question="Do you have any questions about this robot?"

@@ -76,6 +76,7 @@ function actionAvailable(robot, action) {
       }
       break;
     default:
+      break;
   }
   return false;
 }
