@@ -23,7 +23,7 @@ class QuestionSelect extends React.Component {
     const { qId } = this.props;
     const { update } = this.context;
     const data = this.getState();
-    data[`${qId}_extended`] = event.target.value;
+    data[`${qId}_O`] = event.target.value;
     update(data);
   }
 
@@ -31,7 +31,7 @@ class QuestionSelect extends React.Component {
     const { qId } = this.props;
     const { update } = this.context;
     const data = this.getState();
-    data[`${qId}_option`] = event.target.value;
+    data[`${qId}_D`] = event.target.value;
     update(data);
   }
 
@@ -39,8 +39,8 @@ class QuestionSelect extends React.Component {
     const { qId } = this.props;
     const { data } = this.context;
     const s = {};
-    s[`${qId}_option`] = data[`${qId}_option`] || false;
-    s[`${qId}_extended`] = data[`${qId}_extended`] || '';
+    s[`${qId}_D`] = data[`${qId}_D`] || false;
+    s[`${qId}_O`] = data[`${qId}_O`] || '';
     return s;
   }
 
@@ -59,7 +59,7 @@ class QuestionSelect extends React.Component {
               aria-label="option"
               name="option"
               defaultValue="top"
-              value={s[`${qId}_option`]}
+              value={s[`${qId}_D`]}
               onChange={this.handleRadioChange}
             >
               <FormControlLabel
@@ -82,7 +82,7 @@ class QuestionSelect extends React.Component {
             id="outlined-basic"
             variant="outlined"
             multiline={TextareaAutosize}
-            value={s[`${qId}_extended`]}
+            value={s[`${qId}_O`]}
             onChange={this.handleTextChange}
           />
         </form>

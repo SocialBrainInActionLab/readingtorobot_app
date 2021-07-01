@@ -118,7 +118,7 @@ class App extends React.Component {
     }
     this.setState({ loading: true });
     const videoOrder = JSON.parse(localStorage.getItem('videos'));
-    results.videos = videoOrder;
+    results.VideoOrder = videoOrder;
     fetch('/saveData', {
       method: 'POST',
       body: JSON.stringify(results),

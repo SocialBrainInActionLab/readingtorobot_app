@@ -19,7 +19,7 @@ export default class RobotVideoQuestionsPage extends Page {
           <Grid item>
             <Question
               question="Do you have any questions about this robot?"
-              qId={`${name}_q1`}
+              qId={`${name}_AnyQ`}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -27,7 +27,7 @@ export default class RobotVideoQuestionsPage extends Page {
             <Box height="20px" />
             <IntensityButtons
               question="How intelligent do you think this robot is?"
-              qId={`${name}_q2`}
+              qId={`${name}_Intelligent`}
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -35,7 +35,7 @@ export default class RobotVideoQuestionsPage extends Page {
             <Box height="20px" />
             <IntensityButtons
               question="How friendly do you think this robot is?"
-              qId={`${name}_q3`}
+              qId={`${name}_Friendly`}
             />
           </Grid>
         </Grid>

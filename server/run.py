@@ -24,13 +24,15 @@ CORS(app)
 
 robotProcesses = []
 csv_fieldnames = ['id', 'date', 'name', 'phone', 'email', 'birthdate', 'age', 'gender', 'ethnicity', 'language',
-                  'miro_q1', 'miro_q2', 'miro_q3', 'nao_q1', 'nao_q2', 'nao_q3', 'cozmo_q1', 'cozmo_q2', 'cozmo_q3',
-                  'chosen', 'q0', 'q1_option', 'q1_extended', 'q2', 'q3', 'q4', 'q5', 'q6_extended', 'q6_option',
-                  'q7_extended', 'q7_option', 'q8_extended', 'q8_option', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14',
-                  'videos', 'rating1_miro', 'rating1_origin', 'rating1_nao', 'rating1_cozmo', 'rating2_cozmo',
-                  'rating2_origin', 'rating2_miro', 'rating2_nao', 'stai1_calm', 'stai1_content', 'stai1_relaxed',
-                  'stai1_tense', 'stai1_upset', 'stai1_worried', 'stai2_calm', 'stai2_content', 'stai2_relaxed',
-                  'stai2_tense', 'stai2_upset', 'stai2_worried']
+                  'miro_AnyQ', 'miro_Intelligent', 'miro_Friendly', 'nao_AnyQ', 'nao_Intelligent', 'nao_Friendly',
+                  'cozmo_AnyQ', 'cozmo_Intelligent', 'cozmo_Friendly', 'chosen', 'Impressions', 'Helpful_D',
+                  'Helpful_O', 'Helpful_R', 'GoodListener_R', 'GoodTeacher_R', 'Kind_R', 'Dislike_O', 'Dislike_D',
+                  'TeachRobotPref_O', 'TeachRobotPref_D', 'Enjoy_O', 'Enjoy_D', 'Enjoy_R', 'GoodReadBudQuals_O',
+                  'BetterReadButQuals_Q', 'Activities_O', 'AvoidActivities_O', 'FinalComments_O', 'VideoOrder',
+                  'rating1_miro', 'rating1_origin', 'rating1_nao', 'rating1_cozmo', 'rating2_cozmo', 'rating2_origin',
+                  'rating2_miro', 'rating2_nao', 'stai1_calm', 'stai1_content', 'stai1_relaxed', 'stai1_tense',
+                  'stai1_upset', 'stai1_worried', 'stai2_calm', 'stai2_content', 'stai2_relaxed', 'stai2_tense',
+                  'stai2_upset', 'stai2_worried']
 running_robot = '_'
 robot_ips = {}
 data_file = '/data/data.csv'

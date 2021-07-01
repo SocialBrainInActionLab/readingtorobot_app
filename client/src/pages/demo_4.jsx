@@ -23,21 +23,21 @@ export default class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question={`What makes ${d.chosen} a good reading buddy?`}
-              qId="q10"
+              qId="GoodReadBudQuals_O"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
               question={`How could ${d.chosen} be a better reading buddy?`}
-              qId="q11"
+              qId="BetterReadButQuals_Q"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
               question={`What types of activities could you do with ${d.chosen}? [Prompt for explanation].`}
-              qId="q12"
+              qId="Activities_O"
             />
           </Grid>
           <Grid item>
@@ -45,14 +45,14 @@ export default class DemoPage4 extends Page {
             <Question
               question={`Can you think of something you probably shouldn’t do with the ${d.chosen}?
                          [Prompt for explanation].`}
-              qId="q13"
+              qId="AvoidActivities_O"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
               question="Do you have any questions or is there anything else you’d like to say?"
-              qId="q14"
+              qId="FinalComments_O"
             />
           </Grid>
         </Grid>
