@@ -14,7 +14,7 @@ export default class DemoPage4 extends Page {
   }
 
   render() {
-    const d = this.getState();
+    const robot = this.getState();
 
     return (
       <Box m={5}>
@@ -22,28 +22,28 @@ export default class DemoPage4 extends Page {
           <Grid item>
             <Box height="20px" />
             <Question
-              question={`What makes ${d.chosen} a good reading buddy?`}
+              question={`What makes ${robot} a good reading buddy?`}
               qId="GoodReadBudQuals_O"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
-              question={`How could ${d.chosen} be a better reading buddy?`}
+              question={`How could ${robot} be a better reading buddy?`}
               qId="BetterReadButQuals_Q"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
-              question={`What types of activities could you do with ${d.chosen}? [Prompt for explanation].`}
+              question={`What types of activities could you do with ${robot}? [Prompt for explanation].`}
               qId="Activities_O"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
-              question={`Can you think of something you probably shouldn’t do with the ${d.chosen}?
+              question={`Can you think of something you probably shouldn’t do with the ${robot}?
                          [Prompt for explanation].`}
               qId="AvoidActivities_O"
             />
