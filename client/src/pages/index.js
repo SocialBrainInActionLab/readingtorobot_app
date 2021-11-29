@@ -8,12 +8,14 @@ import RobotVideoQuestionsPage from './robot_video_questions';
 import RobotSelectionPage from './select_robot';
 import STAI from './stai';
 import RobotRating from './robot_rating';
+import ExperimenterQuestionPage from './experimenter_question';
 
 export {
   DemoPage1,
   DemoPage2,
   DemoPage3,
   DemoPage4,
+  ExperimenterQuestionPage,
   ParticipantInfoPage,
   RobotVideoPage,
   RobotVideoQuestionsPage,
