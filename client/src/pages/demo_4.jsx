@@ -51,6 +51,13 @@ export default class DemoPage4 extends Page {
           <Grid item>
             <Box height="20px" />
             <Question
+              question={`Do you think ${robot} could read this book on their own? [Prompt for explanation]`}
+              qId="RobotCanRead_O"
+            />
+          </Grid>
+          <Grid item>
+            <Box height="20px" />
+            <Question
               question="Do you have any questions or is there anything else you’d like to say?"
               qId="FinalComments_O"
             />

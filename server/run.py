@@ -23,7 +23,7 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 robotProcesses = []
-csv_fieldnames = ['id', 'date', 'name', 'phone', 'email', 'birthdate', 'age', 'gender', 'ethnicity', 'language',
+csv_fieldnames = ['id', 'date', 'AloneRobotPref_D', 'AloneRobotPref_O', 'RobotCanRead_O', 'ExperimenterPresence_R',
                   'miro_AnyQ', 'miro_Intelligent', 'miro_Friendly', 'nao_AnyQ', 'nao_Intelligent', 'nao_Friendly',
                   'cozmo_AnyQ', 'cozmo_Intelligent', 'cozmo_Friendly', 'chosen', 'Impressions', 'Helpful_D',
                   'Helpful_O', 'Helpful_R', 'GoodListener_R', 'GoodTeacher_R', 'Kind_R', 'Dislike_O', 'Dislike_D',

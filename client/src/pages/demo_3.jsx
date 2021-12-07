@@ -42,6 +42,17 @@ export default class DemoPage3 extends Page {
           <Grid item>
             <Box height="20px" />
             <QuestionSelect
+              question={`If you had to read a really difficult book for the first time,
+                        would you be more comfortable reading with a teacher or this robot?`}
+              options={['Prefer Robots', 'Prefer Alone']}
+              qId="AloneRobotPref"
+            />
+            <Divider />
+          </Grid>
+
+          <Grid item>
+            <Box height="20px" />
+            <QuestionSelect
               question={`Did you enjoy reading with ${robot}? Why?`}
               options={['Yes', 'No']}
               qId="Enjoy"
