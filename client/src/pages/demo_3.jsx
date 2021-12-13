@@ -43,7 +43,7 @@ export default class DemoPage3 extends Page {
             <Box height="20px" />
             <QuestionSelect
               question={`If you had to read a really difficult book for the first time,
-                        would you be more comfortable reading with a teacher or this robot?`}
+                         would you be more comfortable reading on alone or with this robot?`}
               options={['Prefer Robots', 'Prefer Alone']}
               qId="AloneRobotPref"
             />
