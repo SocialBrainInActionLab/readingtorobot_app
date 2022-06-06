@@ -6,41 +6,16 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import Page from './page';
-import IntensityButtons from '../IntensityButtons';
+import { IntensityButtons, Page } from '../components';
 
-export class DemoPage2 extends Page {
-  static initialValues() {
-    return {
-      q8: null,
-      q9: null,
-      q10: null,
-    };
-  }
-
-  handleChange(id) {
-    return (event) => {
-      const { setData } = this.props;
-      const d = this.getState();
-      d[id] = event;
-      setData(d);
-    };
-  }
-
+export default class DemoPage2 extends Page {
   getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = this.constructor.initialValues();
-    }
-    return d;
+    const { data } = this.context;
+    return data.chosen || 'the robot';
   }
 
   render() {
-    const { robot } = this.props;
-    const d = this.getState();
-    const updateListener = this.handleChange('q8');
-    const updateTeacher = this.handleChange('q9');
-    const updateKind = this.handleChange('q10');
+    const robot = this.getState();
 
     return (
       <Box m={5}>
@@ -52,8 +27,7 @@ export class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is a good listener.`}
-              data={d.q8}
-              setData={updateListener}
+              qId="GoodListener_R"
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -61,8 +35,7 @@ export class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is a good teacher.`}
-              data={d.q9}
-              setData={updateTeacher}
+              qId="GoodTeacher_R"
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -70,8 +43,7 @@ export class DemoPage2 extends Page {
             <Box height="20px" />
             <IntensityButtons
               question={`${robot} is kind.`}
-              data={d.q10}
-              setData={updateKind}
+              qId="Kind_R"
             />
           </Grid>
           <Grid item><Divider /></Grid>
@@ -81,5 +53,3 @@ export class DemoPage2 extends Page {
     );
   }
 }
-
-export default DemoPage2;

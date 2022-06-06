@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   AppBar,
   Box,
@@ -8,16 +10,15 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+
 import LoadingOverlay from 'react-loading-overlay';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import MenuIcon from '@material-ui/icons/Menu';
-import React from 'react';
 import PropTypes from 'prop-types';
+
 import './App.css';
-import Navigator from './Navigation';
-import Drawer from './Drawer';
+import { Drawer, Navigator, QuestionaireContext } from './components';
 
 class App extends React.Component {
   static clearForm() {
@@ -74,18 +75,17 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    // TODO: Populate results from formularies
-    this.state = {
-      drawer: false,
-      loading: false,
-      settings: {},
-      results: JSON.parse(localStorage.getItem('data')),
-    };
-    this.handleResultChange = this.handleResultChange.bind(this);
+
     this.handleSave = this.handleSave.bind(this);
     this.isLoading = this.isLoading.bind(this);
     this.setSettings = this.setSettings.bind(this);
     this.sendCurrentSettings = this.sendCurrentSettings.bind(this);
+
+    this.state = {
+      drawer: false,
+      loading: false,
+      settings: {},
+    };
   }
 
   componentDidMount() {
@@ -103,19 +103,22 @@ class App extends React.Component {
     } else {
       s = ls;
     }
-    this.setState({ settings: s });
-    App.sendSettings(s);
-  }
 
-  handleResultChange(result) {
-    this.setState({ results: result });
+    App.sendSettings(s);
+
+    this.setState({
+      settings: s,
+    });
   }
 
   handleSave() {
-    const { results: [...results] } = this.state;
+    const { data: results } = this.context;
+    if (!results) {
+      return;
+    }
     this.setState({ loading: true });
     const videoOrder = JSON.parse(localStorage.getItem('videos'));
-    results.push({ videos: videoOrder });
+    results.VideoOrder = videoOrder;
     fetch('/saveData', {
       method: 'POST',
       body: JSON.stringify(results),
@@ -144,8 +147,7 @@ class App extends React.Component {
           });
           return;
         }
-        // NotificationManager.success('Data saved successfully!\n(click to clear form)', 'Saved', 6000, App.clearForm);
-        toast(
+        toast.success(
           <Grid
             container
             direction="row"
@@ -165,7 +167,6 @@ class App extends React.Component {
                   backgroundColor: '#a7daa9',
                   fontSize: '12px',
                   padding: '1px 10px',
-
                 }}
               >
                 Clear form
@@ -255,7 +256,7 @@ class App extends React.Component {
                 </Grid>
               </Toolbar>
             </AppBar>
-            <Navigator layout={layout} onResultChange={this.handleResultChange} isLoading={this.isLoading} />
+            <Navigator layout={layout} isLoading={this.isLoading} />
           </Box>
 
           <SwipeableDrawer
@@ -283,6 +284,8 @@ class App extends React.Component {
     );
   }
 }
+
+App.contextType = QuestionaireContext;
 
 App.propTypes = {
   layout: PropTypes.arrayOf(PropTypes.element).isRequired,

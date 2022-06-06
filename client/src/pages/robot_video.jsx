@@ -2,21 +2,13 @@
 import React from 'react';
 import {
   Box,
-  Divider,
   Grid,
 } from '@material-ui/core';
 import ReactPlayer from 'react-player';
 
-import Page from './page';
-import Question from '../Question';
+import { Page } from '../components';
 
-export class RobotVideoPage extends Page {
-  static initialValues() {
-    return {
-      questions: '',
-    };
-  }
-
+export default class RobotVideoPage extends Page {
   handleChange(event) {
     const { setData, robotName } = this.props;
     const d = this.getState();
@@ -35,28 +27,17 @@ export class RobotVideoPage extends Page {
   }
 
   render() {
-    const { url, robotName } = this.props;
-    const d = this.getState();
+    const { url } = this.props;
 
     return (
       <Box m={5}>
         <Grid container direction="column" spacing={2} align="center">
           <Grid item>
             <Box height="20px" />
-            <ReactPlayer url={url} controls />
-          </Grid>
-          <Grid item><Divider /></Grid>
-          <Grid item>
-            <Question
-              question="Do you have any questions about this robot?"
-              data={d[`${robotName}Questions`]}
-              setData={this.handleChange}
-            />
+            <ReactPlayer url={url} controls width="90vw" height="70vh" />
           </Grid>
         </Grid>
       </Box>
     );
   }
 }
-
-export default RobotVideoPage;

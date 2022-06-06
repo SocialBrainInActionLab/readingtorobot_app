@@ -5,50 +5,16 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import Page from './page';
-import Question from '../Question';
+import { Page, Question } from '../components';
 
-export class DemoPage4 extends Page {
-  static initialValues() {
-    return {
-      q15: null,
-      q16: null,
-      q17: null,
-      q18: null,
-      q19: null,
-    };
-  }
-
-  handleChange(id) {
-    return (event) => {
-      const { setData } = this.props;
-      const d = this.getState();
-
-      if (typeof event === 'string' || event instanceof String || event instanceof Object) {
-        d[id] = event;
-      } else {
-        d[id] = event.target.value;
-      }
-      setData(d);
-    };
-  }
-
+export default class DemoPage4 extends Page {
   getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = this.constructor.initialValues();
-    }
-    return d;
+    const { data } = this.context;
+    return data.chosen || 'the robot';
   }
 
   render() {
-    const { robot } = this.props;
-    const d = this.getState();
-    const update1 = this.handleChange('q15');
-    const update2 = this.handleChange('q16');
-    const update3 = this.handleChange('q17');
-    const update4 = this.handleChange('q18');
-    const update5 = this.handleChange('q19');
+    const robot = this.getState();
 
     return (
       <Box m={5}>
@@ -57,24 +23,21 @@ export class DemoPage4 extends Page {
             <Box height="20px" />
             <Question
               question={`What makes ${robot} a good reading buddy?`}
-              data={d.q15}
-              setData={update1}
+              qId="GoodReadBudQuals_O"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
               question={`How could ${robot} be a better reading buddy?`}
-              data={d.q16}
-              setData={update2}
+              qId="BetterReadButQuals_Q"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
               question={`What types of activities could you do with ${robot}? [Prompt for explanation].`}
-              data={d.q17}
-              setData={update3}
+              qId="Activities_O"
             />
           </Grid>
           <Grid item>
@@ -82,16 +45,21 @@ export class DemoPage4 extends Page {
             <Question
               question={`Can you think of something you probably shouldn’t do with the ${robot}?
                          [Prompt for explanation].`}
-              data={d.q18}
-              setData={update4}
+              qId="AvoidActivities_O"
+            />
+          </Grid>
+          <Grid item>
+            <Box height="20px" />
+            <Question
+              question={`Do you think ${robot} could read this book on their own? [Prompt for explanation]`}
+              qId="RobotCanRead_O"
             />
           </Grid>
           <Grid item>
             <Box height="20px" />
             <Question
               question="Do you have any questions or is there anything else you’d like to say?"
-              data={d.q19}
-              setData={update5}
+              qId="FinalComments_O"
             />
           </Grid>
         </Grid>
@@ -99,5 +67,3 @@ export class DemoPage4 extends Page {
     );
   }
 }
-
-export default DemoPage4;

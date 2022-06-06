@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
 import {
   Container,
   IconButton,
@@ -8,6 +7,7 @@ import {
   Box,
 } from '@material-ui/core';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
+import QuestionaireContext from './QuestionaireContext';
 
 class IntensityButtons extends React.Component {
   constructor(props) {
@@ -17,33 +17,29 @@ class IntensityButtons extends React.Component {
 
   onButtonClick(buttonId) {
     return () => {
-      const { setData, qId } = this.props;
-      if (qId !== null) {
-        const res = {};
-        res[qId] = buttonId;
-        setData(res);
-      } else {
-        setData(buttonId);
-      }
+      const { qId } = this.props;
+      const { update } = this.context;
+      const res = {};
+      res[qId] = buttonId;
+      update(res);
     };
   }
 
-  render() {
-    const { question, qId } = this.props;
-    let { data } = this.props;
+  getState() {
+    const { qId } = this.props;
+    const { data } = this.context;
     const variants = ['pink', 'pink', 'pink'];
-    let id = data;
-    if (qId) {
-      if (data === null) {
-        data = {};
-        data[qId] = '';
-      }
-      id = data[qId];
+    if (data[qId] >= 0) {
+      variants[data[qId]] = 'red';
+    } else {
+      data[qId] = -1;
     }
-    variants[id] = 'red';
-    const onClick0 = this.onButtonClick(0);
-    const onClick1 = this.onButtonClick(1);
-    const onClick2 = this.onButtonClick(2);
+    return variants;
+  }
+
+  render() {
+    const { question } = this.props;
+    const variants = this.getState();
 
     return (
       <Container>
@@ -53,19 +49,19 @@ class IntensityButtons extends React.Component {
         </p>
         <Grid container alignItems="center" justify="space-evenly">
           <Grid item>
-            <IconButton onClick={onClick0}>
+            <IconButton onClick={this.onButtonClick(0)}>
               <Brightness1Icon style={{ fontSize: 30, color: variants[0] }} />
             </IconButton>
           </Grid>
 
           <Grid item>
-            <IconButton onClick={onClick1}>
+            <IconButton onClick={this.onButtonClick(1)}>
               <Brightness1Icon style={{ fontSize: 80, color: variants[1] }} />
             </IconButton>
           </Grid>
 
           <Grid item>
-            <IconButton onClick={onClick2}>
+            <IconButton onClick={this.onButtonClick(2)}>
               <Brightness1Icon style={{ fontSize: 150, color: variants[2] }} />
             </IconButton>
           </Grid>
@@ -75,16 +71,11 @@ class IntensityButtons extends React.Component {
   }
 }
 
-IntensityButtons.propTypes = {
-  setData: PropTypes.func.isRequired,
-  question: PropTypes.string.isRequired,
-  data: PropTypes.string,
-  qId: PropTypes.string,
-};
+IntensityButtons.contextType = QuestionaireContext;
 
-IntensityButtons.defaultProps = {
-  data: null,
-  qId: null,
+IntensityButtons.propTypes = {
+  question: PropTypes.string.isRequired,
+  qId: PropTypes.string.isRequired,
 };
 
 export default IntensityButtons;

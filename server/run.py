@@ -23,9 +23,16 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 robotProcesses = []
-csv_fieldnames = ['id', 'date', 'name', 'phone', 'email', 'birthdate', 'age', 'gender', 'ethnicity', 'language',
-                  'miroQuestions', 'naoQuestions', 'cozmoQuestions', 'chosen', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7',
-                  'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'videos']
+csv_fieldnames = ['id', 'date', 'AloneRobotPref_D', 'AloneRobotPref_O', 'RobotCanRead_O', 'ExperimenterPresence_R',
+                  'miro_AnyQ', 'miro_Intelligent', 'miro_Friendly', 'nao_AnyQ', 'nao_Intelligent', 'nao_Friendly',
+                  'cozmo_AnyQ', 'cozmo_Intelligent', 'cozmo_Friendly', 'chosen', 'Impressions', 'Helpful_D',
+                  'Helpful_O', 'Helpful_R', 'GoodListener_R', 'GoodTeacher_R', 'Kind_R', 'Dislike_O', 'Dislike_D',
+                  'TeachRobotPref_O', 'TeachRobotPref_D', 'Enjoy_O', 'Enjoy_D', 'Enjoy_R', 'GoodReadBudQuals_O',
+                  'BetterReadButQuals_Q', 'Activities_O', 'AvoidActivities_O', 'FinalComments_O', 'VideoOrder',
+                  'rating1_miro', 'rating1_origin', 'rating1_nao', 'rating1_cozmo', 'rating2_cozmo', 'rating2_origin',
+                  'rating2_miro', 'rating2_nao', 'stai1_calm', 'stai1_content', 'stai1_relaxed', 'stai1_tense',
+                  'stai1_upset', 'stai1_worried', 'stai2_calm', 'stai2_content', 'stai2_relaxed', 'stai2_tense',
+                  'stai2_upset', 'stai2_worried']
 running_robot = '_'
 robot_ips = {}
 data_file = '/data/data.csv'
@@ -141,7 +148,7 @@ def startRobot():
     running_robot = robot_name.lower()
 
     if running_robot == 'cozmo':
-        robotProcesses.append(subprocess.Popen(['read_to_cozmo']))
+        robotProcesses.append(subprocess.Popen(['read_to_robot', 'cozmo']))
     else:
         robotProcesses.append(subprocess.Popen(['launch_{}.sh'.format(running_robot),
                                                 robot_ips.get(running_robot, '')]))
@@ -264,21 +271,17 @@ def saveData():
     d = request.get_json()
     if isinstance(d, str):
         d = json.loads(d)
-    onedict = {}
-    for p in d:
-        for key in p:
-            onedict[key] = p[key]
 
     if not os.path.isfile(data_file):
         # Create new file and add header.
         with open(data_file, 'w') as f:
             writer = csv.DictWriter(f, csv_fieldnames)
             writer.writeheader()
-            writer.writerow(onedict)
+            writer.writerow(d)
     else:
         with open(data_file, 'a') as f:
             writer = csv.DictWriter(f, csv_fieldnames)
-            writer.writerow(onedict)
+            writer.writerow(d)
 
     return make_response(jsonify({"message": "Saved."}), 200)
 

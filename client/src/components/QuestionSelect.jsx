@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
 import {
   Box,
   TextField,
@@ -11,6 +10,7 @@ import {
   RadioGroup,
   FormControlLabel,
 } from '@material-ui/core';
+import QuestionaireContext from './QuestionaireContext';
 
 class QuestionSelect extends React.Component {
   constructor(props) {
@@ -20,30 +20,33 @@ class QuestionSelect extends React.Component {
   }
 
   handleTextChange(event) {
-    const { setData } = this.props;
+    const { qId } = this.props;
+    const { update } = this.context;
     const data = this.getState();
-    data.answer = event.target.value;
-    setData(data);
+    data[`${qId}_O`] = event.target.value;
+    update(data);
   }
 
   handleRadioChange(event) {
-    const { setData } = this.props;
+    const { qId } = this.props;
+    const { update } = this.context;
     const data = this.getState();
-    data.option = event.target.value;
-    setData(data);
+    data[`${qId}_D`] = event.target.value;
+    update(data);
   }
 
   getState() {
-    let { data: d } = this.props;
-    if (!d) {
-      d = { option: false, answer: '' };
-    }
-    return d;
+    const { qId } = this.props;
+    const { data } = this.context;
+    const s = {};
+    s[`${qId}_D`] = data[`${qId}_D`] || false;
+    s[`${qId}_O`] = data[`${qId}_O`] || '';
+    return s;
   }
 
   render() {
-    const { question, options } = this.props;
-    const data = this.getState();
+    const { question, options, qId } = this.props;
+    const s = this.getState();
     return (
       <Container>
         <p>
@@ -56,7 +59,7 @@ class QuestionSelect extends React.Component {
               aria-label="option"
               name="option"
               defaultValue="top"
-              value={data.option}
+              value={s[`${qId}_D`]}
               onChange={this.handleRadioChange}
             >
               <FormControlLabel
@@ -79,7 +82,7 @@ class QuestionSelect extends React.Component {
             id="outlined-basic"
             variant="outlined"
             multiline={TextareaAutosize}
-            value={data.answer}
+            value={s[`${qId}_O`]}
             onChange={this.handleTextChange}
           />
         </form>
@@ -88,15 +91,12 @@ class QuestionSelect extends React.Component {
   }
 }
 
+QuestionSelect.contextType = QuestionaireContext;
+
 QuestionSelect.propTypes = {
-  setData: PropTypes.func.isRequired,
   question: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  data: PropTypes.string,
-};
-
-QuestionSelect.defaultProps = {
-  data: '',
+  qId: PropTypes.string.isRequired,
 };
 
 export default QuestionSelect;

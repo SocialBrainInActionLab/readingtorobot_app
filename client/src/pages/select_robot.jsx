@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
+import { QuestionaireContext } from '../components';
 
 function publishMQTT(topicName, message) {
   fetch('/pubMQTT', {
@@ -75,11 +76,12 @@ function actionAvailable(robot, action) {
       }
       break;
     default:
+      break;
   }
   return false;
 }
 
-export class RobotSelectionPage extends React.Component {
+export default class RobotSelectionPage extends React.Component {
   static sendEmotion(emotion) {
     return () => {
       publishMQTT('speech/cmd', emotion);
@@ -116,7 +118,7 @@ export class RobotSelectionPage extends React.Component {
 
   handleStart(bot) {
     return () => {
-      const { isLoading, chooseRobot } = this.props;
+      const { isLoading } = this.props;
       isLoading(true);
       fetch('/startRobot', {
         method: 'POST',
@@ -149,7 +151,7 @@ export class RobotSelectionPage extends React.Component {
           }
           this.setState({ robot: bot, speechOn: true });
           isLoading(false);
-          chooseRobot(bot);
+          this.chooseRobot(bot);
         })
         .catch((error) => {
           toast.error(
@@ -167,7 +169,7 @@ export class RobotSelectionPage extends React.Component {
           );
           isLoading(false);
         });
-      chooseRobot(bot);
+      this.chooseRobot(bot);
     };
   }
 
@@ -205,6 +207,7 @@ export class RobotSelectionPage extends React.Component {
             return;
           }
           res.json().then((data) => {
+            // eslint-disable-next-line
             console.log(data);
           });
           this.setState({ robot: '' });
@@ -381,6 +384,11 @@ export class RobotSelectionPage extends React.Component {
       });
   }
 
+  chooseRobot(bot) {
+    const { update } = this.context;
+    update({ chosen: bot });
+  }
+
   paintIdle() {
     this.data.push();
     const buttons = [];
@@ -545,9 +553,8 @@ export class RobotSelectionPage extends React.Component {
   }
 }
 
+RobotSelectionPage.contextType = QuestionaireContext;
+
 RobotSelectionPage.propTypes = {
   isLoading: PropTypes.func.isRequired,
-  chooseRobot: PropTypes.func.isRequired,
 };
-
-export default RobotSelectionPage;

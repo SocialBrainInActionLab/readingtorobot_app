@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import QuestionaireContext from './QuestionaireContext';
 
-class Page extends React.Component {
+export default class Page extends React.Component {
   static initialValues() {
     return '';
   }
@@ -16,26 +16,19 @@ class Page extends React.Component {
     // give react a function to set the state asynchronously.
     // here it's using the "name" value set on the TextField
     // to set state.person.[firstname|lastname].
-    const { setData } = this.props;
-    setData(event.target.value);
+    const { update } = this.context;
+    update(event.target.value);
   }
 
   getState() {
-    let { data: d } = this.props;
-    if (!d) {
-      d = Page.initialValues();
+    let { data: d } = this.context;
+    const { update } = this.context;
+    if (!d || Object.keys(d).length === 0) {
+      d = this.constructor.initialValues();
+      update(d);
     }
     return d;
   }
 }
 
-Page.propTypes = {
-  setData: PropTypes.func.isRequired,
-  data: PropTypes.string,
-};
-
-Page.defaultProps = {
-  data: '',
-};
-
-export default Page;
+Page.contextType = QuestionaireContext;

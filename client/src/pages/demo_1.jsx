@@ -6,45 +6,10 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import Page from './page';
-import Question from '../Question';
-import QuestionSelect from '../Question_select';
+import { Page, Question, QuestionSelect } from '../components';
 
-export class DemoPage1 extends Page {
-  static initialValues() {
-    return {
-      q5: '',
-      q6: '',
-    };
-  }
-
-  handleChange(id) {
-    return (event) => {
-      const { setData } = this.props;
-      const d = this.getState();
-
-      if (typeof event === 'string' || event instanceof String || event instanceof Object) {
-        d[id] = event;
-      } else {
-        d[id] = event.target.value;
-      }
-      setData(d);
-    };
-  }
-
-  getState() {
-    let { data: d } = this.props;
-    if (d && Object.keys(d).length === 0) {
-      d = this.constructor.initialValues();
-    }
-    return d;
-  }
-
+export default class DemoPage1 extends Page {
   render() {
-    const d = this.getState();
-    const updateHowWasIt = this.handleChange('q5');
-    const updateHelpful = this.handleChange('q6');
-
     return (
       <Box m={5}>
         <Grid container direction="column" spacing={2}>
@@ -52,17 +17,23 @@ export class DemoPage1 extends Page {
             <Box height="20px" />
             <Question
               question="How was that? What do you think about this robot?"
-              data={d.q5}
-              setData={updateHowWasIt}
+              qId="Impressions"
             />
           </Grid>
           <Grid item><Divider /></Grid>
           <Grid item>
             <QuestionSelect
-              question="Do you think this is a helpful robot? Why (if not) / HOW (if so)?"
+              question={(
+                <p>
+                  <p>Do you think this is a helpful robot? Why (if not) / HOW (if so)?</p>
+                  <p>
+                    Prompts: What other things do you think it might be helpful with?
+                    How helpful do you think this robot would be in helping kids learn to read?
+                  </p>
+                </p>
+              )}
               options={['Yes', 'No']}
-              data={d.q6}
-              setData={updateHelpful}
+              qId="Helpful"
             />
           </Grid>
         </Grid>
@@ -70,5 +41,3 @@ export class DemoPage1 extends Page {
     );
   }
 }
-
-export default DemoPage1;

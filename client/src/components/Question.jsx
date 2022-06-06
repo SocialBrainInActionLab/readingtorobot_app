@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './App.css';
 import { TextField, TextareaAutosize, Container } from '@material-ui/core';
+import QuestionaireContext from './QuestionaireContext';
 
 class Question extends React.Component {
   constructor(props) {
@@ -10,18 +10,23 @@ class Question extends React.Component {
   }
 
   handleChange(event) {
-    event.persist(); // allow native event access (see: https://facebook.github.io/react/docs/events.html)
-    // give react a function to set the state asynchronously.
-    // here it's using the "name" value set on the TextField
-    // to set state.person.[firstname|lastname].
-    const { setData } = this.props;
-    setData(event.target.value);
+    event.persist();
+    const { qId } = this.props;
+    const { update } = this.context;
+    const res = {};
+    res[qId] = event.target.value;
+    update(res);
+  }
+
+  getState() {
+    const { qId } = this.props;
+    const { data } = this.context;
+    data[qId] = data[qId] || '';
+    return data[qId];
   }
 
   render() {
     const { question } = this.props;
-    const { data: value } = this.props;
-
     return (
       <Container>
         <p>
@@ -33,7 +38,7 @@ class Question extends React.Component {
             id="outlined-basic"
             variant="outlined"
             multiline={TextareaAutosize}
-            value={value}
+            value={this.getState()}
             onChange={this.handleChange}
           />
         </form>
@@ -42,14 +47,11 @@ class Question extends React.Component {
   }
 }
 
-Question.propTypes = {
-  setData: PropTypes.func.isRequired,
-  question: PropTypes.string.isRequired,
-  data: PropTypes.string,
-};
+Question.contextType = QuestionaireContext;
 
-Question.defaultProps = {
-  data: '',
+Question.propTypes = {
+  question: PropTypes.string.isRequired,
+  qId: PropTypes.string.isRequired,
 };
 
 export default Question;
