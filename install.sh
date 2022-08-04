@@ -2,7 +2,7 @@
 # Installation script for current web server
 
 src_path=$(dirname $(realpath $0))
-server_name=$(basename $src_path)
+server_name=$(basename $src_path)_control
 
 read -p "Target ip address (default: 10.3.141.1) " TARGET_IP
 read -p "Target user (default: ubuntu):" TARGET_USER
