@@ -16,7 +16,7 @@ from flask_cors import CORS
 
 import paho.mqtt.client as mqtt
 
-from server.slack_bot import publish_control_hostname
+from slack_bot import publish_hostname
 
 
 app = Flask(__name__, static_url_path='')
@@ -58,7 +58,7 @@ def stop_robot(name: str, timeout: Optional[int] = 30) -> bool:
     mqttc = mqtt.Client('stop')
     mqttc.message_callback_add("{}/stopped_clean".format(name), robot_callback)
     mqttc.message_callback_add("speech/stopped_clean", speech_callback)
-    mqttc.connect(socket.gethostbyname(socket.gethostname()))
+    mqttc.connect('127.0.0.1')
     mqttc.subscribe("{}/stopped_clean".format(name), 0)
     mqttc.subscribe("speech/stopped_clean", 0)
     mqttc.loop_start()
@@ -89,7 +89,7 @@ def stop_speech(timeout: Optional[int] = 20) -> bool:
 
     mqttc = mqtt.Client('stopSpeech')
     mqttc.message_callback_add("speech/stopped_clean", speech_callback)
-    mqttc.connect(socket.gethostbyname(socket.gethostname()))
+    mqttc.connect('127.0.0.1')
     mqttc.subscribe("speech/stopped_clean", 0)
     mqttc.loop_start()
     mqttc.publish("speech/stop", "stop")
@@ -161,7 +161,7 @@ def startRobot():
 
     mqttc = mqtt.Client('start')
     mqttc.message_callback_add("{}/started".format(running_robot), start_callback)
-    mqttc.connect(socket.gethostbyname(socket.gethostname()))
+    mqttc.connect('127.0.0.1')
     mqttc.subscribe("{}/started".format(running_robot), 0)
     mqttc.loop_start()
 
@@ -258,7 +258,7 @@ def pubMQTT():
     req = request.get_json()
     mqttc = mqtt.Client('publisher')
 
-    mqttc.connect(socket.gethostbyname(socket.gethostname()))
+    mqttc.connect('127.0.0.1')
     mqttc.loop_start()
     mqttc.publish(req['topic'], req['msg'])
     mqttc.loop_stop()
@@ -308,5 +308,8 @@ def getData():
 
 
 if __name__ == '__main__':
-    publish_control_hostname()
+    try:
+        publish_hostname()
+    except Exception as e:
+        app.logger.warn(e)
     app.run(host='0.0.0.0', port='5001')
