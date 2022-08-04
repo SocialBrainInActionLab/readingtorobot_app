@@ -308,5 +308,8 @@ def getData():
 
 
 if __name__ == '__main__':
-    publish_hostname()
+    try:
+        publish_hostname()
+    except Exception as e:
+        app.logger.warn(e)
     app.run(host='0.0.0.0')
