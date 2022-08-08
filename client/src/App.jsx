@@ -95,8 +95,8 @@ class App extends React.Component {
     if (!ls) {
       s = {
         robotIPs: {
-          miro: '0.0.0.0',
-          nao: '0.0.0.0',
+          miro: '10.3.141.60', // <- we'll reserve 60, 61, etc for different MiRos
+          nao: '10.3.141.50', // <- 50, 51, etc for different NAOs
         },
         filename: 'data.csv',
       };
