@@ -52,9 +52,9 @@ case "$response" in
         autorestart=true
         stderr_logfile=/logs/${server_name}.err.log
         stdout_logfile=/logs/${server_name}.out.log
-        environment=SLACK_TOKEN=\\\"${SLACK_TOKEN}\\\",NAO_PASSWORD=\\\"${NAO_PASSWORD}\\\",HOME=\\\"/home/${TARGET_USER}\\\"
+        environment=SLACK_TOKEN=\\\"${SLACK_TOKEN}\\\",NAO_PASSWORD=\\\"${NAO_PASSWORD}\\\"
         "
 
-        echo $PASSWORD | ssh -tt $TARGET_USER@$TARGET_IP "echo \"$supervisor_conf\" | sudo tee /etc/supervisor/conf.d/$server_name.conf >/dev/null && sudo supervisorctl reread && sudo supervisorctl update"
+        echo $PASSWORD | ssh -tt $TARGET_USER@$TARGET_IP "echo \"$supervisor_conf\" | sudo tee -a  /etc/supervisor/conf.d/$server_name.conf >/dev/null && sudo supervisorctl reread && sudo supervisorctl update"
         ;;
 esac
