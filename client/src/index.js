@@ -22,15 +22,15 @@ import { shuffle } from './utils';
 
 const robotVideos = {
   miro: [
-    <RobotVideoPage url="https://youtu.be/wtaOtL8-RF8" />,
+    <RobotVideoPage url="videos/MiRo.mp4" />,
     <RobotVideoQuestionsPage name="miro" />,
   ],
   cozmo: [
-    <RobotVideoPage url="https://youtu.be/8LWp_GPMsoc" />,
+    <RobotVideoPage url="videos/Cozmo.mp4" />,
     <RobotVideoQuestionsPage name="cozmo" />,
   ],
   nao: [
-    <RobotVideoPage url="https://youtu.be/f40EYuccxRg" />,
+    <RobotVideoPage url="videos/NAO.mp4" />,
     <RobotVideoQuestionsPage name="nao" />,
   ],
 };
