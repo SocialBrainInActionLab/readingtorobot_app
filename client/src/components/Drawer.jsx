@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
   Button,
   Divider,
@@ -7,7 +7,7 @@ import {
   List,
   ListItem,
   TextField,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 class Drawer extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class Drawer extends React.Component {
         direction="column"
         alignItems="center"
         justify="space-between"
-        style={{ height: '90vh' }}
+        style={{ height: "90vh" }}
       >
         <Grid item>
           <List>
@@ -60,7 +60,9 @@ class Drawer extends React.Component {
             })}
           </List>
         </Grid>
-        <Grid item><Divider /></Grid>
+        <Grid item>
+          <Divider />
+        </Grid>
         <Grid item>
           <List>
             <ListItem>Data Storage</ListItem>
@@ -75,7 +77,9 @@ class Drawer extends React.Component {
           </List>
         </Grid>
         <Grid item>
-          <Button variant="outlined" onClick={clearForm}>Clear form</Button>
+          <Button variant="outlined" onClick={clearForm}>
+            Clear form
+          </Button>
         </Grid>
       </Grid>
     );

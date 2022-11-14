@@ -1,43 +1,43 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { DragDropContext } from 'react-beautiful-dnd';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { DragDropContext } from "react-beautiful-dnd";
 
-import Box from './box';
+import Box from "./box";
 
-import QuestionaireContext from '../QuestionaireContext';
+import QuestionaireContext from "../QuestionaireContext";
 
 const initData = {
   cards: {
-    'card-1': { id: 'card-1', content: 'card 1' },
-    'card-2': { id: 'card-2', content: 'card 2' },
-    'card-3': { id: 'card-3', content: 'card 3' },
-    'card-4': { id: 'card-4', content: 'card 4' },
-    'card-5': { id: 'card-5', content: 'card 5' },
+    "card-1": { id: "card-1", content: "card 1" },
+    "card-2": { id: "card-2", content: "card 2" },
+    "card-3": { id: "card-3", content: "card 3" },
+    "card-4": { id: "card-4", content: "card 4" },
+    "card-5": { id: "card-5", content: "card 5" },
   },
   fields: {
     origin: {
-      id: 'origin',
-      title: 'Origin',
-      cardIds: ['card-1', 'card-2', 'card-3', 'card-4', 'card-5'],
+      id: "origin",
+      title: "Origin",
+      cardIds: ["card-1", "card-2", "card-3", "card-4", "card-5"],
     },
     col1: {
-      id: 'col1',
-      title: 'Col1',
+      id: "col1",
+      title: "Col1",
       cardIds: [],
     },
     col2: {
-      id: 'col2',
-      title: 'Col2',
+      id: "col2",
+      title: "Col2",
       cardIds: [],
     },
     col3: {
-      id: 'col3',
-      title: 'Col3',
+      id: "col3",
+      title: "Col3",
       cardIds: [],
     },
   },
-  fieldOrder: ['col1', 'col2', 'col3'],
+  fieldOrder: ["col1", "col2", "col3"],
 };
 
 const Container = styled.div`
@@ -62,7 +62,12 @@ export default class DragArea extends React.Component {
     if (res) {
       const { qId } = this.props;
       const { update } = this.context;
-      const data = Object.fromEntries(Object.keys(res.fields).map((key) => [`${qId}_${key}`, res.fields[key].cardIds]));
+      const data = Object.fromEntries(
+        Object.keys(res.fields).map((key) => [
+          `${qId}_${key}`,
+          res.fields[key].cardIds,
+        ])
+      );
       update(data);
     }
   }
@@ -71,7 +76,10 @@ export default class DragArea extends React.Component {
     const { fields } = this.state;
     const { qId } = this.props;
     const { data } = this.context;
-    if (qId !== undefined && Object.keys(fields).every((key) => data[`${qId}_${key}`])) {
+    if (
+      qId !== undefined &&
+      Object.keys(fields).every((key) => data[`${qId}_${key}`])
+    ) {
       Object.keys(fields).forEach((key) => {
         fields[key].cardIds = data[`${qId}_${key}`];
       });
@@ -88,8 +96,8 @@ export default class DragArea extends React.Component {
     }
 
     if (
-      destination.droppableId === source.droppableId
-      && destination.index === source.index
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
     ) {
       return null;
     }
@@ -156,7 +164,7 @@ export default class DragArea extends React.Component {
               const field = fields[fieldId];
               const cardIds = field.cardIds.map((cardId) => cards[cardId]);
 
-              return (<Box key={field.id} box={field} cards={cardIds} />);
+              return <Box key={field.id} box={field} cards={cardIds} />;
             })}
           </Container>
           <Box
@@ -179,5 +187,5 @@ DragArea.propTypes = {
 };
 
 DragArea.defaultProps = {
-  qId: '',
+  qId: "",
 };

@@ -1,9 +1,9 @@
-import React from 'react';
-import QuestionaireContext from './QuestionaireContext';
+import React from "react";
+import QuestionaireContext from "./QuestionaireContext";
 
 export default class Page extends React.Component {
   static initialValues() {
-    return '';
+    return "";
   }
 
   constructor(props) {

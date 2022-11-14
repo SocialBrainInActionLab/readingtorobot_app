@@ -1,13 +1,13 @@
 /* eslint-disable import/prefer-default-export */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const QuestionaireContext = React.createContext();
 
 class QuestionaireProvider extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: JSON.parse(localStorage.getItem('data')) };
+    this.state = { data: JSON.parse(localStorage.getItem("data")) };
     this.update = this.update.bind(this);
   }
 
@@ -15,7 +15,7 @@ class QuestionaireProvider extends React.Component {
     const { data } = this.state;
     const newd = { ...data, ...newData };
     this.setState({ data: newd });
-    localStorage.setItem('data', JSON.stringify(newd));
+    localStorage.setItem("data", JSON.stringify(newd));
   }
 
   render() {

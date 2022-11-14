@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { TextField, TextareaAutosize, Container } from '@material-ui/core';
-import QuestionaireContext from './QuestionaireContext';
+import React from "react";
+import PropTypes from "prop-types";
+import { TextField, TextareaAutosize, Container } from "@material-ui/core";
+import QuestionaireContext from "./QuestionaireContext";
 
 class Question extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class Question extends React.Component {
   getState() {
     const { qId } = this.props;
     const { data } = this.context;
-    data[qId] = data[qId] || '';
+    data[qId] = data[qId] || "";
     return data[qId];
   }
 
@@ -29,9 +29,7 @@ class Question extends React.Component {
     const { question } = this.props;
     return (
       <Container>
-        <p>
-          {question}
-        </p>
+        <p>{question}</p>
         <form className="this" noValidate autoComplete="off">
           <TextField
             fullWidth

@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import styled from 'styled-components';
-import { Grid } from '@material-ui/core';
+import React from "react";
+import styled from "styled-components";
+import { Grid } from "@material-ui/core";
 
-import { DragDropContext } from 'react-beautiful-dnd';
-import DragArea, { Box } from '../components/dnd';
-import { shuffle } from '../utils';
+import { DragDropContext } from "react-beautiful-dnd";
+import DragArea, { Box } from "../components/dnd";
+import { shuffle } from "../utils";
 
 const Container = styled.div`
   display: flex;
@@ -20,33 +20,48 @@ const Image = styled.img`
 function getInitData() {
   return {
     cards: {
-      first: { id: 'first', content: <Image src={`${process.env.PUBLIC_URL}/rib1st.png`} alt="first" /> },
-      second: { id: 'second', content: <Image src={`${process.env.PUBLIC_URL}/rib2nd.png`} alt="second" /> },
-      third: { id: 'third', content: <Image src={`${process.env.PUBLIC_URL}/rib3rd.png`} alt="third" /> },
+      first: {
+        id: "first",
+        content: (
+          <Image src={`${process.env.PUBLIC_URL}/rib1st.png`} alt="first" />
+        ),
+      },
+      second: {
+        id: "second",
+        content: (
+          <Image src={`${process.env.PUBLIC_URL}/rib2nd.png`} alt="second" />
+        ),
+      },
+      third: {
+        id: "third",
+        content: (
+          <Image src={`${process.env.PUBLIC_URL}/rib3rd.png`} alt="third" />
+        ),
+      },
     },
     fields: {
       origin: {
-        id: 'origin',
-        title: '',
-        cardIds: ['first', 'second', 'third'],
+        id: "origin",
+        title: "",
+        cardIds: ["first", "second", "third"],
       },
       cozmo: {
-        id: 'cozmo',
-        title: '',
+        id: "cozmo",
+        title: "",
         cardIds: [],
       },
       miro: {
-        id: 'miro',
-        title: '',
+        id: "miro",
+        title: "",
         cardIds: [],
       },
       nao: {
-        id: 'nao',
-        title: '',
+        id: "nao",
+        title: "",
         cardIds: [],
       },
     },
-    fieldOrder: shuffle(['cozmo', 'miro', 'nao']),
+    fieldOrder: shuffle(["cozmo", "miro", "nao"]),
   };
 }
 
@@ -67,15 +82,14 @@ export default class RobotRating extends DragArea {
           direction="column"
           alignItems="center"
           justify="center"
-          style={{ height: '70vh' }}
+          style={{ height: "70vh" }}
         >
-
           <Grid
             container
             direction="row"
             justify="space-between"
             alignItems="center"
-            style={{ width: '80vw' }}
+            style={{ width: "80vw" }}
           >
             <Grid item>
               <Box
@@ -89,8 +103,8 @@ export default class RobotRating extends DragArea {
                 {fieldOrder.map((fieldId) => {
                   const field = fields[fieldId];
                   const cardIds = field.cardIds.map((cardId) => cards[cardId]);
-                  const width = '15vw';
-                  const height = '20vh';
+                  const width = "15vw";
+                  const height = "20vh";
                   return (
                     <Box
                       width={width}
@@ -99,15 +113,16 @@ export default class RobotRating extends DragArea {
                       box={field}
                       cards={cardIds}
                       position="absolute"
-                      content={(
+                      content={
                         <Image
                           src={`${process.env.PUBLIC_URL}/${field.id}.png`}
                           alt={field.id}
                           style={{
-                            zIndex: -1, width,
+                            zIndex: -1,
+                            width,
                           }}
                         />
-                      )}
+                      }
                     />
                   );
                 })}

@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
   AppBar,
   Box,
   Button,
   MobileStepper,
   Typography,
-} from '@material-ui/core';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+} from "@material-ui/core";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 export default class Navigator extends React.Component {
   constructor(props) {
@@ -18,7 +18,9 @@ export default class Navigator extends React.Component {
 
     if (!props.layout) {
       this.layout = [
-        <Typography variant="h6">No layout provided, please specify questionaire layout in index.js</Typography>,
+        <Typography variant="h6">
+          No layout provided, please specify questionaire layout in index.js
+        </Typography>,
       ];
     } else {
       this.layout = props.layout;
@@ -47,32 +49,34 @@ export default class Navigator extends React.Component {
     return (
       <Box position="sticky" height="85%" display="flex" flexDirection="column">
         <Box>
-          {
-            React.cloneElement(this.layout[c], {
-              isLoading: loading,
-            })
-          }
+          {React.cloneElement(this.layout[c], {
+            isLoading: loading,
+          })}
           <Box height="10vh" />
         </Box>
-        <AppBar position="fixed" style={{ top: 'auto', bottom: 0 }}>
+        <AppBar position="fixed" style={{ top: "auto", bottom: 0 }}>
           <MobileStepper
             variant="progress"
             steps={this.layout_length}
             position="static"
             activeStep={c}
             className={this.root}
-            nextButton={(
-              <Button size="small" onClick={this.handleNext} disabled={c === this.layout_length - 1}>
+            nextButton={
+              <Button
+                size="small"
+                onClick={this.handleNext}
+                disabled={c === this.layout_length - 1}
+              >
                 Next
                 <KeyboardArrowRight />
               </Button>
-            )}
-            backButton={(
+            }
+            backButton={
               <Button size="small" onClick={this.handleBack} disabled={c === 0}>
                 <KeyboardArrowLeft />
                 Back
               </Button>
-            )}
+            }
           />
         </AppBar>
       </Box>

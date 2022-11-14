@@ -1,17 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import {
-  Box,
-  Divider,
-  Grid,
-} from '@material-ui/core';
+import React from "react";
+import { Box, Divider, Grid } from "@material-ui/core";
 
-import { Page, QuestionSelect } from '../components';
+import { Page, QuestionSelect } from "../components";
 
 export default class DemoPage3 extends Page {
   getState() {
     const { data } = this.context;
-    return data.chosen || 'the robot';
+    return data.chosen || "the robot";
   }
 
   render() {
@@ -24,7 +20,7 @@ export default class DemoPage3 extends Page {
             <Box height="20px" />
             <QuestionSelect
               question="Is there anything you didn’t like about the robot?"
-              options={['Yes', 'No']}
+              options={["Yes", "No"]}
               qId="Dislike"
             />
             <Divider />
@@ -34,7 +30,7 @@ export default class DemoPage3 extends Page {
             <QuestionSelect
               question={`If you had to read a really difficult book for the first time,
                         would you be more comfortable reading with a teacher or this robot?`}
-              options={['Prefer Robots', 'Prefer Adult']}
+              options={["Prefer Robots", "Prefer Adult"]}
               qId="TeachRobotPref"
             />
             <Divider />
@@ -44,7 +40,7 @@ export default class DemoPage3 extends Page {
             <QuestionSelect
               question={`If you had to read a really difficult book for the first time,
                          would you be more comfortable reading on alone or with this robot?`}
-              options={['Prefer Robots', 'Prefer Alone']}
+              options={["Prefer Robots", "Prefer Alone"]}
               qId="AloneRobotPref"
             />
             <Divider />
@@ -54,7 +50,7 @@ export default class DemoPage3 extends Page {
             <Box height="20px" />
             <QuestionSelect
               question={`Did you enjoy reading with ${robot}? Why?`}
-              options={['Yes', 'No']}
+              options={["Yes", "No"]}
               qId="Enjoy"
             />
             <Divider />

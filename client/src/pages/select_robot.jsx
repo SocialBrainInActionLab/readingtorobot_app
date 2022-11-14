@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
   Button,
   Divider,
@@ -7,17 +7,17 @@ import {
   Typography,
   Switch,
   Box,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import { toast } from 'react-toastify';
-import { QuestionaireContext } from '../components';
+import { toast } from "react-toastify";
+import { QuestionaireContext } from "../components";
 
 function publishMQTT(topicName, message) {
-  fetch('/pubMQTT', {
-    method: 'POST',
+  fetch("/pubMQTT", {
+    method: "POST",
     body: JSON.stringify({ topic: topicName, msg: message }),
     headers: new Headers({
-      'content-type': 'application/json',
+      "content-type": "application/json",
     }),
   })
     .then((res) => {
@@ -28,50 +28,47 @@ function publishMQTT(topicName, message) {
             Status code: ${res.status}
             Error: ${data}`,
             {
-              toastId: 'mqttRequestError',
-              position: 'top-center',
+              toastId: "mqttRequestError",
+              position: "top-center",
               autoClose: 5000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-            },
+            }
           );
         });
       }
     })
     .catch((error) => {
-      toast.error(
-        `Fetch error: ${error}`,
-        {
-          toastId: 'mqttExceptionError',
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        },
-      );
+      toast.error(`Fetch error: ${error}`, {
+        toastId: "mqttExceptionError",
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
 }
 
 function actionAvailable(robot, action) {
   switch (robot.toLowerCase()) {
-    case 'cozmo':
-      if (action === 'scared') {
+    case "cozmo":
+      if (action === "scared") {
         return true;
       }
       break;
-    case 'miro':
-      if (action === 'scared') {
+    case "miro":
+      if (action === "scared") {
         return true;
       }
       break;
-    case 'nao':
-      if (action === 'happy') {
+    case "nao":
+      if (action === "happy") {
         return true;
       }
       break;
@@ -84,7 +81,7 @@ function actionAvailable(robot, action) {
 export default class RobotSelectionPage extends React.Component {
   static sendEmotion(emotion) {
     return () => {
-      publishMQTT('speech/cmd', emotion);
+      publishMQTT("speech/cmd", emotion);
     };
   }
 
@@ -92,11 +89,11 @@ export default class RobotSelectionPage extends React.Component {
     super(props);
     this.data = [];
     this.state = {
-      robot: '',
+      robot: "",
       running: false,
       speechOn: false,
     };
-    this.robots = ['Cozmo', 'MiRo', 'NAO'];
+    this.robots = ["Cozmo", "MiRo", "NAO"];
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.getRobotState = this.getRobotState.bind(this);
@@ -120,11 +117,11 @@ export default class RobotSelectionPage extends React.Component {
     return () => {
       const { isLoading } = this.props;
       isLoading(true);
-      fetch('/startRobot', {
-        method: 'POST',
+      fetch("/startRobot", {
+        method: "POST",
         body: JSON.stringify(bot),
         headers: new Headers({
-          'content-type': 'application/json',
+          "content-type": "application/json",
         }),
       })
         .then((res) => {
@@ -135,15 +132,15 @@ export default class RobotSelectionPage extends React.Component {
                 Status code: ${res.status}
                 Error: ${data}`,
                 {
-                  toastId: 'robotStartRequestError',
-                  position: 'top-center',
+                  toastId: "robotStartRequestError",
+                  position: "top-center",
                   autoClose: 5000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                },
+                }
               );
             });
             isLoading(false);
@@ -154,19 +151,16 @@ export default class RobotSelectionPage extends React.Component {
           this.chooseRobot(bot);
         })
         .catch((error) => {
-          toast.error(
-            `Fetch error: ${error}`,
-            {
-              toastId: 'robotStartExceptionError',
-              position: 'top-center',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            },
-          );
+          toast.error(`Fetch error: ${error}`, {
+            toastId: "robotStartExceptionError",
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           isLoading(false);
         });
       this.chooseRobot(bot);
@@ -177,11 +171,11 @@ export default class RobotSelectionPage extends React.Component {
     return () => {
       const { isLoading } = this.props;
       isLoading(true);
-      fetch('/stopRobot', {
-        method: 'POST',
+      fetch("/stopRobot", {
+        method: "POST",
         body: JSON.stringify(bot),
         headers: new Headers({
-          'content-type': 'application/json',
+          "content-type": "application/json",
         }),
       })
         .then((res) => {
@@ -192,15 +186,15 @@ export default class RobotSelectionPage extends React.Component {
                 Status code: ${res.status}
                 Error: ${data}`,
                 {
-                  toastId: 'robotStopRequestError',
-                  position: 'top-center',
+                  toastId: "robotStopRequestError",
+                  position: "top-center",
                   autoClose: 5000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                },
+                }
               );
             });
             isLoading(false);
@@ -210,23 +204,20 @@ export default class RobotSelectionPage extends React.Component {
             // eslint-disable-next-line
             console.log(data);
           });
-          this.setState({ robot: '' });
+          this.setState({ robot: "" });
           isLoading(false);
         })
         .catch((error) => {
-          toast.error(
-            `Fetch error: ${error}`,
-            {
-              toastId: 'robotStopExceptionError',
-              position: 'top-center',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            },
-          );
+          toast.error(`Fetch error: ${error}`, {
+            toastId: "robotStopExceptionError",
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           isLoading(false);
         });
     };
@@ -236,12 +227,12 @@ export default class RobotSelectionPage extends React.Component {
     const { isLoading } = this.props;
     isLoading(true);
     if (event.target.checked) {
-      fetch('/startSpeech', {
-        method: 'GET',
+      fetch("/startSpeech", {
+        method: "GET",
         headers: new Headers({
-          'content-type': 'application/json',
+          "content-type": "application/json",
         }),
-        mode: 'cors',
+        mode: "cors",
       })
         .then((res) => {
           isLoading(false);
@@ -252,15 +243,15 @@ export default class RobotSelectionPage extends React.Component {
                 Status code: ${res.status}
                 Error: ${data}`,
                 {
-                  toastId: 'speechStartRequestError',
-                  position: 'top-center',
+                  toastId: "speechStartRequestError",
+                  position: "top-center",
                   autoClose: 5000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                },
+                }
               );
             });
             return;
@@ -268,28 +259,25 @@ export default class RobotSelectionPage extends React.Component {
           this.setState({ speechOn: true });
         })
         .catch((error) => {
-          toast.error(
-            `Fetch error: ${error}`,
-            {
-              toastId: 'speechStartExceptionError',
-              position: 'top-center',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            },
-          );
+          toast.error(`Fetch error: ${error}`, {
+            toastId: "speechStartExceptionError",
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           isLoading(false);
         });
     } else {
-      fetch('/stopSpeech', {
-        method: 'GET',
+      fetch("/stopSpeech", {
+        method: "GET",
         headers: new Headers({
-          'content-type': 'application/json',
+          "content-type": "application/json",
         }),
-        mode: 'cors',
+        mode: "cors",
       })
         .then((res) => {
           isLoading(false);
@@ -300,15 +288,15 @@ export default class RobotSelectionPage extends React.Component {
                 Status code: ${res.status}
                 Error: ${data}`,
                 {
-                  toastId: 'speechStopRequestError',
-                  position: 'top-center',
+                  toastId: "speechStopRequestError",
+                  position: "top-center",
                   autoClose: 5000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                },
+                }
               );
             });
             return;
@@ -316,31 +304,28 @@ export default class RobotSelectionPage extends React.Component {
           this.setState({ speechOn: false });
         })
         .catch((error) => {
-          toast.error(
-            `Fetch error: ${error}`,
-            {
-              toastId: 'speechStopExceptionError',
-              position: 'top-center',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            },
-          );
+          toast.error(`Fetch error: ${error}`, {
+            toastId: "speechStopExceptionError",
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           isLoading(false);
         });
     }
   }
 
   getRobotState() {
-    fetch('/getRobotState', {
-      method: 'GET',
+    fetch("/getRobotState", {
+      method: "GET",
       headers: new Headers({
-        'content-type': 'application/json',
+        "content-type": "application/json",
       }),
-      mode: 'cors',
+      mode: "cors",
     })
       .then((res) => {
         if (res.status !== 200) {
@@ -350,15 +335,15 @@ export default class RobotSelectionPage extends React.Component {
               Status code: ${res.status}
               Error: ${data}`,
               {
-                toastId: 'robotStateRequestError',
-                position: 'top-center',
+                toastId: "robotStateRequestError",
+                position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-              },
+              }
             );
           });
           return;
@@ -368,19 +353,16 @@ export default class RobotSelectionPage extends React.Component {
         });
       })
       .catch((error) => {
-        toast.error(
-          `Fetch error: ${error}`,
-          {
-            toastId: 'robotStateExceptionError',
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          },
-        );
+        toast.error(`Fetch error: ${error}`, {
+          toastId: "robotStateExceptionError",
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
   }
 
@@ -396,7 +378,13 @@ export default class RobotSelectionPage extends React.Component {
     for (let i = 0; i < this.robots.length; i += 1) {
       const bot = this.robots[i];
       const start = this.handleStart(bot);
-      buttons.push(<Grid element><Button variant="outlined" onClick={start}>{bot}</Button></Grid>);
+      buttons.push(
+        <Grid element>
+          <Button variant="outlined" onClick={start}>
+            {bot}
+          </Button>
+        </Grid>
+      );
     }
     return buttons;
   }
@@ -409,23 +397,21 @@ export default class RobotSelectionPage extends React.Component {
         container
         direction="column"
         justify="space-around"
-        style={{ height: '65vh' }}
+        style={{ height: "65vh" }}
       >
         <Grid element>
-          <Button variant="outlined" onClick={this.handleStop(robot)}>Stop</Button>
+          <Button variant="outlined" onClick={this.handleStop(robot)}>
+            Stop
+          </Button>
         </Grid>
         <Grid element>
           <Divider />
         </Grid>
 
         <Grid element>
-          <Grid
-            container
-            direction="column"
-            justify="space-between"
-          >
+          <Grid container direction="column" justify="space-between">
             <Grid element>
-              {`Speech Recognition: ${speechOn ? 'ON' : 'OFF'}`}
+              {`Speech Recognition: ${speechOn ? "ON" : "OFF"}`}
             </Grid>
 
             <Grid element>
@@ -444,17 +430,12 @@ export default class RobotSelectionPage extends React.Component {
         </Grid>
 
         <Grid element>
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            // style={{ height: '40vh' }}
-          >
+          <Grid container direction="row" justify="space-around">
             <Grid element>
               <Button
                 variant="outlined"
-                onClick={this.sendEmotion('happy')}
-                disabled={speechOn || actionAvailable(robot, 'happy')}
+                onClick={this.sendEmotion("happy")}
+                disabled={speechOn || actionAvailable(robot, "happy")}
               >
                 Happy
               </Button>
@@ -462,8 +443,8 @@ export default class RobotSelectionPage extends React.Component {
             <Grid element>
               <Button
                 variant="outlined"
-                onClick={this.sendEmotion('sad')}
-                disabled={speechOn || actionAvailable(robot, 'sad')}
+                onClick={this.sendEmotion("sad")}
+                disabled={speechOn || actionAvailable(robot, "sad")}
               >
                 Sad
               </Button>
@@ -471,8 +452,8 @@ export default class RobotSelectionPage extends React.Component {
             <Grid element>
               <Button
                 variant="outlined"
-                onClick={this.sendEmotion('excited')}
-                disabled={speechOn || actionAvailable(robot, 'excited')}
+                onClick={this.sendEmotion("excited")}
+                disabled={speechOn || actionAvailable(robot, "excited")}
               >
                 Excited
               </Button>
@@ -480,8 +461,8 @@ export default class RobotSelectionPage extends React.Component {
             <Grid element>
               <Button
                 variant="outlined"
-                onClick={this.sendEmotion('groan')}
-                disabled={speechOn || actionAvailable(robot, 'groan')}
+                onClick={this.sendEmotion("groan")}
+                disabled={speechOn || actionAvailable(robot, "groan")}
               >
                 Annoyed
               </Button>
@@ -489,10 +470,10 @@ export default class RobotSelectionPage extends React.Component {
             <Grid element>
               <Button
                 variant="outlined"
-                onClick={this.sendEmotion('scared')}
-                disabled={speechOn || actionAvailable(robot, 'scared')}
+                onClick={this.sendEmotion("scared")}
+                disabled={speechOn || actionAvailable(robot, "scared")}
               >
-                {robot.toLowerCase() === 'nao' ? 'Surprised' : 'Scared'}
+                {robot.toLowerCase() === "nao" ? "Surprised" : "Scared"}
               </Button>
             </Grid>
           </Grid>
@@ -512,8 +493,8 @@ export default class RobotSelectionPage extends React.Component {
             <Grid element>
               <Button
                 variant="outlined"
-                onClick={this.sendEmotion('start')}
-                disabled={actionAvailable(robot, 'start')}
+                onClick={this.sendEmotion("start")}
+                disabled={actionAvailable(robot, "start")}
               >
                 Start
               </Button>
@@ -524,8 +505,8 @@ export default class RobotSelectionPage extends React.Component {
             <Grid element>
               <Button
                 variant="outlined"
-                onClick={this.sendEmotion('end')}
-                disabled={actionAvailable(robot, 'end')}
+                onClick={this.sendEmotion("end")}
+                disabled={actionAvailable(robot, "end")}
               >
                 End
               </Button>
@@ -544,7 +525,7 @@ export default class RobotSelectionPage extends React.Component {
         container
         direction="column"
         justify="space-evenly"
-        style={{ height: '70vh' }}
+        style={{ height: "70vh" }}
       >
         <Typography variant="h6">Robot Control</Typography>
         {running ? this.paintRunning() : this.paintIdle()}
