@@ -4,6 +4,9 @@ import { Box, Grid, TextField } from "@material-ui/core";
 
 import { Page, QuestionaireContext } from "../components";
 
+/** Information about the participant. Currently only indicates the Participant ID.
+ * @extends {Page}
+ */
 export default class ParticipantInfoPage extends Page {
   static initialValues() {
     return {

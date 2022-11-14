@@ -4,6 +4,9 @@ import { Box, Divider, Grid } from "@material-ui/core";
 
 import { IntensityButtons, Page } from "../components";
 
+/** Questionaire page 2.
+ * @extends {Page}
+ */
 export default class DemoPage2 extends Page {
   getState() {
     const { data } = this.context;

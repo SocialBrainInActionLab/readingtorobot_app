@@ -20,13 +20,23 @@ import PropTypes from "prop-types";
 import "./App.css";
 import { Drawer, Navigator, QuestionaireContext } from "./components";
 
+/**
+ * Main application.
+ *
+ * @extends {React.Component}
+ */
 class App extends React.Component {
+  /* Clear participant data. */
   static clearForm() {
     localStorage.removeItem("data");
     localStorage.removeItem("videos");
     window.location.reload();
   }
 
+  /**
+   * Update the server settings.
+   * @param {any} msg Application settings: robot IPs and data file filename.
+   */
   static sendSettings(msg) {
     fetch("/setSettings", {
       method: "POST",
@@ -108,6 +118,7 @@ class App extends React.Component {
     });
   }
 
+  /* Write the experiment responses to the output data file. */
   handleSave() {
     const { data: results } = this.context;
     if (!results) {
@@ -194,20 +205,34 @@ class App extends React.Component {
     this.setState({ loading: false });
   }
 
+  /**
+   * Update the application settings in client side.
+   * @param {any} value Application settings: robot IPs and data file filename.
+   */
   setSettings(value) {
     localStorage.setItem("settings", JSON.stringify(value));
     this.setState({ settings: value });
   }
 
+  /* Send stored settings to server. */
   sendCurrentSettings() {
     const { settings } = this.state;
     App.sendSettings(settings);
   }
 
+  /**
+   * Set the loading state value.
+   * @param {any} value Loading state.
+   */
   isLoading(value) {
     this.setState({ loading: value });
   }
 
+  /**
+   * Generate a method to toggle on/off the side menu drawer
+   * @param {any} open Toggle state to be applied.
+   * @returns {Function} Call this method to apply the state change.
+   */
   toogleDrawer(open) {
     return (event) => {
       if (

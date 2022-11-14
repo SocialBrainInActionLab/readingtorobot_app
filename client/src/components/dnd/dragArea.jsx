@@ -50,6 +50,10 @@ const Area = styled.div`
   margin: auto;
 `;
 
+/**
+ * Drag and drop area manager.
+ * @extends {React.Component}
+ */
 export default class DragArea extends React.Component {
   constructor(props) {
     super(props);
@@ -57,6 +61,10 @@ export default class DragArea extends React.Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
+  /**
+   * Update state on drag end.
+   * @param {any} result Drag event result data.
+   */
   onDragEnd(result) {
     const res = this.evaluateDragEnd(result);
     if (res) {
@@ -72,6 +80,10 @@ export default class DragArea extends React.Component {
     }
   }
 
+  /**
+   * Card field initialization.
+   * @returns {Object} Card fields.
+   */
   getFields() {
     const { fields } = this.state;
     const { qId } = this.props;
@@ -87,6 +99,11 @@ export default class DragArea extends React.Component {
     return fields;
   }
 
+  /**
+   * Evaluate the result of a drag event.
+   * @param {any} result Drag event result data.
+   * @returns {Object} New state.
+   */
   evaluateDragEnd(result) {
     const { destination, source, draggableId } = result;
     const { fields } = this.state;

@@ -10,6 +10,10 @@ import {
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
+/**
+ * Page management and navigation.
+ * @extends {React.Component}
+ */
 export default class Navigator extends React.Component {
   constructor(props) {
     super(props);

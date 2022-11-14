@@ -5,6 +5,9 @@ import { Box, Divider, Grid } from "@material-ui/core";
 
 import { IntensityButtons, Question, Page } from "../components";
 
+/** Page including questions about the robot videos.
+ * @extends {Page}
+ */
 export default class RobotVideoQuestionsPage extends Page {
   render() {
     const { name } = this.props;

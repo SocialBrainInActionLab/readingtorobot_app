@@ -12,6 +12,11 @@ import {
 import { toast } from "react-toastify";
 import { QuestionaireContext } from "../components";
 
+/**
+ * Send a MQTT message to a given topic.
+ * @param {String} topicName MQTT topic.
+ * @param {any} message Message to be sent.
+ */
 function publishMQTT(topicName, message) {
   fetch("/pubMQTT", {
     method: "POST",
@@ -55,7 +60,13 @@ function publishMQTT(topicName, message) {
     });
 }
 
-function actionAvailable(robot, action) {
+/**
+ * Check if animation is available for this robot.
+ * @param {any} robot Robot name
+ * @param {any} action Action name
+ * @returns {Boolean} True if action is not available.
+ */
+function actionNotAvailable(robot, action) {
   switch (robot.toLowerCase()) {
     case "cozmo":
       if (action === "scared") {
@@ -78,7 +89,16 @@ function actionAvailable(robot, action) {
   return false;
 }
 
+/**
+ * Robot control page.
+ * @extends {React.Component}
+ */
 export default class RobotSelectionPage extends React.Component {
+  /**
+   * Generate a method to play a specific emotion.
+   * @param {String} emotion Emotion to be played.
+   * @returns {Function} The method to play a specific emotion.
+   */
   static sendEmotion(emotion) {
     return () => {
       publishMQTT("speech/cmd", emotion);
@@ -113,6 +133,11 @@ export default class RobotSelectionPage extends React.Component {
     }
   }
 
+  /**
+   * Run the required script to start the ReadingWithRobot activity.
+   * @param {String} bot Robot name.
+   * @returns {Function} The method to start the given robot.
+   */
   handleStart(bot) {
     return () => {
       const { isLoading } = this.props;
@@ -167,6 +192,11 @@ export default class RobotSelectionPage extends React.Component {
     };
   }
 
+  /**
+   * Run the required script to stop the ReadingWithRobot activity.
+   * @param {String} bot Robot name.
+   * @returns {Function} The method to stop the given robot.
+   */
   handleStop(bot) {
     return () => {
       const { isLoading } = this.props;
@@ -223,6 +253,10 @@ export default class RobotSelectionPage extends React.Component {
     };
   }
 
+  /**
+   * Run the required script to stop the speech recognition program.
+   * @param {event} Event info.
+   */
   handleSpeechChange(event) {
     const { isLoading } = this.props;
     isLoading(true);
@@ -319,6 +353,7 @@ export default class RobotSelectionPage extends React.Component {
     }
   }
 
+  /* Ping the robot to verify if running. */
   getRobotState() {
     fetch("/getRobotState", {
       method: "GET",
@@ -435,7 +470,7 @@ export default class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion("happy")}
-                disabled={speechOn || actionAvailable(robot, "happy")}
+                disabled={speechOn || actionNotAvailable(robot, "happy")}
               >
                 Happy
               </Button>
@@ -444,7 +479,7 @@ export default class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion("sad")}
-                disabled={speechOn || actionAvailable(robot, "sad")}
+                disabled={speechOn || actionNotAvailable(robot, "sad")}
               >
                 Sad
               </Button>
@@ -453,7 +488,7 @@ export default class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion("excited")}
-                disabled={speechOn || actionAvailable(robot, "excited")}
+                disabled={speechOn || actionNotAvailable(robot, "excited")}
               >
                 Excited
               </Button>
@@ -462,7 +497,7 @@ export default class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion("groan")}
-                disabled={speechOn || actionAvailable(robot, "groan")}
+                disabled={speechOn || actionNotAvailable(robot, "groan")}
               >
                 Annoyed
               </Button>
@@ -471,7 +506,7 @@ export default class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion("scared")}
-                disabled={speechOn || actionAvailable(robot, "scared")}
+                disabled={speechOn || actionNotAvailable(robot, "scared")}
               >
                 {robot.toLowerCase() === "nao" ? "Surprised" : "Scared"}
               </Button>
@@ -484,17 +519,12 @@ export default class RobotSelectionPage extends React.Component {
         </Grid>
 
         <Grid element>
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            // style={{ height: '40vh' }}
-          >
+          <Grid container direction="row" justify="center">
             <Grid element>
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion("start")}
-                disabled={actionAvailable(robot, "start")}
+                disabled={actionNotAvailable(robot, "start")}
               >
                 Start
               </Button>
@@ -506,7 +536,7 @@ export default class RobotSelectionPage extends React.Component {
               <Button
                 variant="outlined"
                 onClick={this.sendEmotion("end")}
-                disabled={actionAvailable(robot, "end")}
+                disabled={actionNotAvailable(robot, "end")}
               >
                 End
               </Button>

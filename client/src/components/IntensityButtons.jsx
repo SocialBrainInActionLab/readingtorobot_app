@@ -4,6 +4,10 @@ import { Container, IconButton, Grid, Box } from "@material-ui/core";
 import Brightness1Icon from "@material-ui/icons/Brightness1";
 import QuestionaireContext from "./QuestionaireContext";
 
+/**
+ * Option question with three buttons of different size, matching the corresponding intensity.
+ * @extends {React.Component}
+ */
 class IntensityButtons extends React.Component {
   constructor(props) {
     super(props);

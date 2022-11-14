@@ -38,10 +38,12 @@ const DynamicList = styled.section`
   text-align: center;
 `;
 
+/** Drop area component.
+ * @extends {React.Component}
+ */
 export default class Box extends React.Component {
   getDroppable() {
     const { box, cards, direction, bordered } = this.props;
-
     return (
       <Droppable droppableId={box.id} direction={direction}>
         {(provided, snapshot) => (

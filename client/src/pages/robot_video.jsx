@@ -5,6 +5,9 @@ import ReactPlayer from "react-player";
 
 import { Page } from "../components";
 
+/** A page showing the provided video url.
+ * @extends {Page}
+ */
 export default class RobotVideoPage extends Page {
   handleChange(event) {
     const { setData, robotName } = this.props;

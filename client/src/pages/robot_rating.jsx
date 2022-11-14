@@ -17,6 +17,10 @@ const Image = styled.img`
   max-width: 70%;
 `;
 
+/**
+ * Initial card list for DnD.
+ * @returns {Object} The card and drop location description.
+ */
 function getInitData() {
   return {
     cards: {
@@ -65,6 +69,10 @@ function getInitData() {
   };
 }
 
+/**
+ * Robot rating page.
+ * @extends {DragArea}
+ */
 export default class RobotRating extends DragArea {
   constructor(props) {
     super(props);

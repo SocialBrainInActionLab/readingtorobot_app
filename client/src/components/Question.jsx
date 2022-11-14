@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import { TextField, TextareaAutosize, Container } from "@material-ui/core";
 import QuestionaireContext from "./QuestionaireContext";
 
+/**
+ * Simple question component including a single question and text response field.
+ * @extends {React.Component}
+ */
 class Question extends React.Component {
   constructor(props) {
     super(props);

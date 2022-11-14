@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { Grid, Box, Divider } from "@material-ui/core";
 import { Page, IntensityButtons } from "../components";
 
+/** Page for STAI test.
+ * @extends {Page}
+ */
 export default class STAI extends Page {
   render() {
     const { qId } = this.props;

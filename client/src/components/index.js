@@ -1,3 +1,7 @@
+/**
+ * Application components.
+ * @module components
+ */
 import DragArea from "./dnd";
 import Drawer from "./Drawer";
 import IntensityButtons from "./IntensityButtons";

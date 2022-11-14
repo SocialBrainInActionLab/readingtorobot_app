@@ -12,6 +12,10 @@ import {
 } from "@material-ui/core";
 import QuestionaireContext from "./QuestionaireContext";
 
+/**
+ * Question with multiple options and text response area.
+ * @extends {React.Component}
+ */
 class QuestionSelect extends React.Component {
   constructor(props) {
     super(props);

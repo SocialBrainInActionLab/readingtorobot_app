@@ -14,6 +14,9 @@ const Container = styled.div`
   padding: 8px;
 `;
 
+/** Draggable component.
+ * @extends {React.Component}
+ */
 export default class Card extends React.Component {
   render() {
     const { card, index } = this.props;

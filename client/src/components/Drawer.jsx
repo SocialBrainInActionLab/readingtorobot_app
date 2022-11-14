@@ -9,6 +9,10 @@ import {
   TextField,
 } from "@material-ui/core";
 
+/**
+ * Content for left drawer menu.
+ * @extends {React.Component}
+ */
 class Drawer extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +21,11 @@ class Drawer extends React.Component {
     this.handleChangeFile = this.handleChangeFile.bind(this);
   }
 
+  /**
+   * Generate method to update the IP of a specific robot.
+   * @param {String} id Robot identifier.
+   * @returns {(Object) => void} Method to update the IP of the robot.
+   */
   handleChangeIP(id) {
     return (event) => {
       const { settings, setSettings } = this.props;
@@ -25,6 +34,10 @@ class Drawer extends React.Component {
     };
   }
 
+  /**
+   * Update the name of the file to store the results.
+   * @param {Object} event
+   */
   handleChangeFile(event) {
     const { settings, setSettings } = this.props;
     settings.filename = event.target.value;
@@ -33,7 +46,6 @@ class Drawer extends React.Component {
 
   render() {
     const { settings, clearForm } = this.props;
-
     return (
       <Grid
         container

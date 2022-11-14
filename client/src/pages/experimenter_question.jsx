@@ -4,6 +4,9 @@ import { Box } from "@material-ui/core";
 
 import { IntensityButtons, Page } from "../components";
 
+/** Question about the experimenter presence.
+ * @extends {Page}
+ */
 export default class ExperimenterQuestionPage extends Page {
   getState() {
     const { data } = this.context;
