@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import {
-  Box,
-  Grid,
-} from '@material-ui/core';
-import ReactPlayer from 'react-player';
+import React from "react";
+import { Box, Grid } from "@material-ui/core";
+import ReactPlayer from "react-player";
 
-import { Page } from '../components';
+import { Page } from "../components";
 
+/** A page showing the provided video url.
+ * @extends {Page}
+ */
 export default class RobotVideoPage extends Page {
   handleChange(event) {
     const { setData, robotName } = this.props;
@@ -21,7 +21,7 @@ export default class RobotVideoPage extends Page {
     const { robotName } = this.props;
     if (d && Object.keys(d).length === 0) {
       d = {};
-      d[`${robotName}Questions`] = '';
+      d[`${robotName}Questions`] = "";
     }
     return d;
   }

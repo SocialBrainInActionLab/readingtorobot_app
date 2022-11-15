@@ -1,16 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import {
-  Box,
-  Grid,
-} from '@material-ui/core';
 
-import { Page, Question } from '../components';
+import React from "react";
+import { Box, Grid } from "@material-ui/core";
 
+import { Page, Question } from "../components";
+
+/** Questionaire page 4.
+ * @extends {Page}
+ */
 export default class DemoPage4 extends Page {
   getState() {
     const { data } = this.context;
-    return data.chosen || 'the robot';
+    return data.chosen || "the robot";
   }
 
   render() {

@@ -1,17 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import {
-  Box,
-  Divider,
-  Grid,
-} from '@material-ui/core';
+import React from "react";
+import { Box, Divider, Grid } from "@material-ui/core";
 
-import { IntensityButtons, Page } from '../components';
+import { IntensityButtons, Page } from "../components";
 
+/** Questionaire page 2.
+ * @extends {Page}
+ */
 export default class DemoPage2 extends Page {
   getState() {
     const { data } = this.context;
-    return data.chosen || 'the robot';
+    return data.chosen || "the robot";
   }
 
   render() {
@@ -30,7 +29,9 @@ export default class DemoPage2 extends Page {
               qId="GoodListener_R"
             />
           </Grid>
-          <Grid item><Divider /></Grid>
+          <Grid item>
+            <Divider />
+          </Grid>
           <Grid item>
             <Box height="20px" />
             <IntensityButtons
@@ -38,16 +39,16 @@ export default class DemoPage2 extends Page {
               qId="GoodTeacher_R"
             />
           </Grid>
-          <Grid item><Divider /></Grid>
+          <Grid item>
+            <Divider />
+          </Grid>
           <Grid item>
             <Box height="20px" />
-            <IntensityButtons
-              question={`${robot} is kind.`}
-              qId="Kind_R"
-            />
+            <IntensityButtons question={`${robot} is kind.`} qId="Kind_R" />
           </Grid>
-          <Grid item><Divider /></Grid>
-
+          <Grid item>
+            <Divider />
+          </Grid>
         </Grid>
       </Box>
     );

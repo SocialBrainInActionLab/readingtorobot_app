@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
   Box,
   TextField,
@@ -9,9 +9,13 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
-} from '@material-ui/core';
-import QuestionaireContext from './QuestionaireContext';
+} from "@material-ui/core";
+import QuestionaireContext from "./QuestionaireContext";
 
+/**
+ * Question with multiple options and text response area.
+ * @extends {React.Component}
+ */
 class QuestionSelect extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +44,7 @@ class QuestionSelect extends React.Component {
     const { data } = this.context;
     const s = {};
     s[`${qId}_D`] = data[`${qId}_D`] || false;
-    s[`${qId}_O`] = data[`${qId}_O`] || '';
+    s[`${qId}_O`] = data[`${qId}_O`] || "";
     return s;
   }
 
@@ -49,9 +53,7 @@ class QuestionSelect extends React.Component {
     const s = this.getState();
     return (
       <Container>
-        <p>
-          {question}
-        </p>
+        <p>{question}</p>
         <form className="this" noValidate autoComplete="off">
           <FormControl component="fieldset">
             <RadioGroup

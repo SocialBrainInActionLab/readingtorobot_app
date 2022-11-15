@@ -1,13 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import {
-  Box,
-  Divider,
-  Grid,
-} from '@material-ui/core';
+import React from "react";
+import { Box, Divider, Grid } from "@material-ui/core";
 
-import { Page, Question, QuestionSelect } from '../components';
+import { Page, Question, QuestionSelect } from "../components";
 
+/** Questionaire page 1.
+ * @extends {Page}
+ */
 export default class DemoPage1 extends Page {
   render() {
     return (
@@ -20,19 +19,25 @@ export default class DemoPage1 extends Page {
               qId="Impressions"
             />
           </Grid>
-          <Grid item><Divider /></Grid>
+          <Grid item>
+            <Divider />
+          </Grid>
           <Grid item>
             <QuestionSelect
-              question={(
+              question={
                 <p>
-                  <p>Do you think this is a helpful robot? Why (if not) / HOW (if so)?</p>
                   <p>
-                    Prompts: What other things do you think it might be helpful with?
-                    How helpful do you think this robot would be in helping kids learn to read?
+                    Do you think this is a helpful robot? Why (if not) / HOW (if
+                    so)?
+                  </p>
+                  <p>
+                    Prompts: What other things do you think it might be helpful
+                    with? How helpful do you think this robot would be in
+                    helping kids learn to read?
                   </p>
                 </p>
-              )}
-              options={['Yes', 'No']}
+              }
+              options={["Yes", "No"]}
               qId="Helpful"
             />
           </Grid>

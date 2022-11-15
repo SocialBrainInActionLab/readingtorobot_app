@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-filename-extension */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import {
   STAI,
   ParticipantInfoPage,
@@ -16,9 +16,9 @@ import {
   DemoPage3,
   DemoPage4,
   RobotRating,
-} from './pages';
-import { IntensityButtons, QuestionaireProvider } from './components';
-import { shuffle } from './utils';
+} from "./pages";
+import { IntensityButtons, QuestionaireProvider } from "./components";
+import { shuffle } from "./utils";
 
 const robotVideos = {
   miro: [
@@ -36,20 +36,19 @@ const robotVideos = {
 };
 
 function getVideos() {
-  let videos = JSON.parse(localStorage.getItem('videos'));
+  let videos = JSON.parse(localStorage.getItem("videos"));
   let res = [];
   if (videos == null) {
-    videos = shuffle(['miro', 'cozmo', 'nao']);
-    localStorage.setItem('videos', JSON.stringify(videos));
+    videos = shuffle(["miro", "cozmo", "nao"]);
+    localStorage.setItem("videos", JSON.stringify(videos));
   }
-  videos.forEach((vid) => { res = [...res, ...robotVideos[vid]]; });
+  videos.forEach((vid) => {
+    res = [...res, ...robotVideos[vid]];
+  });
   return res;
 }
 
-let layout = [
-  <ParticipantInfoPage />,
-  <RobotRating qId="rating1" />,
-];
+let layout = [<ParticipantInfoPage />, <RobotRating qId="rating1" />];
 
 layout = layout.concat(getVideos());
 
@@ -63,7 +62,10 @@ layout = layout.concat([
   <IntensityButtons qId="Helpful_R" question="How helpful was this robot?" />,
   <DemoPage2 />,
   <DemoPage3 />,
-  <IntensityButtons qId="Enjoy_R" question="How much did you enjoy reading with the robot?" />,
+  <IntensityButtons
+    qId="Enjoy_R"
+    question="How much did you enjoy reading with the robot?"
+  />,
   <DemoPage4 />,
 ]);
 
@@ -73,7 +75,7 @@ ReactDOM.render(
       <App layout={layout} />
     </QuestionaireProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

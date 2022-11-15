@@ -1,14 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Box,
-  Divider,
-  Grid,
-} from '@material-ui/core';
+import React from "react";
+import PropTypes from "prop-types";
+import { Box, Divider, Grid } from "@material-ui/core";
 
-import { IntensityButtons, Question, Page } from '../components';
+import { IntensityButtons, Question, Page } from "../components";
 
+/** Page including questions about the robot videos.
+ * @extends {Page}
+ */
 export default class RobotVideoQuestionsPage extends Page {
   render() {
     const { name } = this.props;
@@ -22,7 +21,9 @@ export default class RobotVideoQuestionsPage extends Page {
               qId={`${name}_AnyQ`}
             />
           </Grid>
-          <Grid item><Divider /></Grid>
+          <Grid item>
+            <Divider />
+          </Grid>
           <Grid item>
             <Box height="20px" />
             <IntensityButtons
@@ -30,7 +31,9 @@ export default class RobotVideoQuestionsPage extends Page {
               qId={`${name}_Intelligent`}
             />
           </Grid>
-          <Grid item><Divider /></Grid>
+          <Grid item>
+            <Divider />
+          </Grid>
           <Grid item>
             <Box height="20px" />
             <IntensityButtons

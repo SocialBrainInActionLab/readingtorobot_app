@@ -1,17 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import {
-  Box,
-  Grid,
-  TextField,
-} from '@material-ui/core';
+import React from "react";
+import { Box, Grid, TextField } from "@material-ui/core";
 
-import { Page, QuestionaireContext } from '../components';
+import { Page, QuestionaireContext } from "../components";
 
+/** Information about the participant. Currently only indicates the Participant ID.
+ * @extends {Page}
+ */
 export default class ParticipantInfoPage extends Page {
   static initialValues() {
     return {
-      id: '',
+      id: "",
       date: new Date().toLocaleString(),
     };
   }
@@ -52,7 +51,7 @@ export default class ParticipantInfoPage extends Page {
               label="Participant ID"
               variant="outlined"
               value={d.id}
-              onChange={this.handleChange('id')}
+              onChange={this.handleChange("id")}
             />
           </Grid>
         </Grid>

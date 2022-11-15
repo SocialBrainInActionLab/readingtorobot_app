@@ -1,8 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { TextField, TextareaAutosize, Container } from '@material-ui/core';
-import QuestionaireContext from './QuestionaireContext';
+import React from "react";
+import PropTypes from "prop-types";
+import { TextField, TextareaAutosize, Container } from "@material-ui/core";
+import QuestionaireContext from "./QuestionaireContext";
 
+/**
+ * Simple question component including a single question and text response field.
+ * @extends {React.Component}
+ */
 class Question extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +25,7 @@ class Question extends React.Component {
   getState() {
     const { qId } = this.props;
     const { data } = this.context;
-    data[qId] = data[qId] || '';
+    data[qId] = data[qId] || "";
     return data[qId];
   }
 
@@ -29,9 +33,7 @@ class Question extends React.Component {
     const { question } = this.props;
     return (
       <Container>
-        <p>
-          {question}
-        </p>
+        <p>{question}</p>
         <form className="this" noValidate autoComplete="off">
           <TextField
             fullWidth

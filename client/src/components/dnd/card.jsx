@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { Draggable } from 'react-beautiful-dnd';
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import { Draggable } from "react-beautiful-dnd";
 
 const Container = styled.div`
   align-items: center;
@@ -14,6 +14,9 @@ const Container = styled.div`
   padding: 8px;
 `;
 
+/** Draggable component.
+ * @extends {React.Component}
+ */
 export default class Card extends React.Component {
   render() {
     const { card, index } = this.props;
@@ -34,9 +37,11 @@ export default class Card extends React.Component {
 }
 
 Card.propTypes = {
-  card: PropTypes.objectOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-  })).isRequired,
+  card: PropTypes.objectOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   index: PropTypes.number.isRequired,
 };

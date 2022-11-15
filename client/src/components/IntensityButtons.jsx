@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Container,
-  IconButton,
-  Grid,
-  Box,
-} from '@material-ui/core';
-import Brightness1Icon from '@material-ui/icons/Brightness1';
-import QuestionaireContext from './QuestionaireContext';
+import React from "react";
+import PropTypes from "prop-types";
+import { Container, IconButton, Grid, Box } from "@material-ui/core";
+import Brightness1Icon from "@material-ui/icons/Brightness1";
+import QuestionaireContext from "./QuestionaireContext";
 
+/**
+ * Option question with three buttons of different size, matching the corresponding intensity.
+ * @extends {React.Component}
+ */
 class IntensityButtons extends React.Component {
   constructor(props) {
     super(props);
@@ -28,9 +27,9 @@ class IntensityButtons extends React.Component {
   getState() {
     const { qId } = this.props;
     const { data } = this.context;
-    const variants = ['pink', 'pink', 'pink'];
+    const variants = ["pink", "pink", "pink"];
     if (data[qId] >= 0) {
-      variants[data[qId]] = 'red';
+      variants[data[qId]] = "red";
     } else {
       data[qId] = -1;
     }
@@ -44,9 +43,7 @@ class IntensityButtons extends React.Component {
     return (
       <Container>
         <Box height="5vh" />
-        <p>
-          {question}
-        </p>
+        <p>{question}</p>
         <Grid container alignItems="center" justify="space-evenly">
           <Grid item>
             <IconButton onClick={this.onButtonClick(0)}>

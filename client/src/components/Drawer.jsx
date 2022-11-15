@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import {
   Button,
   Divider,
@@ -7,8 +7,12 @@ import {
   List,
   ListItem,
   TextField,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
+/**
+ * Content for left drawer menu.
+ * @extends {React.Component}
+ */
 class Drawer extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +21,11 @@ class Drawer extends React.Component {
     this.handleChangeFile = this.handleChangeFile.bind(this);
   }
 
+  /**
+   * Generate method to update the IP of a specific robot.
+   * @param {String} id Robot identifier.
+   * @returns {(Object) => void} Method to update the IP of the robot.
+   */
   handleChangeIP(id) {
     return (event) => {
       const { settings, setSettings } = this.props;
@@ -25,6 +34,10 @@ class Drawer extends React.Component {
     };
   }
 
+  /**
+   * Update the name of the file to store the results.
+   * @param {Object} event
+   */
   handleChangeFile(event) {
     const { settings, setSettings } = this.props;
     settings.filename = event.target.value;
@@ -33,14 +46,13 @@ class Drawer extends React.Component {
 
   render() {
     const { settings, clearForm } = this.props;
-
     return (
       <Grid
         container
         direction="column"
         alignItems="center"
         justify="space-between"
-        style={{ height: '90vh' }}
+        style={{ height: "90vh" }}
       >
         <Grid item>
           <List>
@@ -60,7 +72,9 @@ class Drawer extends React.Component {
             })}
           </List>
         </Grid>
-        <Grid item><Divider /></Grid>
+        <Grid item>
+          <Divider />
+        </Grid>
         <Grid item>
           <List>
             <ListItem>Data Storage</ListItem>
@@ -75,7 +89,9 @@ class Drawer extends React.Component {
           </List>
         </Grid>
         <Grid item>
-          <Button variant="outlined" onClick={clearForm}>Clear form</Button>
+          <Button variant="outlined" onClick={clearForm}>
+            Clear form
+          </Button>
         </Grid>
       </Grid>
     );
