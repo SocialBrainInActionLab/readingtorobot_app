@@ -8,6 +8,6 @@ module.exports = {
   rules: {
     "react/jsx-props-no-spreading": "off",
     "import/extensions": "off",
-    "prettier/prettier": ["error"],
+    "prettier/prettier": ["error", {"endOfLine": "auto"}],
   },
 };
