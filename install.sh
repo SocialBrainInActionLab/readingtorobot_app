@@ -22,9 +22,10 @@ read -s PASSWORD
 
 # Build client and send to target machine
 cd $src_path/client
+npm install --legacy-peer-deps
 npm run build
 cd $src_path
-scp -pr server/. $TARGET_USER@$TARGET_IP:~/$server_name/.
+scp -pr server/. $TARGET_USER@$TARGET_IP:~/$server_name/
 
 # Install required python packages
 read -r -p "Update required Python packages? [Y/n] " response
